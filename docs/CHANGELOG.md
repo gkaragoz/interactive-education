@@ -18,3 +18,6 @@
 
 ## v0.5.0
 - Module Enerji dönüşümleri: fotosentez, hücresel solunum, fermantasyon ve kemosentez.
+
+## v0.6.0
+- Modules Kas ve hareket, Sinir sistemi ve Kalıtım (Mendel, Punnett): sliding filament, refleks, aksiyon potansiyeli, sinaps, monohibrit, dihibrit, kan grupları, eşeye bağlı kalıtım.

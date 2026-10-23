@@ -35,13 +35,14 @@ async function drawn(page: Page): Promise<number> {
 const seek = (page: Page, t: number): Promise<void> => page.evaluate((x) => window.__bilimModules!.session.player.seek(x), t);
 
 test('genetics: plays, scrubs, changes the cross, answers a check, no console errors', async ({ page }) => {
+  test.setTimeout(300_000); // four tracks with screenshots on the software renderer
   const problems = await open(page);
   expect(await drawn(page)).toBeGreaterThan(8);
 
   // play for a moment: the playhead advances
   await page.locator('[data-play]').click();
-  await page.waitForTimeout(1500);
-  expect(await page.evaluate(() => window.__bilimModules!.session.player.time)).toBeGreaterThan(0.3);
+  // software rendering is slow: wait for the playhead instead of a fixed sleep
+  await page.waitForFunction(() => window.__bilimModules!.session.player.time > 0.3, null, { timeout: 30_000 });
   await page.locator('[data-play]').click();
 
   // scrub forward and backward through gametes, the Punnett square and the tally
