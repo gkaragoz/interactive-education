@@ -98,7 +98,7 @@ export async function createYapi(env: TrackEnv): Promise<TrackRuntime> {
       let scale = 1;
       if (i < 4) {
         const toSlot = win(t, 7 + 0.15 * i, 8.4 + 0.15 * i);
-        const grow = i === 0 ? clamp01(easeBack(seg(t, 0, 1.6))) : t < 4.9 + 0.35 * i ? 0 : clamp01(easeBack(seg(t, 4.9 + 0.35 * i, 5.8 + 0.35 * i)));
+        const grow = i === 0 ? 0.8 + 0.2 * clamp01(easeBack(seg(t, 0, 1.6))) : t < 4.9 + 0.35 * i ? 0 : clamp01(easeBack(seg(t, 4.9 + 0.35 * i, 5.8 + 0.35 * i)));
         const toRow = i === 0 ? win(t, 4.6, 6.2) : 1;
         pos2.set(0, 0, 0).lerp(mid.set(ROW_X[i] as number, 0, 0), toRow);
         pos.lerpVectors(pos2, pos, toSlot);

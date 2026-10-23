@@ -193,7 +193,7 @@ export async function createMutasyon(env: TrackEnv): Promise<TrackRuntime> {
     // peptide row: beads, links, stop marker
     const nOld = mp.before.aminoAcids.length;
     const nNew = mp.after.peptide.length;
-    const shown = (k: number): number => easeBack(seg(t, 1.6 + 0.4 * k, 2.4 + 0.4 * k));
+    const shown = (k: number): number => 0.45 + 0.55 * easeBack(seg(t, 1.6 + 0.4 * k, 2.4 + 0.4 * k));
     for (let k = 0; k < nOld; k++) {
       const x = xOf(3 * k + 1);
       let col: Color = aaColor(mp.before.aminoAcids[k] as string);

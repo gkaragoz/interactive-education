@@ -12,9 +12,9 @@ const lab = (id: string, t0: number, t1: number, text: string, x: number, y: num
 function intro(kit: Kit): void {
   ['IA', 'IB', 'i'].forEach((a, k) => {
     const x = (k - 1) * 4;
-    const anim = gate(still(x, 12.6, 1.5), 0.4 + k * 0.4, 1.6 + k * 0.4, 17.6, 18.6);
+    const anim = gate(still(x, 12.6, 1.5), -1.2, -0.1, 17.6, 18.6);
     kit.chromo({ single: true, color: alleleColor(a), anim });
-    kit.tag({ alleles: [a], height: 0.9, anim: gate(still(x, 11.1, 1, 0.3), 0.8 + k * 0.4, 1.8 + k * 0.4, 17.6, 18.6) });
+    kit.tag({ alleles: [a], height: 0.9, anim: gate(still(x, 11.1, 1, 0.3), -1, 0, 17.6, 18.6) });
   });
   const groups: Array<[string, string[][], number]> = [
     ['A', [['IA', 'IA'], ['IA', 'i']], -7.5],
@@ -38,7 +38,7 @@ export function buildKan(kit: Kit, cross: CrossSpec): Plan {
   const times = { parents: 18.2, cell: 19.2, meiosis: 24.2, fly: [27.2, 29.6] as [number, number], fill: [30, 40] as [number, number], hist: { pheno: [41, 48] as [number, number] } };
   const { sq, hist } = buildCross(kit, 'blood', cross, lay, times);
   const labels: LabelSpec[] = [
-    lab('al', 0.5, 8, 'Üç alel: IA, IB ve i', 0, 9.9),
+    lab('al', 0, 8, 'Üç alel: IA, IB ve i', 0, 9.9),
     lab('co', 4.5, 8.2, 'IA ve IB eş baskın, i çekinik', 0, 14.6, 'ileri'),
     lab('gt', 8.4, 17.6, 'Genotip belirler, fenotip kan grubudur', 0, 2.2, 'ileri'),
     lab('p1', 19, 24, 'Ebeveyn 1', -4, -2.0),

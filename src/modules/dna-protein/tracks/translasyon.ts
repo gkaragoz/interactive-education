@@ -35,7 +35,7 @@ const STUB = new Color('#c99a4a');
 const HIDDEN = new Matrix4().makeScale(0, 0, 0);
 
 const CAM: CamKey[] = [
-  { t: 0, p: [3, 3, 23], l: [3, 0.5, 0] },
+  { t: 0, p: [1.5, 2.5, 19], l: [1.5, 0, 0] },
   { t: 7, p: [1, 3, 21], l: [0, 1.4, 0] },
   { t: 16, p: [0, 3.2, 21], l: [0, 1.8, 0] },
   { t: 28, p: [-2, 3.4, 21], l: [0, 2.2, 0] },
@@ -74,7 +74,7 @@ export async function createTranslasyon(env: TrackEnv): Promise<TrackRuntime> {
   const ball = [0, 1, 2, 3, 4, 5].map(() => new Vector3());
   const ballOn = [false, false, false, false, false, false];
 
-  const mrnaShift = (t: number): number => 12.5 - 6.5 * win(t, 0, 6) - 6 * win(t, T_SCAN[0], T_SCAN[1]);
+  const mrnaShift = (t: number): number => 6.5 - 0.5 * win(t, 0, 6) - 6 * win(t, T_SCAN[0], T_SCAN[1]);
   /** x of the centre of codon k at time t. */
   const codonX = (k: number, t: number): number => CODON_PITCH * k - slide(t, plan.peptide.length) + mrnaShift(t);
 
@@ -102,11 +102,11 @@ export async function createTranslasyon(env: TrackEnv): Promise<TrackRuntime> {
     for (let i = 0; i < Math.min(mrna.length, NMAX) - 1; i++) nucs.link(slotM[i] as number, slotM[i + 1] as number, LINK_R, 1);
 
     // --- ribosome subunits
-    const smallS = easeBack(seg(t, T_SMALL[0], T_SMALL[0] + 1.2));
+    const smallS = 1;
     const fS = seg(t, T_SMALL[0], T_SMALL[1]);
-    A.set(-9, -9, -3);
+    A.set(-3, -2.8, -0.5);
     B.set(0, MRNA_Y, 0);
-    lift.set(0, 2, 2);
+    lift.set(0, 1, 1);
     hop(C, A, B, fS, lift);
     C.x += -7 * sep;
     C.y += -8 * sep;
@@ -127,7 +127,6 @@ export async function createTranslasyon(env: TrackEnv): Promise<TrackRuntime> {
     m2.compose(C, q1.identity(), one.set(sL, sL, sL));
     ribo.setPart(0, 'large', m2);
     ribo.setPart(0, 'sites', ileri ? m2 : HIDDEN);
-    if (t < T_SMALL[0]) ribo.setPart(0, 'small', HIDDEN);
     if (t < T_LARGE[0]) {
       ribo.setPart(0, 'large', HIDDEN);
       ribo.setPart(0, 'sites', HIDDEN);

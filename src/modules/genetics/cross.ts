@@ -72,7 +72,7 @@ export function buildCross(kit: Kit, kind: CrossKind, cross: CrossSpec, lay: Cro
     const x = xs[i] as number;
     const keys: Key[] = origin
       ? [[times.parents - 0.5, origin.x, origin.y, 0], [times.parents, origin.x, origin.y, 1], [times.parents + 1.4, x, lay.py, 1]]
-      : [[times.parents, x, lay.py, 0], [times.parents + 1.2, x, lay.py, 1]];
+      : [[times.parents - 1.2, x, lay.py, 0], [times.parents, x, lay.py, 1]];
     const anim = path(keys);
     parentAnim.push(anim);
     addOrganism(kit, lookOf(kind, genes), anim);

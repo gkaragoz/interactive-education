@@ -21,3 +21,6 @@
 
 ## v0.6.0
 - Modules Kas ve hareket, Sinir sistemi ve Kalıtım (Mendel, Punnett): sliding filament, refleks, aksiyon potansiyeli, sinaps, monohibrit, dihibrit, kan grupları, eşeye bağlı kalıtım.
+
+## v0.6.1
+- DNA ve Kalıtım modüllerinde ilk kare artık dolu; kart küçük resimleri güncellendi.

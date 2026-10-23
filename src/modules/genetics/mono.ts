@@ -21,8 +21,8 @@ export function buildMono(kit: Kit, cross: CrossSpec, options: Record<string, st
   const wanted = [[['A']], [['a']]];
   P.forEach((genes, i) => {
     const x = i === 0 ? -4 : 4;
-    addOrganism(kit, { kind: 'pea', yellow: i === 0, round: true }, path([[0.2, x, 0, 0], [1.4, x, 0, 1]]));
-    const slots = meiosis(kit, { genes, cx: x, cy: -3.8, pitch: 0, appear: 1.0, T: 6.4, color: alleleColor });
+    addOrganism(kit, { kind: 'pea', yellow: i === 0, round: true }, path([[-1.2, x, 0, 0], [0, x, 0, 1]]));
+    const slots = meiosis(kit, { genes, cx: x, cy: -3.8, pitch: 0, appear: -1.5, T: 6.4, color: alleleColor });
     const picks = claim(slots, wanted[i] as string[][]);
     picks[0]?.build({ t0: 10.3, t1: 12.4, x: i === 0 ? -0.7 : 0.7, y: zy, s: 1.0, lift: 1.0, vanish: true }, [0, 0]);
     for (const s of slots) if (s !== picks[0]) s.build(null, [10.0, 11.0]);
@@ -43,10 +43,10 @@ export function buildMono(kit: Kit, cross: CrossSpec, options: Record<string, st
   const { sq, hist } = buildCross(kit, 'mono', cross, lay, times, isDefault ? { x: 0, y: f1y } : undefined);
 
   const labels: LabelSpec[] = [
-    lab('p1', 0.6, 4, 'Sarı tohum (AA)', -4, -2.0, 'temel'),
-    lab('p2', 0.6, 4, 'Yeşil tohum (aa)', 4, -2.0, 'temel'),
-    lab('p1', 0.6, 4, 'AA: baskın homozigot, sarı', -4, -2.0, 'ileri'),
-    lab('p2', 0.6, 4, 'aa: çekinik homozigot, yeşil', 4, -2.0, 'ileri'),
+    lab('p1', 0, 4, 'Sarı tohum (AA)', -4, -2.0, 'temel'),
+    lab('p2', 0, 4, 'Yeşil tohum (aa)', 4, -2.0, 'temel'),
+    lab('p1', 0, 4, 'AA: baskın, sarı', -4, -2.0, 'ileri'),
+    lab('p2', 0, 4, 'aa: çekinik, yeşil', 4, -2.0, 'ileri'),
     lab('m1', 6.4, 10, 'Eşey hücreleri oluşuyor', -4, -5.9, 'temel'),
     lab('m1', 6.4, 10, 'Mayoz: alel çifti ayrılır', -4, -5.9, 'ileri'),
     lab('fert', 11.2, 14.3, 'Döllenme: A + a', 0, -1.7),
@@ -59,7 +59,7 @@ export function buildMono(kit: Kit, cross: CrossSpec, options: Record<string, st
     lab('feno', 48.4, 56, 'Fenotip oranı', lay.hx + 0.95, hist.phenoLabelY),
   ];
   const cam = [
-    [0, 0, -2.0, 13], [5, 0, -2.2, 12.5], [9.5, 0, -2.6, 12.5], [10.3, 0, -3.2, 12], [12.5, 0, -4.2, 11], [14, 0, -5.8, 11.5], [17, 0, -6.6, 12.5],
+    [0, 1.8, 1.0, 13.5], [5, 1.2, 0.2, 12.5], [9.5, 0, -2.6, 12.5], [10.3, 0, -3.2, 12], [12.5, 0, -4.2, 11], [14, 0, -5.8, 11.5], [17, 0, -6.6, 12.5],
     [19.5, 0, -10, 14], [20.5, 0, -12.5, 15.5], [24, 0, -20.5, 15.5], [27.5, 0, -24.5, 15], [29, 2.0, -27, 13.5], [46, 4.0, -27.3, 13], [56, 3.6, -27.3, 13.5],
   ] as Plan['cam'];
   return { duration: 56, kind: 'mono', sq, fill: times.fill, cam, labels, warnAt: 19.2 };

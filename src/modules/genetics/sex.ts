@@ -39,12 +39,12 @@ function pedigree(kit: Kit, sq: Square, t0: number, cx: number, cy: number): voi
 export function buildSex(kit: Kit, cross: CrossSpec): Plan {
   const sqLayout = layoutFor(2, 0, -12.5);
   const lay = { px: 4, py: 0, sq: sqLayout, hx: 5.4, hy: -14.9 };
-  const times = { parents: 0.2, cell: 0.8, meiosis: 22.3, fly: [26.0, 28.4] as [number, number], fill: [30, 40] as [number, number], hist: { pheno: [41, 48] as [number, number] } };
+  const times = { parents: 0, cell: -1.5, meiosis: 22.3, fly: [26.0, 28.4] as [number, number], fill: [30, 40] as [number, number], hist: { pheno: [41, 48] as [number, number] } };
   const { sq } = buildCross(kit, 'sex', cross, lay, times);
   pedigree(kit, sq, 47, 0, -22.5);
   const labels: LabelSpec[] = [
-    lab('p1', 0.8, 8, 'Anne: XX (dişi)', -4, -2.0),
-    lab('p2', 0.8, 8, 'Baba: XY (erkek)', 4, -2.0),
+    lab('p1', 0, 8, 'Anne: XX (dişi)', -4, -2.0),
+    lab('p2', 0, 8, 'Baba: XY (erkek)', 4, -2.0),
     lab('x1', 8.2, 16, 'Renk görme geni X kromozomunda', -4, -5.9),
     lab('x2', 12, 16.5, 'Y kromozomunda bu genin karşılığı yok', 4, -5.9, 'ileri'),
     lab('m', 22.5, 26, 'Alel çifti ayrılır: her gamette tek X (ya da Y)', -4, -5.9, 'ileri'),
@@ -52,7 +52,7 @@ export function buildSex(kit: Kit, cross: CrossSpec): Plan {
     lab('ped', 48, 52, 'Soyağacı: ● renk körü, ◐ taşıyıcı', 0, -19.6, 'ileri'),
   ];
   const cam = [
-    [0, 0, -2.2, 12], [14, 0, -2.2, 12], [20, 0, -3.4, 11], [24, 0, -3.8, 11], [26, 0, -6, 15], [30, 1.5, -11.5, 14.5], [41, 3.2, -11.8, 14.5], [46, 3.2, -11.8, 14.5], [48.5, 0, -20.5, 15], [52, 0, -20.5, 15],
+    [0, 1.5, 0.8, 13], [14, 0, -2.2, 12], [20, 0, -3.4, 11], [24, 0, -3.8, 11], [26, 0, -6, 15], [30, 1.5, -11.5, 14.5], [41, 3.2, -11.8, 14.5], [46, 3.2, -11.8, 14.5], [48.5, 0, -20.5, 15], [52, 0, -20.5, 15],
   ] as Plan['cam'];
   return { duration: 52, kind: 'sex', sq, fill: times.fill, cam, labels, warnAt: 16.2 };
 }
