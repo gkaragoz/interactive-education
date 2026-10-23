@@ -1,0 +1,23 @@
+{
+  "id": "mitochondrion",
+  "tris": {
+    "LOD0": 57768,
+    "LOD1": 14840,
+    "LOD2": 7472
+  },
+  "bboxMin": [
+    -1.6024,
+    -0.634,
+    -0.6301
+  ],
+  "bboxMax": [
+    1.6024,
+    0.634,
+    0.6301
+  ],
+  "boundsRadius": 1.6341,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1294576
+}

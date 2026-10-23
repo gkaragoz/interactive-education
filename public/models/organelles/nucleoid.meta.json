@@ -1,0 +1,23 @@
+{
+  "id": "nucleoid",
+  "tris": {
+    "LOD0": 39856,
+    "LOD1": 9052,
+    "LOD2": 4884
+  },
+  "bboxMin": [
+    -1.6302,
+    -1.2084,
+    -1.2158
+  ],
+  "bboxMax": [
+    1.6302,
+    1.2084,
+    1.2158
+  ],
+  "boundsRadius": 1.7314,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1048924
+}

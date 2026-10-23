@@ -1,0 +1,23 @@
+{
+  "id": "ribosome",
+  "tris": {
+    "LOD0": 32144,
+    "LOD1": 8008,
+    "LOD2": 3880
+  },
+  "bboxMin": [
+    -0.6965,
+    -0.2697,
+    -0.283
+  ],
+  "bboxMax": [
+    0.6965,
+    0.2697,
+    0.283
+  ],
+  "boundsRadius": 0.7465,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 760392
+}

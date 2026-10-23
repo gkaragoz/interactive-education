@@ -1,0 +1,23 @@
+{
+  "id": "lysosome",
+  "tris": {
+    "LOD0": 41148,
+    "LOD1": 7740,
+    "LOD2": 2868
+  },
+  "bboxMin": [
+    -0.5683,
+    -0.5579,
+    -0.5651
+  ],
+  "bboxMax": [
+    0.5683,
+    0.5579,
+    0.5651
+  ],
+  "boundsRadius": 0.5784,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 850208
+}

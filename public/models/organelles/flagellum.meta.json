@@ -1,0 +1,23 @@
+{
+  "id": "flagellum",
+  "tris": {
+    "LOD0": 26096,
+    "LOD1": 6980,
+    "LOD2": 3666
+  },
+  "bboxMin": [
+    -2.8335,
+    -0.702,
+    -0.7104
+  ],
+  "bboxMax": [
+    2.8335,
+    0.702,
+    0.7104
+  ],
+  "boundsRadius": 2.8492,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 618552
+}

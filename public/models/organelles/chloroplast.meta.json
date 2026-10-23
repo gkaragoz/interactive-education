@@ -1,0 +1,23 @@
+{
+  "id": "chloroplast",
+  "tris": {
+    "LOD0": 58800,
+    "LOD1": 13392,
+    "LOD2": 6540
+  },
+  "bboxMin": [
+    -2.5037,
+    -1.1994,
+    -1.2062
+  ],
+  "bboxMax": [
+    2.5037,
+    1.1994,
+    1.2062
+  ],
+  "boundsRadius": 2.5075,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1264812
+}

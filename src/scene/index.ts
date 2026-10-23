@@ -1,0 +1,6 @@
+export { Stage, type StageData, type StageOptions, type StageEvents, type StageStats, type ViewState } from './stage';
+export { solveLayout, worstOverlap, fitsInShell, overlapOf, shellSdf, ORGANELLE_BOOST, type PlacedInstance, type LayoutCell } from './layout';
+export { makePlaceholderAsset, isShellId } from './placeholders';
+export { CellScene } from './cellScene';
+export { Cutaway } from './cutaway';
+export { heightField, normalPixels } from './normalMap';

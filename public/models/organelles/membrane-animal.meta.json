@@ -1,0 +1,31 @@
+{
+  "id": "membrane-animal",
+  "tris": {
+    "LOD0": 39552,
+    "LOD1": 7728,
+    "LOD2": 3348
+  },
+  "bboxMin": [
+    -11.0434,
+    -8.5574,
+    -9.6343
+  ],
+  "bboxMax": [
+    11.0434,
+    8.5574,
+    9.6343
+  ],
+  "boundsRadius": 11.2931,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 913032,
+  "shell": {
+    "shape": "ellipsoid",
+    "halfExtents": [
+      11.0,
+      8.5,
+      9.5
+    ]
+  }
+}

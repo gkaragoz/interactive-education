@@ -1,0 +1,23 @@
+{
+  "id": "smooth-er",
+  "tris": {
+    "LOD0": 50680,
+    "LOD1": 7448,
+    "LOD2": 3870
+  },
+  "bboxMin": [
+    -2.2005,
+    -1.0229,
+    -1.4943
+  ],
+  "bboxMax": [
+    2.2005,
+    1.0229,
+    1.4943
+  ],
+  "boundsRadius": 2.2856,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1079904
+}

@@ -1,0 +1,23 @@
+{
+  "id": "centrosome",
+  "tris": {
+    "LOD0": 35912,
+    "LOD1": 8736,
+    "LOD2": 2332
+  },
+  "bboxMin": [
+    -0.873,
+    -0.5348,
+    -0.6909
+  ],
+  "bboxMax": [
+    0.873,
+    0.5348,
+    0.6909
+  ],
+  "boundsRadius": 1.0948,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 792472
+}

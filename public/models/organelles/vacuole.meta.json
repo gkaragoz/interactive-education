@@ -1,0 +1,23 @@
+{
+  "id": "vacuole",
+  "tris": {
+    "LOD0": 44928,
+    "LOD1": 9972,
+    "LOD2": 4944
+  },
+  "bboxMin": [
+    -2.5981,
+    -1.4486,
+    -1.1817
+  ],
+  "bboxMax": [
+    2.5981,
+    1.4486,
+    1.1817
+  ],
+  "boundsRadius": 2.6098,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 999320
+}

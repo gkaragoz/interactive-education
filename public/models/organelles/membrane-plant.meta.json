@@ -1,0 +1,31 @@
+{
+  "id": "membrane-plant",
+  "tris": {
+    "LOD0": 39264,
+    "LOD1": 7512,
+    "LOD2": 3132
+  },
+  "bboxMin": [
+    -13.0966,
+    -7.1096,
+    -10.1071
+  ],
+  "bboxMax": [
+    13.0966,
+    7.1096,
+    10.1071
+  ],
+  "boundsRadius": 14.9193,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 855112,
+  "shell": {
+    "shape": "rounded-box",
+    "halfExtents": [
+      13.0,
+      7.0,
+      10.0
+    ]
+  }
+}

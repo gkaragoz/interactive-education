@@ -1,0 +1,23 @@
+{
+  "id": "plasmid",
+  "tris": {
+    "LOD0": 8320,
+    "LOD1": 2080,
+    "LOD2": 1248
+  },
+  "bboxMin": [
+    -0.328,
+    -0.144,
+    -0.3358
+  ],
+  "bboxMax": [
+    0.328,
+    0.144,
+    0.3358
+  ],
+  "boundsRadius": 0.3413,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 240264
+}

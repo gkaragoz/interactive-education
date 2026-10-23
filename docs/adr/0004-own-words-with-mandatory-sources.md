@@ -1,0 +1,3 @@
+# Learner text is written in our own words; every organelle must cite a Source and a kazanım
+
+Wikipedia (CC BY-SA) is the main explanatory source, but its text is not copied: copying would make our content share-alike. We learn from the Sources, write Turkish text at each Level ourselves, and link each fact's Source. MEB programs are the authority for kazanım mapping; open textbooks (OpenStax Biology 2e, which is CC BY-NC-SA 4.0, not CC BY) cross-check facts only; nothing is copied from it and none of its images are used. Micrographs come only from Wikimedia Commons with author and license shown. A test fails the build if an organelle lacks a Source or a kazanım link.

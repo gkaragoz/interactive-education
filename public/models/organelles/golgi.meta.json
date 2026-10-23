@@ -1,0 +1,23 @@
+{
+  "id": "golgi",
+  "tris": {
+    "LOD0": 55080,
+    "LOD1": 14568,
+    "LOD2": 5040
+  },
+  "bboxMin": [
+    -1.8506,
+    -1.8113,
+    -1.1422
+  ],
+  "bboxMax": [
+    1.8506,
+    1.8113,
+    1.1422
+  ],
+  "boundsRadius": 2.5508,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1156752
+}

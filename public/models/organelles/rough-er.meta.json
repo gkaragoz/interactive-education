@@ -1,0 +1,23 @@
+{
+  "id": "rough-er",
+  "tris": {
+    "LOD0": 51360,
+    "LOD1": 12840,
+    "LOD2": 4356
+  },
+  "bboxMin": [
+    -1.8326,
+    -0.5985,
+    -1.8119
+  ],
+  "bboxMax": [
+    1.8326,
+    0.5985,
+    1.8119
+  ],
+  "boundsRadius": 2.2399,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1289240
+}

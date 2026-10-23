@@ -1,0 +1,77 @@
+import type { Kazanim } from './types';
+
+// Codes were found in the 2026 MEB programmes. `summaryTr` is our own paraphrase, not the official text.
+export const kazanimlar: Kazanim[] = [
+  {
+    id: 'FB.5.3.1',
+    grade: 5,
+    subject: 'fen-bilimleri',
+    theme: 'Canlıların Yapısına Yolculuk',
+    summaryTr: 'Bitki ve hayvan hücrelerini temel kısımları ve özellikleri bakımından karşılaştırır; organeller yalnızca adları ve görevleriyle ele alınır.',
+    sourceId: 'meb-fen-2026',
+  },
+  {
+    id: 'FB.5.3.2',
+    grade: 5,
+    subject: 'fen-bilimleri',
+    theme: 'Canlıların Yapısına Yolculuk',
+    summaryTr: 'Hücreden doku, organ, sistem ve organizmaya uzanan yapısal basamakları ilişkilendirir.',
+    sourceId: 'meb-fen-2026',
+  },
+  {
+    id: 'FB.8.3.1',
+    grade: 8,
+    subject: 'fen-bilimleri',
+    theme: 'Yaşamın Gizemi',
+    summaryTr: 'Nükleotid, gen, DNA ve kromozom kavramları arasındaki bağı kurar (DNA hücre çekirdeğinde bulunur).',
+    sourceId: 'meb-fen-2026',
+  },
+  {
+    id: 'FB.8.7.1',
+    grade: 8,
+    subject: 'fen-bilimleri',
+    theme: 'Sürdürülebilir Yaşam ve Madde Döngüleri',
+    summaryTr: 'Bitkilerde besin üretiminde fotosentezin önemini açıklar (kloroplastın rolü önceden bilinen bilgi olarak varsayılır).',
+    sourceId: 'meb-fen-2026',
+  },
+  {
+    id: 'BİY.9.2.1',
+    grade: 9,
+    subject: 'biyoloji',
+    theme: 'Organizasyon',
+    summaryTr: 'Hücrenin alt birimlerini (zar, sitoplazma, organeller, çekirdek; prokaryot ve ökaryot hücre) ve bunların görevleri arasındaki ilişkiyi çözümler.',
+    sourceId: 'meb-biyoloji-2026',
+  },
+  {
+    id: 'BİY.9.2.2',
+    grade: 9,
+    subject: 'biyoloji',
+    theme: 'Organizasyon',
+    summaryTr: 'Hücre zarından madde geçişlerini (difüzyon, osmoz, aktif taşıma, endositoz ve ekzositoz) sınıflandırır.',
+    sourceId: 'meb-biyoloji-2026',
+  },
+  {
+    id: 'BİY.9.2.5',
+    grade: 9,
+    subject: 'biyoloji',
+    theme: 'Organizasyon',
+    summaryTr: 'Üç üst âlem (domain) sistemindeki canlıların özelliklerini karşılaştırır; bakteriler bunlardan biridir.',
+    sourceId: 'meb-biyoloji-2026',
+  },
+  {
+    id: 'BİY.10.1.2',
+    grade: 10,
+    subject: 'biyoloji',
+    theme: 'Enerji',
+    summaryTr: 'Fotosentez tepkimeleriyle ilgili bilimsel model oluşturur (kloroplastın yapısı ve rolü 9. sınıf ön bilgisidir).',
+    sourceId: 'meb-biyoloji-2026',
+  },
+  {
+    id: 'BİY.10.1.7',
+    grade: 10,
+    subject: 'biyoloji',
+    theme: 'Enerji',
+    summaryTr: 'Hücresel solunum tepkimeleriyle ilgili bilimsel model oluşturur (mitokondrinin yapısı ve rolü 9. sınıf ön bilgisidir).',
+    sourceId: 'meb-biyoloji-2026',
+  },
+];

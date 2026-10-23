@@ -1,0 +1,23 @@
+{
+  "id": "pilus",
+  "tris": {
+    "LOD0": 21360,
+    "LOD1": 5466,
+    "LOD2": 2478
+  },
+  "bboxMin": [
+    -1.6547,
+    -1.1425,
+    -0.5546
+  ],
+  "bboxMax": [
+    1.6547,
+    1.1425,
+    0.5546
+  ],
+  "boundsRadius": 1.7487,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 488564
+}

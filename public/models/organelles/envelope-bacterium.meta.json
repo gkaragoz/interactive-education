@@ -1,0 +1,36 @@
+{
+  "id": "envelope-bacterium",
+  "tris": {
+    "LOD0": 45984,
+    "LOD1": 10728,
+    "LOD2": 4848
+  },
+  "bboxMin": [
+    -8.3868,
+    -3.1909,
+    -3.1722
+  ],
+  "bboxMax": [
+    8.3868,
+    3.1909,
+    3.1722
+  ],
+  "boundsRadius": 8.4045,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1082508,
+  "shell": {
+    "shape": "capsule",
+    "halfExtents": [
+      6.2,
+      2.0,
+      2.0
+    ]
+  },
+  "layers": {
+    "membrane": 2.0,
+    "wall": 2.5,
+    "capsule": 3.1
+  }
+}

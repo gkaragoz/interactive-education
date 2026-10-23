@@ -1,0 +1,23 @@
+{
+  "id": "nucleus",
+  "tris": {
+    "LOD0": 56892,
+    "LOD1": 15000,
+    "LOD2": 8384
+  },
+  "bboxMin": [
+    -3.0392,
+    -3.0514,
+    -3.037
+  ],
+  "bboxMax": [
+    3.0392,
+    3.0514,
+    3.037
+  ],
+  "boundsRadius": 3.1103,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1429448
+}

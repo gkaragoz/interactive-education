@@ -1,0 +1,31 @@
+{
+  "id": "wall-plant",
+  "tris": {
+    "LOD0": 44256,
+    "LOD1": 11064,
+    "LOD2": 4236
+  },
+  "bboxMin": [
+    -14.9356,
+    -8.9241,
+    -11.8995
+  ],
+  "bboxMax": [
+    14.9356,
+    8.9241,
+    11.8995
+  ],
+  "boundsRadius": 17.1231,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1138800,
+  "shell": {
+    "shape": "rounded-box",
+    "halfExtents": [
+      14.44,
+      8.44,
+      11.44
+    ]
+  }
+}
