@@ -1,23 +1,173 @@
 {
   "id": "flagellum",
   "tris": {
-    "LOD0": 26096,
-    "LOD1": 6980,
-    "LOD2": 3666
+    "LOD0": 22130,
+    "LOD1": 5148,
+    "LOD2": 2394
   },
   "bboxMin": [
-    -2.8335,
-    -0.702,
-    -0.7104
+    -2.8334,
+    -0.7021,
+    -0.7108
   ],
   "bboxMax": [
-    2.8335,
-    0.702,
-    0.7104
+    2.8333,
+    0.7022,
+    0.7109
   ],
-  "boundsRadius": 2.8492,
+  "boundsRadius": 2.8505,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 618552
+  "bytes": 609956,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9781,
+        0.9981
+      ],
+      "coverage": 0.751,
+      "overlap": 0,
+      "stretchP95": 1.391,
+      "stretchP05": 0.769,
+      "uvPerUnit": 0.2281
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 153023
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 90888
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 87375
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 564822
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 385069
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 311229
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2049493
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1581764
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1057237
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.9,
+    "paintSeconds": 5.5,
+    "totalSeconds": 13.5
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/flagellum/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 75943,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 22440,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 37230,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 16273,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 277601,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 73417,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 149636,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 54548,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 957088,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 202539,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 604297,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 150252,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
 }

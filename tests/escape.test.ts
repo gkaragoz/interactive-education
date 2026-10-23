@@ -32,7 +32,7 @@ describe('escaping', () => {
       ...bundle,
       sources: [{ ...bundle.sources[0]!, id: 'evil', title: PAYLOAD, url: 'javascript:alert(1)', publisher: PAYLOAD }, ...bundle.sources.slice(1)],
     };
-    const page = renderBibliography({ catalog: new Catalog(evil), actions: noActions, baseUrl: './', qualityLocked: false });
+    const page = renderBibliography({ catalog: new Catalog(evil), actions: noActions, baseUrl: './', qualityLocked: false, reducedMotion: true });
     expect(page.querySelector('img[src="x"]')).toBeNull();
     expect(page.querySelector('script')).toBeNull();
     expect(page.textContent).toContain(PAYLOAD);
@@ -45,7 +45,7 @@ describe('escaping', () => {
       organelles: bundle.organelles.map((o) => (o.id === 'nucleus' ? { ...o, nameTr: PAYLOAD, tagline: PAYLOAD, funFact: PAYLOAD } : o)),
     };
     const catalog = new Catalog(evil);
-    const card = createInfoCard({ catalog, actions: noActions, baseUrl: './', qualityLocked: false });
+    const card = createInfoCard({ catalog, actions: noActions, baseUrl: './', qualityLocked: false, reducedMotion: true });
     const state: AppState = {
       route: 'explore', cellId: 'plant', level: 'temel', selectedId: 'nucleus', hidden: new Set(), viewMode: 'full', hideOthers: false,
       cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto',

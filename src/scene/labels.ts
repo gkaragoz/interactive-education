@@ -13,6 +13,8 @@ export interface LabelAnchor {
   world: Vector3;
 }
 
+/** The floating toolbars sit along the bottom edge of the stage; labels stay above them. */
+const TOOLBAR_CLEARANCE = 84;
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 interface Entry {
@@ -120,7 +122,7 @@ export class LabelLayer {
         ys[i] = Math.max(ys[i] as number, prev);
       }
       for (let i = ys.length - 1; i >= 0; i--) {
-        const next = i < ys.length - 1 ? (ys[i + 1] as number) - half(i + 1) - half(i) - 4 : height - half(i) - 8;
+        const next = i < ys.length - 1 ? (ys[i + 1] as number) - half(i + 1) - half(i) - 4 : height - half(i) - TOOLBAR_CLEARANCE;
         ys[i] = Math.min(ys[i] as number, next);
       }
       column.forEach((p, i) => this.show(p.entry, p.x, p.y, ys[i] as number, side, width, sizes.get(p.entry) as { w: number; h: number }));

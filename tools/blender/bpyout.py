@@ -8,10 +8,12 @@ import numpy as np
 
 import geo
 import glbinfo
+import uvtools
+import charts
 
 NAME_OK = re.compile(r"^[A-Za-z0-9_\-]+$")
 LODS = (0, 1, 2)
-GRID = 4096.0
+GRID = 16384.0
 
 
 class Scratch:
@@ -61,7 +63,7 @@ def uv_cube(V, F):
     return uv.reshape(-1, 2)
 
 
-def to_object(name, part, V, parent, mats):
+def to_object(name, part, V, parent, mats, bake=False, uv0=None, pid=0):
     """Game coords (y up) -> Blender (z up), then a mesh object with COLOR layer, UVs, smooth shading."""
     B = np.stack([V[:, 0], -V[:, 2], V[:, 1]], axis=1)
     me = bpy.data.meshes.new(name)
@@ -72,8 +74,23 @@ def to_object(name, part, V, parent, mats):
     ca.data.foreach_set("color", col.ravel())
     me.color_attributes.active_color = ca
     uv = me.uv_layers.new(name="UVMap")
-    uv.data.foreach_set("uv", (np.round(uv_cube(V, part.F) * 512) / 512).astype(np.float32).ravel())
+    if uv0 is not None:
+        # snap to 1/8192 (compression) plus a different sub-quantum shift in u and v, so no texel centre of any bake
+        # resolution lies exactly on a triangle edge (exact ties leave one-texel holes along quad diagonals)
+        uvq = np.round(uv0 * 8192.0) / 8192.0 + np.array([1.0 / 32768.0, 3.0 / 32768.0])
+        uv.data.foreach_set("uv", uvq.astype(np.float32).ravel())
+    else:
+        uv.data.foreach_set("uv", (np.round(uv_cube(V, part.F) * 512) / 512).astype(np.float32).ravel())
     me.materials.append(mats[part.mat])
+    if bake:                                   # generic attributes (not colour: the glTF exporter ignores them)
+        n = len(V)
+        z = np.zeros(n)
+        vec = me.attributes.new("bk_base", "FLOAT_VECTOR", "POINT")
+        vec.data.foreach_set("vector", np.asarray(part.lit if part.lit is not None else np.ones((n, 3)), dtype=np.float32).ravel())
+        for key, arr in (("bk_ao", part.aoval), ("bk_aux", part.aux), ("bk_aux2", part.aux2), ("bk_pid", np.full(n, float(pid))),
+                         ("bk_alpha", np.broadcast_to(np.asarray(part.alpha, dtype=np.float64), (n,)))):
+            at = me.attributes.new(key, "FLOAT", "POINT")
+            at.data.foreach_set("value", np.asarray(z if arr is None else arr, dtype=np.float32))
     ob = bpy.data.objects.new(name, me)
     bpy.context.scene.collection.objects.link(ob)
     ob.parent = parent
@@ -125,36 +142,67 @@ def validate(asset, lods, problems):
     return tris
 
 
-def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None):
-    """lods: {0: [Part], 1: [...], 2: [...]} in game coords. Writes <asset>.glb + <asset>.meta.json."""
+def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None, tex=None):
+    """lods: {0: [Part], 1: [...], 2: [...]} in game coords. Unwraps LOD0 into one atlas per material, transfers the UVs
+    to LOD1/2, writes <asset>.glb + <asset>.meta.json. `tex(ctx)` (optional) bakes and paints the textures."""
     problems = []
+    allv0 = np.concatenate([p.V for p in lods[0]])
+    centre0 = np.round((allv0.min(0) + allv0.max(0)) / 2 * GRID) / GRID
+    for parts in lods.values():             # centre on the LOD0 bbox and snap to a grid (meshopt compresses it far better)
+        for p in parts:
+            p.V = np.round((p.V - centre0) * GRID) / GRID
     tris = validate(asset, lods, problems)
     if problems:
         raise ValueError("\n".join(problems))
     allv = np.concatenate([p.V for p in lods[0]])
     lo, hi = allv.min(0), allv.max(0)
-    centre = (lo + hi) / 2
+    centre = np.zeros(3)
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     glb = out_dir / f"{asset}.glb"
+    uvmeta, tex_info, texel_scale = {}, None, {}
     with Scratch():
         mats = {k: make_material(f"{asset}_{k}", k) for k in sorted({p.mat for ps in lods.values() for p in ps})}
         root = bpy.data.objects.new(asset, None)
         bpy.context.scene.collection.objects.link(root)
         made = [root]
         suffix = {0: "", 1: "-lod1", 2: "-lod2"}
+        objs = {}
+        uv_by_part = {}
+        for m_ in sorted({p.mat for p in lods[0]}):          # analytic chart atlas per material (LOD0)
+            grp_parts = [p for p in lods[0] if p.mat == m_]
+            uvs, uv_scale = charts.make_uvs(grp_parts)
+            for p, u in zip(grp_parts, uvs):
+                uv_by_part[p.name] = u
+            texel_scale[m_] = uv_scale
         for k in LODS:
             grp = bpy.data.objects.new(f"LOD{k}", None)
             bpy.context.scene.collection.objects.link(grp)
             grp.parent = root
             made.append(grp)
             for p in lods[k]:
-                ob = to_object(f"{asset}-{p.name}{suffix[k]}", p, p.V - centre, grp, mats)
+                ob = to_object(f"{asset}-{p.name}{suffix[k]}", p, p.V - centre, grp, mats, bake=(k == 0),
+                               uv0=uv_by_part.get(p.name) if k == 0 else None, pid=lods[0].index(p) if k == 0 else 0)
                 made.append(ob)
+                objs[(k, p.name)] = ob
                 if k == 0:
                     e, v = bm_check(ob)
                     if e or v:
                         raise ValueError(f"{asset}-{p.name}: bmesh found {e} bad edges, {v} non-manifold verts")
+        groups = {}
+        for p in lods[0]:
+            groups.setdefault(p.mat, []).append(objs[(0, p.name)])
+        for p in lods[0]:
+            for k in (1, 2):
+                dst = objs.get((k, p.name))
+                if dst is not None:
+                    uvtools.transfer_uv(objs[(0, p.name)], dst)
+        for m, obs in groups.items():
+            uvmeta[m] = uvtools.uv_stats(obs)
+            uvmeta[m]["uvPerUnit"] = round(float(texel_scale[m]), 5)
+            if uvmeta[m]["overlap"] > 0.005:
+                print("UVDBG", asset, m, uvmeta[m], uvtools.uv_stats(obs, 2048))
+                raise ValueError(f"{asset}: UV overlap {uvmeta[m]['overlap']} in {m} atlas")
         bpy.ops.object.select_all(action="DESELECT")
         for o in made:
             o.select_set(True)
@@ -163,6 +211,9 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None):
                                   export_apply=False, export_animations=False, export_cameras=False,
                                   export_lights=False, export_vertex_color="MATERIAL",
                                   export_meshopt_compression_enable=True)
+        if tex is not None:
+            tex_info = tex(dict(asset=asset, groups=groups, parts=lods[0], mats=mats, root=root, made=made,
+                                objs=objs, uv=uvmeta))
     summary, matnames, ext = glbinfo.summarize(glb)
     for k in LODS:
         s = summary.get(f"LOD{k}")
@@ -176,7 +227,9 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None):
     meta = dict(id=asset, tris={f"LOD{k}": tris[k] for k in LODS},
                 bboxMin=[round(float(x), 4) for x in (lo - centre)], bboxMax=[round(float(x), 4) for x in (hi - centre)],
                 boundsRadius=round(float(np.linalg.norm(allv - centre, axis=1).max()), 4), closed=True,
-                generator="tools/blender/make_organelles.py", seed=seed, bytes=size)
+                generator="tools/blender/make_organelles.py", seed=seed, bytes=size, uv=uvmeta)
+    if tex_info:
+        meta["textureSource"] = tex_info
     meta.update(extra_meta or {})
     (out_dir / f"{asset}.meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
     return meta, matnames, ext

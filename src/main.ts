@@ -12,7 +12,7 @@ import '@fontsource/caveat/latin-500.css';
 import '@fontsource/caveat/latin-ext-500.css';
 import '@fontsource/caveat/latin-600.css';
 import '@fontsource/caveat/latin-ext-600.css';
-import { startApp } from './app';
+import { registerServiceWorker, startApp } from './app';
 import { cells, kazanimlar, micrographs, organelles, sources } from './data';
 
 const root = document.getElementById('app');
@@ -28,3 +28,5 @@ startApp({
   console.error(error);
   root.textContent = 'Uygulama başlatılamadı. Sayfayı yenilemeyi dene.';
 });
+
+registerServiceWorker(import.meta.env.BASE_URL, { prod: import.meta.env.PROD });

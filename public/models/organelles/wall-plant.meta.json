@@ -1,25 +1,97 @@
 {
   "id": "wall-plant",
   "tris": {
-    "LOD0": 44256,
-    "LOD1": 11064,
-    "LOD2": 4236
+    "LOD0": 35520,
+    "LOD1": 8880,
+    "LOD2": 4764
   },
   "bboxMin": [
-    -14.9356,
-    -8.9241,
-    -11.8995
+    -14.9308,
+    -8.925,
+    -11.8998
   ],
   "bboxMax": [
-    14.9356,
-    8.9241,
-    11.8995
+    14.9308,
+    8.925,
+    11.8998
   ],
-  "boundsRadius": 17.1231,
+  "boundsRadius": 17.0712,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 1138800,
+  "bytes": 1048896,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9254,
+        0.9981
+      ],
+      "coverage": 0.7542,
+      "overlap": 0,
+      "stretchP95": 1.23,
+      "stretchP05": 0.778,
+      "uvPerUnit": 0.01337
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2181328
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1975562
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1123833
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 8283892
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 8682170
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 4151871
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 4096,
+            "pngBytes": 31197098
+          },
+          "normal": {
+            "size": 4096,
+            "pngBytes": 37382131
+          },
+          "orm": {
+            "size": 4096,
+            "pngBytes": 14739597
+          }
+        }
+      }
+    },
+    "bakeSeconds": 30.7,
+    "paintSeconds": 148.5,
+    "totalSeconds": 199.5
+  },
   "shell": {
     "shape": "rounded-box",
     "halfExtents": [
@@ -27,5 +99,83 @@
       8.44,
       11.44
     ]
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/wall-plant/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 1137920,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 194558,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 794622,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 148740,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 1892303,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 679419,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 744245,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 468639,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 7040321,
+        "size": 4096,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 4096,
+            "bytes": 2531026,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 4096,
+            "bytes": 2948123,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 4096,
+            "bytes": 1561172,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
   }
 }

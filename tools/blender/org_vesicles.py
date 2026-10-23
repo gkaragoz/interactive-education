@@ -12,7 +12,7 @@ def _hollow_ball(n, r, th, seed, pos, amp=0.04):
     d, f = geo.cube_sphere(n)
     k = 1 + amp * noise.fbm(d, seed, 2.0, 2)
     outer = (d * (r * k)[:, None] + pos, f)
-    inner = (d * ((r - th) * k)[:, None] + pos, f[:, ::-1].copy())
+    inner = (d * ((r - th) * k)[:, None] + pos, geo.flipf(f))
     return geo.merge(outer, inner)
 
 
@@ -24,7 +24,7 @@ def lysosome(q):
     k = R * (1 + 0.02 * noise.fbm(d, 5, 1.6, 3)) + geo.bumps(d, studs, 0.024, 0.07)
     vo = (d * k[:, None], f)
     di, fi = geo.cube_sphere(res(14, q, 6))
-    vi = (di * (R - 0.07) * (1 + 0.02 * noise.fbm(di, 6, 1.6, 2))[:, None], fi[:, ::-1].copy())
+    vi = (di * (R - 0.07) * (1 + 0.02 * noise.fbm(di, 6, 1.6, 2))[:, None], geo.flipf(fi))
     s = geo.merge(vo, vi)
     co = ramp(0.5 + 0.5 * noise.fbm(vo[0] * 1.5, 6, 1.0, 3), [(0, "#6b5ad0"), (0.5, "#8a6ee0"), (1, "#c08ae8")])
     ci = ramp(0.5 + 0.5 * noise.fbm(vi[0] * 2.0, 7, 1.0, 2), [(0, "#4a2f9a"), (1, "#8a4fb8")])
@@ -69,7 +69,7 @@ def vacuole(q):
     co = ramp(t, [(0, "#2f78c4"), (0.5, "#4f9ae0"), (1, "#8cc8f4")])
     ci = ramp(0.5 + 0.5 * noise.fbm(vi * 0.7, 5, 1.0, 2), [(0, "#1f58a4"), (1, "#3f86d0")])
     alpha = np.concatenate([np.full(len(vo), 0.55), np.full(len(vi), 0.5)])
-    parts = [part("tonoplast", geo.merge((vo, fo), (vi, fi[:, ::-1].copy())), np.concatenate([co, ci]), mat="gel",
+    parts = [part("tonoplast", geo.merge((vo, fo), (vi, geo.flipf(fi))), np.concatenate([co, ci]), mat="gel",
                   alpha=alpha, hollow=True, occ=False, ao=(0.55, 1.0, 14), tint=(0.5, 0.6, 0.85))]
     rng = np.random.default_rng(15)
     pieces, cid = [], []

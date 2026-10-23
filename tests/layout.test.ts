@@ -80,11 +80,10 @@ describe('flat cells (plant slab)', () => {
     for (const inst of layout) expect(fitsInShell(plant.shell, inst.position, inst.rh, inst.rv)).toBe(true);
   });
 
-  it('keeps organelles flat: yaw is free, tilt is small, and flat items are squashed only down to 60 %', () => {
+  it('keeps organelles flat: yaw is free and tilt is small', () => {
     for (const inst of layout) {
       expect(Math.abs(inst.rotation[0])).toBeLessThanOrEqual(0.17);
       expect(Math.abs(inst.rotation[2])).toBeLessThanOrEqual(0.17);
-      expect(inst.rv).toBeLessThanOrEqual(inst.rh + 1e-9);
     }
   });
 

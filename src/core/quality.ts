@@ -22,14 +22,16 @@ export interface QualitySettings {
   studs: boolean;
   /** Cross-section caps for organelles too (stencil twins cost vertex work); low keeps only the shell cap. */
   organelleCaps: boolean;
+  /** Cytoskeleton, vesicles, floating particles and the slow drift of things (off at low). */
+  ambient: boolean;
   /** Instances smaller than this projected size (radius / distance) are not drawn at all. */
   cullSize: number;
 }
 
 export const QUALITY_PRESETS: Record<QualityName, QualitySettings> = {
-  low: { maxPixelRatio: 1, smaa: false, gtao: false, bloom: false, vignette: true, shadows: false, shadowMapSize: 512, lodBias: 0.6, triBudget: 110_000, lod0Max: 0, shellLod: 2, studs: false, organelleCaps: false, cullSize: 0.035 },
-  medium: { maxPixelRatio: 1.25, smaa: true, gtao: false, bloom: true, vignette: true, shadows: true, shadowMapSize: 1024, lodBias: 1, triBudget: 520_000, lod0Max: 3, shellLod: 1, studs: true, organelleCaps: true, cullSize: 0.008 },
-  high: { maxPixelRatio: 1.75, smaa: true, gtao: true, bloom: true, vignette: true, shadows: true, shadowMapSize: 2048, lodBias: 1.4, triBudget: 2_000_000, lod0Max: 8, shellLod: 0, studs: true, organelleCaps: true, cullSize: 0 },
+  low: { maxPixelRatio: 1, smaa: false, gtao: false, bloom: false, vignette: true, shadows: false, shadowMapSize: 512, lodBias: 0.6, triBudget: 110_000, lod0Max: 0, shellLod: 2, studs: false, organelleCaps: false, ambient: false, cullSize: 0.035 },
+  medium: { maxPixelRatio: 1.25, smaa: true, gtao: false, bloom: true, vignette: true, shadows: true, shadowMapSize: 1024, lodBias: 1, triBudget: 520_000, lod0Max: 3, shellLod: 1, studs: true, organelleCaps: true, ambient: true, cullSize: 0.008 },
+  high: { maxPixelRatio: 1.75, smaa: true, gtao: true, bloom: true, vignette: true, shadows: true, shadowMapSize: 2048, lodBias: 1.4, triBudget: 2_000_000, lod0Max: 8, shellLod: 0, studs: true, organelleCaps: true, ambient: true, cullSize: 0 },
 };
 
 export const QUALITY_NAMES: QualityName[] = ['low', 'medium', 'high'];

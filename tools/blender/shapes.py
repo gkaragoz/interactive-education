@@ -5,9 +5,13 @@ import geo
 import noise
 
 
+GEO_SCALE = 0.9      # v2: the textures carry the surface detail, so LOD0 geometry is ~19 % lighter (GLB size limit)
+
+
 def res(n, q, lo=4):
     """Resolution at quality q (LOD0 = 1.0)."""
-    return max(int(n * q + 0.5), lo)
+    lo = max(min(lo, 3), int(lo * min(1.0, 2.0 * q) + 0.5))      # floors relax at tiny q so LOD2 can shrink enough
+    return max(int(n * GEO_SCALE * q + 0.5), lo)
 
 
 def blob(n, radii, seed=0, amp=0.1, freq=1.2, octaves=3, pos=(0, 0, 0), rot=None, detail=0.0, detail_freq=5.0):

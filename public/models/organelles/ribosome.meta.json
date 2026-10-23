@@ -1,23 +1,173 @@
 {
   "id": "ribosome",
   "tris": {
-    "LOD0": 32144,
-    "LOD1": 8008,
-    "LOD2": 3880
+    "LOD0": 27190,
+    "LOD1": 6088,
+    "LOD2": 3342
   },
   "bboxMin": [
     -0.6965,
-    -0.2697,
-    -0.283
+    -0.2694,
+    -0.2824
   ],
   "bboxMax": [
-    0.6965,
-    0.2697,
-    0.283
+    0.6964,
+    0.2694,
+    0.2825
   ],
-  "boundsRadius": 0.7465,
+  "boundsRadius": 0.7462,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 760392
+  "bytes": 768512,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9519,
+        0.9981
+      ],
+      "coverage": 0.8102,
+      "overlap": 0,
+      "stretchP95": 1.177,
+      "stretchP05": 0.902,
+      "uvPerUnit": 0.67892
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 170735
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 91383
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 115641
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 633843
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 408210
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 431888
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2273926
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1764538
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1545516
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.7,
+    "paintSeconds": 5.7,
+    "totalSeconds": 13.5
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/ribosome/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 69142,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 22710,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 26483,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19949,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 261638,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 73783,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 121772,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 66083,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 955698,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 214902,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 560046,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 180750,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
 }

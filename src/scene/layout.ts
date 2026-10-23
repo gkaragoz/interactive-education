@@ -23,12 +23,16 @@ type Vec3 = [number, number, number];
  * Teaching exaggeration: organelles are drawn larger than life so they read at a glance (the reference look is a dense
  * diorama). Per cell type because the shells differ in size; applied on top of the data's own placement scales.
  */
-export const ORGANELLE_BOOST: Record<string, number> = { animal: 1.45, plant: 1.4, bacterium: 1.5 };
+export const ORGANELLE_BOOST: Record<string, number> = { animal: 1.45, plant: 1.55, bacterium: 1.5 };
 /** Big organelles are boosted less, otherwise they crowd the rest out of the shell. */
+/** Per cell overrides of the table below (the plant's nucleus is a landmark and gets room). */
+const CELL_ID_FACTOR: Record<string, Record<string, number>> = { plant: { nucleus: 1.1 } };
 const ID_FACTOR: Record<string, number> = { nucleus: 0.9, vacuole: 0.62, golgi: 0.78, 'rough-er': 0.82, 'smooth-er': 0.82 };
 
 const MAX_TRIES = 700;
 const GAP = 0.08;
+/** Flat cells squash an organelle in y down to this fraction before it shrinks (less squash = fuller organelles). */
+const MIN_SQUASH = 0.78;
 
 /**
  * Approximate signed distance from p to the shell surface (negative inside).
@@ -164,7 +168,7 @@ export function solveLayout(
   const jobs: Job[] = [];
   for (const rule of cell.placements) {
     const authored = rule.scale ?? [1, 1, 1];
-    const k = boost * (ID_FACTOR[rule.organelleId] ?? 1);
+    const k = boost * (CELL_ID_FACTOR[cell.id]?.[rule.organelleId] ?? ID_FACTOR[rule.organelleId] ?? 1);
     const scale: Vec3 = [authored[0] * k, authored[1] * k, authored[2] * k];
     const half = halfOf?.(rule.organelleId);
     const baseRadius = radiusOf(rule.organelleId) * Math.max(scale[0], scale[1], scale[2]);
@@ -190,7 +194,7 @@ export function solveLayout(
       // Below 80 % size the zone preference is dropped: a legal spot matters more than the zone.
       if (!found && kxz < 0.8) found = tryPlace('cytoplasm', rh, rv, ctx, placed, rng);
       if (found) break;
-      if (ctx.flat && ky > 0.6) ky = Math.max(0.6, ky - 0.14);
+      if (ctx.flat && ky > MIN_SQUASH) ky = Math.max(MIN_SQUASH, ky - 0.1);
       else kxz *= 0.9;
       if (!ctx.flat) ky = kxz;
     }

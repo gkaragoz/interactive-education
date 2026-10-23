@@ -1,23 +1,173 @@
 {
   "id": "centrosome",
   "tris": {
-    "LOD0": 35912,
-    "LOD1": 8736,
-    "LOD2": 2332
+    "LOD0": 27792,
+    "LOD1": 7636,
+    "LOD2": 2076
   },
   "bboxMin": [
-    -0.873,
+    -0.8706,
     -0.5348,
-    -0.6909
+    -0.6913
   ],
   "bboxMax": [
-    0.873,
-    0.5348,
-    0.6909
+    0.8706,
+    0.5349,
+    0.6912
   ],
-  "boundsRadius": 1.0948,
+  "boundsRadius": 1.0943,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 792472
+  "bytes": 755916,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.998
+      ],
+      "coverage": 0.713,
+      "overlap": 0,
+      "stretchP95": 1.764,
+      "stretchP05": 0.921,
+      "uvPerUnit": 0.20356
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 180683
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 61549
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 110370
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 676537
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 306967
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 397572
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2438969
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1345416
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1363291
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.8,
+    "paintSeconds": 5.6,
+    "totalSeconds": 13.6
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/centrosome/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 67743,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 22809,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27032,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 17902,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 233324,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 76286,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 95346,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 61692,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 804436,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 222567,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 406792,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 175077,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
 }

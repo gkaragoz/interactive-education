@@ -26,7 +26,7 @@ def _surf(n, rfn, disp=None, noise_amp=0.0, seed=0, freq=1.4, flip=False):
     if disp is not None:
         r = r + disp(d, p0)
     v = d * r[:, None]
-    return v, (f[:, ::-1].copy() if flip else f), d, p0
+    return v, (geo.flipf(f) if flip else f), d, p0
 
 
 def _normals_at(rfn, dirs, seed=0):
@@ -139,8 +139,11 @@ def wall_plant(q):
     col = col * (0.93 + 0.07 * weave)[:, None]                       # cellulose microfibril stripes, rotated per plate
     ci = ramp(0.5 + 0.5 * noise.fbm(vi * 0.2, 8, 1.0, 2), [(0, "#3f5a1a"), (1, "#628a2a")])
     s = geo.merge((vo, fo), (vi, fi))
-    return [part("wall", s, np.concatenate([col, ci]), hollow=True, occ=True, ao=(0.85, 1.2, 14),
-                 tint=(0.45, 0.6, 0.3), speck=0.03)]
+    pw = part("wall", s, np.concatenate([col, ci]), hollow=True, occ=True, ao=(0.85, 1.2, 14),
+              tint=(0.45, 0.6, 0.3), speck=0.03)
+    pw.aux = np.concatenate([edge, np.ones(len(vi))])            # plate-groove factor (1 = flat) for the painter
+    pw.aux2 = np.concatenate([cid, np.full(len(vi), 0.5)])        # per-plate id
+    return [pw]
 
 
 def envelope_bacterium(q):

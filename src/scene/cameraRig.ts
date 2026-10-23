@@ -74,7 +74,7 @@ export class CameraRig {
   focusOn(center: Vector3, radius: number, closeUp = false): void {
     const dir = this.camera.position.clone().sub(this.controls.target).normalize();
     const fov = (FOV * Math.PI) / 180;
-    const distance = Math.max((radius * (closeUp ? 4.2 : 8.5)) / Math.sin(fov / 2) / 2, this.controls.minDistance * 1.2);
+    const distance = Math.max((radius * (closeUp ? 2.9 : 8.5)) / Math.sin(fov / 2) / 2, this.controls.minDistance * 1.2);
     this.flyTo(center, center.clone().addScaledVector(dir, distance));
   }
 

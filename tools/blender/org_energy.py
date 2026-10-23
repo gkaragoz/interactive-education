@@ -95,7 +95,7 @@ def chloroplast(q):
     rng = np.random.default_rng(21)
     pos = []
     tries = 0
-    while len(pos) < 11 and tries < 4000:
+    while len(pos) < 9 and tries < 4000:
         tries += 1
         c = rng.uniform(-1, 1, 3) * np.array([A * 0.78, B * 0.5, B * 0.5])
         if (c[0] / (A * 0.8)) ** 2 + (c[1] / (B * 0.62)) ** 2 + (c[2] / (B * 0.62)) ** 2 > 1:

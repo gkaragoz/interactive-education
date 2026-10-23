@@ -1,7 +1,14 @@
+import type { SurfaceMaps } from './textureStore';
 import { BackSide, Color, DoubleSide, FrontSide, MeshBasicMaterial, MeshPhysicalMaterial, type Plane, type Texture, Vector2 } from 'three';
 
 export type SurfaceKind = 'clay' | 'gel';
 
+/** Sheen, clearcoat and environment strength of clay with a painted albedo. */
+/** Brightness of a painted albedo under the stage lighting (1 = as painted). */
+const TEXTURE_GAIN = 0.8;
+const TEXTURED_SHEEN = 0.08;
+const TEXTURED_COAT = 0.04;
+const TEXTURED_ENV = 0.7;
 const SHEEN = new Color('#ffe9d2');
 const EMISSIVE = new Color('#ffb15c');
 
@@ -37,6 +44,9 @@ const CLAY_STYLE: Record<string, [number, number, number]> = { vacuole: [0.55, 0
 export class MaterialLibrary {
   private readonly materials = new Map<string, MeshPhysicalMaterial>();
   private outlineMaterial: MeshBasicMaterial | null = null;
+  private relief = 1;
+  /** Shared with the flagellum's vertex shader: seconds and wave amplitude (0 = still). */
+  private readonly wave = { time: { value: 0 }, amount: { value: 0 } };
 
   constructor(
     private readonly normalMap: Texture,
@@ -56,11 +66,39 @@ export class MaterialLibrary {
           mat.color.setRGB(...style.color);
           mat.opacity = style.opacity;
         }
-      } else if (CLAY_STYLE[baseId]) mat.color.setRGB(...(CLAY_STYLE[baseId] as [number, number, number]));
+      } else {
+        if (CLAY_STYLE[baseId]) mat.color.setRGB(...(CLAY_STYLE[baseId] as [number, number, number]));
+        if (baseId === 'flagellum') this.addWave(mat);
+      }
       mat.userData.baseColor = mat.color.clone();
       this.materials.set(key, mat);
     }
     return mat;
+  }
+
+  /** Drives the flagellum wave (amount 0 = still); the uniforms are shared by every flagellum material. */
+  setWave(amount: number, seconds: number): void {
+    this.wave.amount.value = amount;
+    this.wave.time.value = seconds;
+  }
+
+  /** Makes the material swing along its length like a beating flagellum (the wave amplitude comes from `setWave`). */
+  private addWave(mat: MeshPhysicalMaterial): void {
+    mat.onBeforeCompile = (shader): void => {
+      shader.uniforms.uWaveTime = this.wave.time;
+      shader.uniforms.uWaveAmount = this.wave.amount;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', `#include <common>
+uniform float uWaveTime;
+uniform float uWaveAmount;`)
+        .replace(
+          '#include <begin_vertex>',
+          `#include <begin_vertex>
+  transformed.y += sin(position.x * 1.4 - uWaveTime * 3.2) * 0.2 * uWaveAmount * smoothstep(-3.0, 3.0, position.x);
+  transformed.z += cos(position.x * 1.1 - uWaveTime * 2.6) * 0.12 * uWaveAmount * smoothstep(-3.0, 3.0, position.x);`,
+        );
+    };
+    mat.customProgramCacheKey = (): string => 'wave';
   }
 
   /** Shell parts (wall, membrane, envelope) are always see-through so the inside stays visible in the full view. */
@@ -114,13 +152,90 @@ export class MaterialLibrary {
       mat = this.createGel();
       mat.opacity = 0.62;
       mat.roughness = 0.22;
-      mat.clearcoat = 1;
-      mat.clearcoatRoughness = 0.08;
+      // A strong clearcoat and environment light would whiten the thin rim at the cut edge.
+      mat.clearcoat = 0.45;
+      mat.clearcoatRoughness = 0.15;
       mat.side = FrontSide;
-      mat.envMapIntensity = 1.1;
+      mat.envMapIntensity = 0.7;
       this.materials.set(key, mat);
     }
     return mat;
+  }
+
+  /**
+   * Puts painted textures on the materials of one organelle id (`kind`: its clay or gel surfaces, and the glossy
+   * membrane look). With an albedo map the vertex colours are switched off; the ORM map feeds ambient occlusion,
+   * roughness and metalness (R, G, B). Passing null maps restores the vertex-colour look. The brightness ramps up
+   * briefly so a higher tier does not pop in.
+   */
+  applyMaps(id: string, kind: SurfaceKind, maps: SurfaceMaps | null, fade: boolean): void {
+    const keys = kind === 'clay' ? [`${id}:clay`] : [`${id}:gel`, `${id}:glossy`];
+    for (const key of keys) {
+      const mat = this.materials.get(key);
+      if (!mat) continue;
+      const textured = maps !== null && (maps.albedo !== null || maps.normal !== null || maps.orm !== null);
+      mat.map = maps?.albedo ?? null;
+      mat.vertexColors = !(maps?.albedo ?? null);
+      if (maps?.albedo) {
+        // Under warm key light plus image-based light the painted colours come out lighter than they were painted.
+        mat.color.setRGB(TEXTURE_GAIN, TEXTURE_GAIN, TEXTURE_GAIN);
+        mat.userData.baseColor = mat.color.clone();
+      }
+      if (maps?.normal) {
+        mat.normalMap = maps.normal;
+        // The GLBs carry no tangents: three derives the frame from UV derivatives, which needs a flipped green channel.
+        mat.normalScale.set(1, -1);
+        mat.userData.texNormal = true;
+      } else if (!textured) {
+        mat.normalMap = this.normalMap;
+      }
+      mat.aoMap = maps?.orm ?? null;
+      mat.roughnessMap = maps?.orm ?? null;
+      mat.metalnessMap = maps?.orm ?? null;
+      if (maps?.orm) {
+        mat.roughness = 1;
+        mat.metalness = 1;
+      }
+      // Painted albedo already contains its own sheen and highlights: keep the extra satin layers subtle or it washes out.
+      if (kind === 'clay') {
+        mat.sheen = textured && maps?.albedo ? TEXTURED_SHEEN : 0.35;
+        mat.clearcoat = textured && maps?.albedo ? TEXTURED_COAT : 0.15;
+        mat.envMapIntensity = textured && maps?.albedo ? TEXTURED_ENV : 1;
+      }
+      // Gel takes its opacity from the albedo's alpha; the flat material opacity would multiply it a second time.
+      mat.userData.alphaMap = kind === 'gel' && maps?.albedo !== null && maps?.albedo !== undefined;
+      if (mat.userData.alphaMap) {
+        mat.transparent = true;
+        mat.depthWrite = false;
+      }
+      mat.userData.fade = fade && textured ? 0 : 1;
+      mat.needsUpdate = true;
+    }
+  }
+
+  /**
+   * Relief strength of painted normal maps (1 = as authored). Up close the compressed normals show faint 4x4 blocks,
+   * so the camera asks for less relief the nearer it gets; the green channel stays flipped (no tangents in the GLBs).
+   */
+  setRelief(strength: number): void {
+    if (Math.abs(strength - this.relief) < 0.02) return;
+    this.relief = strength;
+    for (const mat of this.materials.values()) if (mat.userData.texNormal) mat.normalScale.set(strength, -strength);
+  }
+
+  /** Eases the brightness of freshly textured materials; returns true while any is still fading. */
+  tickFade(dt: number): boolean {
+    let active = false;
+    for (const mat of this.materials.values()) {
+      const f = mat.userData.fade as number | undefined;
+      if (f === undefined || f >= 1) continue;
+      const next = Math.min(1, f + dt * 2.2);
+      mat.userData.fade = next;
+      const base = mat.userData.baseColor as Color | undefined;
+      if (base) mat.color.copy(base).multiplyScalar(0.8 + 0.2 * next);
+      active = active || next < 1;
+    }
+    return active;
   }
 
   /** All materials belonging to one organelle id (both kinds that exist). */

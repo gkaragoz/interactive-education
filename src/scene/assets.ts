@@ -6,6 +6,9 @@ import { disposeAsset } from './assetTypes';
 import type { SurfaceKind } from './materials';
 import { makePlaceholderAsset, type ShellShape } from './placeholders';
 
+/** Size assumed for an asset without meta.json when computing progress. */
+const FALLBACK_BYTES = 300_000;
+
 export interface AssetRequest {
   id: string;
   /** Colour used when the asset has to be replaced by a primitive. */
@@ -87,7 +90,7 @@ export function extractAsset(id: string, root: Object3D, meta: AssetMeta | null)
       if (b) half = [Math.max(half[0], Math.abs(b.min.x), Math.abs(b.max.x)), Math.max(half[1], Math.abs(b.min.y), Math.abs(b.max.y)), Math.max(half[2], Math.abs(b.min.z), Math.abs(b.max.z))];
     }
   }
-  const asset: OrganelleAsset = { id, lods, boundsRadius: radius, halfExtents: half, placeholder: false, dispose: () => disposeAsset(asset) };
+  const asset: OrganelleAsset = { id, lods, boundsRadius: radius, halfExtents: half, placeholder: false, meta, dispose: () => disposeAsset(asset) };
   return asset;
 }
 
@@ -95,6 +98,11 @@ export function extractAsset(id: string, root: Object3D, meta: AssetMeta | null)
 export class AssetLibrary {
   private readonly cache = new Map<string, Promise<OrganelleAsset>>();
   private readonly loaded: OrganelleAsset[] = [];
+  private readonly metas = new Map<string, Promise<AssetMeta | null>>();
+  private readonly metaValues = new Map<string, AssetMeta>();
+  private readonly done = new Set<string>();
+  private readonly received = new Map<string, number>();
+  private readonly listeners = new Set<() => void>();
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 
   constructor(
@@ -108,6 +116,8 @@ export class AssetLibrary {
     if (!promise) {
       promise = this.fetchAsset(req).then((asset) => {
         this.loaded.push(asset);
+        this.done.add(req.id);
+        this.notify();
         return asset;
       });
       this.cache.set(req.id, promise);
@@ -115,30 +125,67 @@ export class AssetLibrary {
     return promise;
   }
 
-  /** Loads many assets, reporting progress 0..1 after each. */
+  /** Meta that has already been fetched (sync); null when unknown or missing. */
+  metaNow(id: string): AssetMeta | null {
+    return this.metaValues.get(id) ?? null;
+  }
+
+  /** Meta of an asset (null when there is none); cached. */
+  meta(id: string): Promise<AssetMeta | null> {
+    let promise = this.metas.get(id);
+    if (!promise) {
+      promise = this.fetchMeta(`${this.baseUrl}models/organelles/${id}.meta.json`).then((meta) => {
+        if (meta) this.metaValues.set(id, meta);
+        return meta;
+      });
+      this.metas.set(id, promise);
+    }
+    return promise;
+  }
+
+  /**
+   * Loads many assets and reports progress 0..1 by bytes: the sizes come from the meta files, the received bytes from
+   * the loader's progress events; assets that are already loaded count as complete.
+   */
   async loadAll(reqs: AssetRequest[], onProgress?: (fraction: number) => void): Promise<OrganelleAsset[]> {
-    let done = 0;
-    const total = reqs.length || 1;
-    return Promise.all(
-      reqs.map(async (r) => {
-        const asset = await this.load(r);
-        onProgress?.(++done / total);
-        return asset;
-      }),
-    );
+    const metas = await Promise.all(reqs.map((r) => this.meta(r.id)));
+    const sizes = new Map(reqs.map((r, i) => [r.id, metas[i]?.bytes ?? FALLBACK_BYTES]));
+    const total = [...sizes.values()].reduce((a, b) => a + b, 0) || 1;
+    const report = (): void => {
+      let got = 0;
+      for (const [id, size] of sizes) got += this.done.has(id) ? size : Math.min(this.received.get(id) ?? 0, size);
+      onProgress?.(Math.min(1, got / total));
+    };
+    this.listeners.add(report);
+    try {
+      report();
+      return await Promise.all(reqs.map((r) => this.load(r)));
+    } finally {
+      this.listeners.delete(report);
+    }
   }
 
   dispose(): void {
     for (const asset of this.loaded) asset.dispose();
     this.loaded.length = 0;
     this.cache.clear();
+    this.metas.clear();
+    this.done.clear();
+    this.received.clear();
+  }
+
+  private notify(): void {
+    for (const listener of this.listeners) listener();
   }
 
   private async fetchAsset(req: AssetRequest): Promise<OrganelleAsset> {
     const base = `${this.baseUrl}models/organelles/${req.id}`;
     try {
-      const meta = await this.fetchMeta(`${base}.meta.json`);
-      const gltf = await this.loader.loadAsync(`${base}.glb`);
+      const meta = await this.meta(req.id);
+      const gltf = await this.loader.loadAsync(`${base}.glb`, (ev) => {
+        this.received.set(req.id, ev.loaded);
+        this.notify();
+      });
       const asset = extractAsset(req.id, gltf.scene, meta);
       if ((asset.lods[0]?.length ?? 0) === 0) throw new Error('GLB has no meshes');
       return asset;

@@ -6,3 +6,5 @@ test-results
 playwright-report
 __pycache__/
 tools/blender/out/
+tools/blender/blend/
+tools/textures/node_modules/

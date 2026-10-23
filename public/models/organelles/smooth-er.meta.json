@@ -1,23 +1,173 @@
 {
   "id": "smooth-er",
   "tris": {
-    "LOD0": 50680,
+    "LOD0": 42750,
     "LOD1": 7448,
-    "LOD2": 3870
+    "LOD2": 3450
   },
   "bboxMin": [
-    -2.2005,
-    -1.0229,
-    -1.4943
+    -2.2006,
+    -1.0224,
+    -1.4947
   ],
   "bboxMax": [
     2.2005,
-    1.0229,
-    1.4943
+    1.0223,
+    1.4946
   ],
-  "boundsRadius": 2.2856,
+  "boundsRadius": 2.284,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 1079904
+  "bytes": 1128644,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9959
+      ],
+      "coverage": 0.7817,
+      "overlap": 0,
+      "stretchP95": 1.664,
+      "stretchP05": 0.824,
+      "uvPerUnit": 0.1381
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 689712
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 540682
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 488930
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2544415
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 2184000
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1833441
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 9120144
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 8864684
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 6537132
+          }
+        }
+      }
+    },
+    "bakeSeconds": 11.6,
+    "paintSeconds": 25.3,
+    "totalSeconds": 41.6
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/smooth-er/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 364319,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 78885,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 214333,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 71101,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 1245852,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 233038,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 805729,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 207085,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 2258627,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 802955,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 784563,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 671109,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
 }

@@ -1,11 +1,13 @@
 import { h, type AppState, type ViewMode } from '../core';
+import type { LoadProgress } from '../scene';
 import { icon, type IconName } from './icons';
+import { createLoadingScreen, loadingTips } from './loadingScreen';
 import type { Component, UiContext } from './types';
 
 export interface StagePanel extends Component {
   /** Container the 3D stage mounts its canvas into. */
   viewport: HTMLElement;
-  setLoading(fraction: number | null): void;
+  setLoading(progress: LoadProgress | null): void;
   /** Overlay with a custom message (e.g. connection lost); null clears it. */
   setStatus(text: string | null): void;
 }
@@ -56,24 +58,21 @@ export function createStagePanel(ctx: UiContext): StagePanel {
   const captionB = h('span');
   const captions = h('div', { class: 'compare-captions', hidden: true }, captionA, captionB);
 
-  const bar = h('i');
-  const loadingText = h('span', {}, 'Hücre hazırlanıyor…');
-  const loading = h('div', { class: 'loading', role: 'status', 'aria-live': 'polite' }, loadingText, h('div', { class: 'bar' }, bar), h('small', {}, 'Bilim Atölyesi · © gkaragoz and Contributors'));
+  let tipsFor = '';
+  const loadingScreen = createLoadingScreen(ctx.reducedMotion);
+  const loading = loadingScreen.el;
 
   const el = h('section', { class: 'card stage-card', 'aria-label': '3B hücre sahnesi' }, viewport, head, tip, captions, viewPanel, leftBar, rightBar, loading);
 
   return {
     el,
     viewport,
-    setLoading(fraction: number | null): void {
-      loading.hidden = fraction === null;
-      if (fraction !== null) bar.style.width = `${Math.round(fraction * 100)}%`;
-      el.setAttribute('aria-busy', String(fraction !== null));
+    setLoading(progress: LoadProgress | null): void {
+      loadingScreen.setProgress(progress);
+      el.setAttribute('aria-busy', String(progress !== null));
     },
     setStatus(text: string | null): void {
-      loading.hidden = text === null;
-      loadingText.textContent = text ?? 'Hücre hazırlanıyor…';
-      bar.style.width = text === null ? '0%' : '100%';
+      loadingScreen.setStatus(text);
       el.setAttribute('aria-busy', String(text !== null));
     },
     update(state: AppState): void {
@@ -95,6 +94,11 @@ export function createStagePanel(ctx: UiContext): StagePanel {
       labelsBtn.setAttribute('aria-pressed', String(state.labels));
       labelsBtn.disabled = state.compareOn;
       modeButtons.get('isolate')?.toggleAttribute('disabled', state.selectedId === null && state.viewMode !== 'isolate');
+      const tipKey = `${state.cellId}:${state.level}`;
+      if (tipKey !== tipsFor) {
+        tipsFor = tipKey;
+        loadingScreen.setTips(loadingTips(catalog, state));
+      }
       el.dataset.cell = state.cellId;
       el.dataset.mode = state.viewMode;
       el.dataset.selected = state.selectedId ?? '';

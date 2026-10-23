@@ -176,6 +176,13 @@ function piecesFor(id: string, k: number): Piece[] {
       const curve = new CatmullRomCurve3(Array.from({ length: 9 }, (_, i) => new Vector3(i * 0.9 - 3.6, Math.sin(i * 1.3) * 0.35, Math.cos(i * 1.3) * 0.2)));
       return [{ geometry: new TubeGeometry(curve, seg(60, k, 16), 0.07, seg(8, k, 4), false) }];
     }
+    case 'cytoskeleton': {
+      // A gently curved filament, 6 long.
+      const curve = new CatmullRomCurve3(Array.from({ length: 7 }, (_, i) => new Vector3(i - 3, Math.sin(i * 0.9) * 0.25, Math.cos(i * 0.7) * 0.2)));
+      return [{ geometry: new TubeGeometry(curve, seg(24, k, 8), 0.045, seg(6, k, 4), false), tint: 1.1 }];
+    }
+    case 'vesicle':
+      return [{ geometry: S(0.34, 14, 10) }];
     case 'pilus':
       return [{ geometry: new CylinderGeometry(0.035, 0.035, 2, seg(8, k, 4)), matrix: mat([0, 0, 0], [0, 0, Math.PI / 2]) }];
     default:
@@ -260,6 +267,7 @@ export function makePlaceholderAsset(id: string, colorHex: string, shape: ShellS
     boundsRadius: radius,
     halfExtents: [box.x, box.y, box.z],
     placeholder: true,
+    meta: null,
     dispose: () => disposeAsset(asset),
   };
   return asset;

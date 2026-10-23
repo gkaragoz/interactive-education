@@ -1,0 +1,40 @@
+{
+  "id": "vesicle",
+  "tris": {
+    "LOD0": 38088,
+    "LOD1": 8712,
+    "LOD2": 4608
+  },
+  "bboxMin": [
+    -0.8116,
+    -0.6472,
+    -0.5947
+  ],
+  "bboxMax": [
+    0.8116,
+    0.6472,
+    0.5948
+  ],
+  "boundsRadius": 0.9843,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1264184,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9903
+      ],
+      "coverage": 0.805,
+      "overlap": 0.0,
+      "stretchP95": 1.029,
+      "stretchP05": 0.961,
+      "uvPerUnit": 0.30769
+    }
+  }
+}

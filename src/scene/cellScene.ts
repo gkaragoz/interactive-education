@@ -1,4 +1,4 @@
-import { Color, Group, Mesh, Vector3, type Raycaster, type Texture } from 'three';
+import { Group, Mesh, Vector3, type Raycaster, type Texture } from 'three';
 import type { QualitySettings } from '../core';
 import type { CellInfo, OrganelleInfo } from '../data/types';
 import type { OrganelleAsset } from './assetTypes';
@@ -10,7 +10,9 @@ import { OrganelleSet } from './organelleSet';
 import { shellProxyGeometry } from './placeholders';
 import { shadeBowl } from './bowl';
 import { focusTargetOf, labelAnchorOf, pickInScene } from './sceneQueries';
+import { AmbientLayer, isDecorId } from './ambient';
 import { ShellParts } from './shellParts';
+import type { AssetTextures } from './textureStore';
 
 export interface CellSceneInit {
   cell: CellInfo;
@@ -61,6 +63,9 @@ export class CellScene {
   private quality: QualitySettings;
   private readonly baseOpacity = new Map<object, number>();
   private readonly bed: Mesh;
+  private ambient: AmbientLayer | null = null;
+  private assetMap: ReadonlyMap<string, OrganelleAsset>;
+  private ambientAllowed = true;
   private bedAllowed = true;
   private shellFactor = 1;
   private studFade = 1;
@@ -69,13 +74,13 @@ export class CellScene {
 
   constructor(init: CellSceneInit) {
     this.cell = init.cell;
+    this.assetMap = init.assets;
     this.quality = init.quality;
     this.scale = init.scale ?? 1;
     this.group.name = `cell-${init.cell.id}`;
     this.group.scale.setScalar(this.scale);
     const info = init.organelles;
-    const shellColor = new Color(info.get(init.cell.shellOrganelleIds[0] ?? '')?.color ?? '#9bbf63');
-    this.cutaway = new Cutaway((key) => capColorFor(key, shellColor, info));
+    this.cutaway = new Cutaway((key) => capColorFor(key, init.cell.shellOrganelleIds, info), init.normalMap);
     this.materials = new MaterialLibrary(init.normalMap, this.cutaway.plane);
     this.baseRadius = Math.max(...init.cell.shell.halfExtents);
     this.radius = this.baseRadius * this.scale;
@@ -102,15 +107,61 @@ export class CellScene {
     for (const mat of this.materials.all()) this.baseOpacity.set(mat, mat.opacity);
     this.shell.setStudsEnabled(this.quality.studs);
     this.cutaway.setOrganelleCaps(this.quality.organelleCaps);
+    this.syncAmbient();
     this.group.traverse((o) => {
       if ((o as Mesh).isMesh) (o as Mesh).receiveShadow = true;
     });
+  }
+
+  /** Puts one asset's painted textures on this scene's materials (the textures themselves are shared). */
+  applyTextures(textures: AssetTextures, fade: boolean): void {
+    this.materials.applyMaps(textures.id, 'clay', textures.clay, fade);
+    this.materials.applyMaps(textures.id, 'gel', textures.gel, fade);
+  }
+
+  /** Advances the brightness ramp of newly textured materials; true while it still runs. */
+  tickTextures(dt: number): boolean {
+    return this.materials.tickFade(dt);
   }
 
   setQuality(quality: QualitySettings): void {
     this.quality = quality;
     this.shell.setStudsEnabled(quality.studs);
     this.cutaway.setOrganelleCaps(quality.organelleCaps);
+    this.syncAmbient();
+  }
+
+  /** Builds the ambient layer the first time a preset wants it; hides it when the preset does not. */
+  private syncAmbient(): void {
+    if (this.quality.ambient && !this.ambient) {
+      this.ambient = new AmbientLayer(this.cell, this.instances, this.assetMap, this.materials, this.cutaway.plane);
+      this.group.add(this.ambient.group);
+      for (const mat of this.materials.all()) if (!this.baseOpacity.has(mat)) this.baseOpacity.set(mat, mat.opacity);
+    }
+    this.ambient?.setVisible(this.quality.ambient && this.ambientAllowed);
+  }
+
+  /** Moves the ambient layer (vesicles, particles, flagellum wave); returns whether anything moves. */
+  updateAmbient(seconds: number, motion: boolean): boolean {
+    this.materials.setWave(motion && this.quality.ambient ? 1 : 0, seconds);
+    if (!motion || !this.quality.ambient || !this.ambient?.group.visible) return false;
+    this.ambient.update(seconds);
+    return true;
+  }
+
+  hasDecor(): boolean {
+    return [...this.assetMap.keys()].some(isDecorId);
+  }
+
+  /** Adds the decor assets after the scene was built (they load in the background); builds the ambient layer if wanted. */
+  addDecor(assets: ReadonlyMap<string, OrganelleAsset>): void {
+    this.assetMap = new Map([...this.assetMap, ...assets]);
+    this.syncAmbient();
+  }
+
+  /** Every asset id whose textures this scene uses, decor included. */
+  textureIds(): string[] {
+    return [...this.sets.keys(), ...this.cell.shellOrganelleIds, ...[...this.assetMap.keys()].filter(isDecorId)];
   }
 
   applyVisibility(rules: VisibilityRules): void {
@@ -124,6 +175,8 @@ export class CellScene {
       this.materials.setDim(id, selectedId !== null && selectedId !== id && !isolateId ? 1 : 0);
     }
     // A selected organelle is easier to see through a fainter shell.
+    this.ambientAllowed = !isolateId && !hideOthersId;
+    this.syncAmbient();
     this.shellFactor = selectedId !== null && this.sets.has(selectedId) ? 0.35 : 1;
     this.shell.setVisible((id) => !isolateId && !hidden.has(id));
     this.bedAllowed = this.shell.anyVisible();
@@ -218,6 +271,10 @@ export class CellScene {
 
     // The cut edge of the shell is its most visible outline: finer shell while cutting, and no far-away downgrade.
     const fit = this.framing();
+    // Relief fades out when the camera is within a few radii of some organelle (projected size radius / distance).
+    let nearest = 0;
+    for (const e of entries) nearest = Math.max(nearest, e.size / (bias * (e.set.id === this.focusId ? 3 : 1)));
+    this.materials.setRelief(Math.min(1, Math.max(0.3, 1 - (nearest - 0.25) * 1.6)));
     const far = !this.cutActive && local.length() > (3.2 * Math.max(fit.h, fit.v)) / this.scale;
     this.shell.setLod(Math.min(2, this.shellLevel() + (far ? 1 : 0)));
     // Protein studs on the shell read as confetti up close; fade them out with distance and in the zoomed-out view.
@@ -252,13 +309,14 @@ export class CellScene {
     const shell = new Set<object>();
     for (const part of this.shell.parts) for (const m of part.meshes) shell.add(m.ghost);
     for (const mat of this.materials.all()) {
-      let base = this.baseOpacity.get(mat) ?? 1;
+      let base = mat.userData.alphaMap ? 1 : (this.baseOpacity.get(mat) ?? 1);
       if (this.shell.studMaterials.has(mat)) base *= this.studFade;
       else if (shell.has(mat) && !this.cutActive) base *= this.shellFactor;
       const fade = this.lastFade;
-      mat.transparent = fade < 0.999 || base < 1;
+      const alpha = mat.userData.alphaMap === true;
+      mat.transparent = fade < 0.999 || base < 1 || alpha;
       mat.opacity = base * fade;
-      mat.depthWrite = fade >= 0.999 && base >= 1;
+      mat.depthWrite = fade >= 0.999 && base >= 1 && !alpha;
     }
   }
 
@@ -291,6 +349,7 @@ export class CellScene {
     this.shell.dispose();
     this.bed.geometry.dispose();
     this.materials.dispose();
+    this.ambient?.dispose();
     this.group.removeFromParent();
   }
 }

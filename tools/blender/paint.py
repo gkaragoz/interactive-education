@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+import geo
 from geo import normals
 import noise
 
@@ -19,6 +20,18 @@ class Part:
     tint: tuple = (0.55, 0.45, 0.6) # shadow colour multiplier (sRGB), shadows are hue-shifted not just darkened
     alpha: object = 1.0             # scalar or (N,) vertex alpha (gel)
     col: np.ndarray = None          # (N,4) linear RGBA, set by finalize
+    lit: np.ndarray = None          # (N,3) sRGB colour before AO, set by finalize (texture baking input)
+    aoval: np.ndarray = None        # (N,) baked vertex AO, set by finalize
+    aux: np.ndarray = None          # (N,) optional per-vertex scalar for texture motifs (edge, ring parameter...)
+    aux2: np.ndarray = None         # (N,) second optional scalar (cell id ...)
+    tex: dict = field(default_factory=dict)   # texture painter hints: flow axis, scales, relief
+    fuv: np.ndarray = None          # (M,3,2) chart coordinates per face corner (from the geo registry)
+    cid: np.ndarray = None          # (M,) chart id per face
+
+    def __post_init__(self):
+        c = geo.chart_of(self.F)
+        if c is not None:
+            self.fuv, self.cid = c
     occ: bool = True                # casts occlusion onto other parts
     ao: tuple = (0.75, 1.2, 24)     # strength, ray distance, rays (None to skip AO)
     hollow: bool = False            # contains one inward-facing (negative volume) component
@@ -170,5 +183,7 @@ def finalize(parts, ao_seed=7):
             ph = p.V @ dirv * (7.0 / max(size, 1e-3)) + 2.0 * noise.fbm(p.V * (3.0 / max(size, 1e-3)), 140, 1.0, 2)
             lit = lit * (1.0 + 0.25 * p.speck * np.sin(2 * np.pi * ph))[:, None]   # faint painted stripes
             lit = lit + 0.05 * np.clip(ny, 0, 1)[:, None] * np.array([1.0, 0.55, 0.25]) * lit.mean(1, keepdims=True)
+        p.lit = np.clip(lit, 0, 1)
+        p.aoval = ao
         p.col = finish(shadow_tint(lit, ao, p.tint), p.alpha)
     return parts

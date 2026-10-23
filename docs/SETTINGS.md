@@ -38,21 +38,25 @@ Unknown or hostile values fall back to the defaults (`core/params.ts`, tested). 
 
 **Adaptive quality** (`scene/governor.ts`). Unless the URL fixes `?quality=`, the governor watches the time between consecutive drawn frames in groups of 45: above 24 ms (under ~42 fps) it steps the preset down (never below low); after four calm groups (< 18 ms) it steps back up, never above medium, and not to a level that failed in the last 25 s (no flicker between two presets). `?quality=high` or `?quality=low` pins the preset. The overlay (`?perf`) shows the preset in force in brackets.
 
-### Measured (GTX 1080 Ti, Chrome/ANGLE D3D11, 1600x900, cut view, 90-frame orbit with a GPU wait after every frame: `window.__bilim.stage.debug.benchmark(90)`)
+### Measured (GTX 1080 Ti, Chrome/ANGLE D3D11, 1600x900, cut view, all 18 assets with painted textures streamed in, 90-frame orbit with a GPU wait after every frame: `window.__bilim.stage.debug.benchmark(90)`)
 
-| cell | preset | ms / frame (avg, p95) | triangles drawn per frame (incl. shadow, prepass and stencil passes) | draw calls |
-|---|---|---|---|---|
-| plant | low | 1.3 (1.9) | 71 k | 24 |
-| plant | medium | 3.2 (4.5) | 0.92 M | 111 |
-| plant | high | 3.6 (4.4) | 2.2 M | 142 |
-| animal | low | 1.3 (1.9) | 77 k | 32 |
-| animal | medium | 3.1 (3.7) | 0.95 M | 108 |
-| animal | high | 3.6 (4.5) | 2.1 M | 153 |
-| bacterium | low | 1.3 (1.9) | 32 k | 27 |
-| bacterium | medium | 2.6 (3.3) | 0.69 M | 103 |
-| bacterium | high | 2.5 (3.1) | 0.95 M | 105 |
+| cell | preset | ms / frame (avg, p95) | tris / frame | draw calls | texture GPU estimate | textures in renderer |
+|---|---|---|---|---|---|---|
+| plant | low | 1.0-1.6 (2.2) | 104 k | 30 | 38 MB | 26 |
+| plant | medium | 2.9 (4.1) | 0.94 M | 116 | 153 MB | 60 |
+| plant | high | 4.0 (4.5) | 2.0 M | 134 | 394 MB (peak, while tiers swap) | 66 |
+| animal | low | 1.0 (1.4) | 46 k | 21 | 26 MB | 17 |
+| animal | medium | 2.9 (3.8) | 1.14 M | 105 | 106 MB | 60 |
+| animal | high | 3.3 (4.0) | 1.63 M | 121 | 372 MB | 66 |
+| bacterium | low | 1.1 (1.4) | 34 k | 25 | 12 MB | 23 |
+| bacterium | medium | 2.4 (2.9) | 0.56 M | 104 | 46 MB | 45 |
+| bacterium | high | 2.4 (2.9) | 0.58 M | 94 | 184 MB | 51 |
 
-(The low and high rows are from the previous measurement round; medium was re-measured after the last layout, asset and cap changes. Tiny organelles get no stencil twins, and the twins of larger ones draw only the instances the cut plane crosses.)
+The texture estimate counts transcoded texels (block-compressed, one byte each) plus a third for mips. The streamer plans against 350 MB and steps the lowest-priority assets down when the plan exceeds it; the numbers above are from before the budget was lowered from 380 to 350 MB and include the moments when an old and a new tier of one asset coexist.
+
+### First-open download (all files of one visit, before the service worker has cached anything)
+
+GLBs 21 MB, app shell (script, fonts, Basis transcoder) about 3 MB, micrographs 0.7 MB. Textures: low tier 12.3 MB, medium 24.6 MB, high 74.8 MB for the whole asset set (a cell uses most of it). So a first visit at **low** downloads about 37 MB; at **medium** about 61 MB (the low tier is fetched first so the cell is interactive at once, and then replaced); at **high** about 111 MB. A repeat visit costs nothing: the service worker has the GLBs and the low tier, and keeps every tier it has fetched.
 
 Before this work the plant at high drew 3.8 M triangles (4.3 M with a cut) in 118 calls. Medium now stays under 1.2 M including the cut; low is about 15 times lighter than medium (about 70 k triangles, no post-processing, no shadows), which is the target for an integrated GPU. To measure on another machine: open `?perf&quality=medium` and run `__bilim.stage.debug.benchmark(90)` in the console.
 
@@ -70,3 +74,11 @@ Tone mapping is ACES (exposure 1.05) and a final composite pass adds the colour 
 ## Graphics connection
 
 If the browser drops the WebGL context the stage pauses and shows "Grafik bağlantısı kesildi, yeniden bağlanıyor…"; when the context returns, three.js re-uploads geometry and textures and the stage rebuilds the environment map (`scene/contextGuard.ts`). A missing or broken model file shows a toast and a simple shape instead.
+
+## Textures
+
+Quality maps to a texture tier: Düşük = low, Orta = medium, Yüksek = high (heroes 1024 / 2048 / 4096 px, others 512 / 1024 / 2048). Assets without textures keep their vertex colours. The lowest tier loads first; the preset's tier streams in afterwards (see `docs/ARCHITECTURE.md`). The `?perf` overlay's texture count comes from `renderer.info.memory`; `stage.debug`-level estimates of texture memory use the compressed sizes from `meta.json` plus a third for mip levels (`TextureStore.estimatedBytes`); the target is at most about 400 MB on the GPU at high.
+
+## Ambient motion
+
+Cytoskeleton, vesicles and particles exist only at medium and high. Their drift is paced at about 30 frames a second and stops 20 seconds after the last user action; with `prefers-reduced-motion` nothing drifts or waves.

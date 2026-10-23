@@ -64,3 +64,26 @@ export function applyGlow(scene: CellScene, otherIds: ReadonlySet<string>, input
     scene.setGlow(id, glow);
   }
 }
+
+/**
+ * Paces the ambient motion (drifting vesicles, floating particles, the flagellum): about 30 frames a second, and only
+ * while the user has done something in the last 20 seconds, so an idle page costs nothing.
+ */
+export class MotionClock {
+  private accumulated = 0;
+  private lastActive = 0;
+
+  /** Call on any user activity (a render request). */
+  touch(nowMs: number): void {
+    this.lastActive = nowMs;
+  }
+
+  /** True when an ambient frame is due. */
+  due(dt: number, nowMs: number, enabled: boolean): boolean {
+    if (!enabled || nowMs - this.lastActive > 20_000) return false;
+    this.accumulated += dt;
+    if (this.accumulated < 1 / 30) return false;
+    this.accumulated = 0;
+    return true;
+  }
+}

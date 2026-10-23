@@ -2,6 +2,7 @@
 declare module 'node:fs' {
   interface Buf {
     readUInt32LE(offset: number): number;
+    readUInt8(offset: number): number;
     subarray(start: number, end?: number): { toString(enc: string): string };
   }
   export function existsSync(path: string): boolean;

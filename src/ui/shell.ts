@@ -1,4 +1,5 @@
 import { h, parseRouteAnchor, routeHash, type AppState, type Route } from '../core';
+import type { LoadProgress } from '../scene';
 import { renderAbout } from './about';
 import { renderBibliography } from './bibliography';
 import { createComparePanel, createMicroscopePanel } from './bottomRow';
@@ -13,7 +14,7 @@ import './styles.css';
 export interface Shell {
   /** Mount point for the 3D stage. */
   viewport: HTMLElement;
-  setLoading(fraction: number | null): void;
+  setLoading(progress: LoadProgress | null): void;
   setPerfText(text: string | null): void;
   /** Small non-blocking message at the bottom of the page; it fades by itself. */
   toast(text: string): void;

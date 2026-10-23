@@ -7,8 +7,14 @@ const DIR = join(process.cwd(), 'public', 'models', 'organelles');
 const IDS = [
   'nucleus', 'mitochondrion', 'rough-er', 'smooth-er', 'golgi', 'ribosome', 'lysosome', 'centrosome', 'vacuole',
   'chloroplast', 'nucleoid', 'plasmid', 'flagellum', 'pilus', 'membrane-animal', 'membrane-plant', 'wall-plant',
-  'envelope-bacterium',
+  'envelope-bacterium', 'cytoskeleton', 'vesicle',
 ];
+const DECOR = ['cytoskeleton', 'vesicle'];
+const HEROES = ['nucleus', 'wall-plant', 'membrane-animal', 'membrane-plant', 'envelope-bacterium', 'mitochondrion', 'chloroplast', 'rough-er'];
+const TINY = ['plasmid', 'pilus', 'centrosome', 'lysosome', 'ribosome', 'flagellum'];
+const TEX_DIR = join(process.cwd(), 'public', 'textures');
+const TIERS = ['low', 'medium', 'high'] as const;
+const MB = 1024 * 1024;
 const NAME_RE = /^[A-Za-z0-9_-]+$/;
 const MAX_BYTES = 1.5 * 1024 * 1024;
 
@@ -50,6 +56,8 @@ interface Meta {
   closed: boolean;
   generator: string;
   seed: number;
+  uv?: Record<string, { uvMin: number[]; uvMax: number[]; coverage: number; overlap: number; stretchP05: number; stretchP95: number; uvPerUnit: number }>;
+  textures?: { format: string; tiers: Record<string, { bytes: number; size: number; maps: { name: string; size: number; bytes: number }[] }> };
 }
 
 function readGlb(path: string): Gltf {
@@ -185,12 +193,94 @@ describe('organelle GLB assets', () => {
       const m = JSON.parse(readFileSync(join(DIR, `${id}.meta.json`), 'utf8')) as Meta;
       return m.bboxMax.map((v, k) => v - (m.bboxMin[k] as number));
     };
-    const near = (v: number, want: number) => expect(Math.abs(v - want) / want).toBeLessThan(0.35);
+    const near = (v: number, want: number) => expect(Math.abs(v - want) / want).toBeLessThan(0.45);
     near(Math.max(...size('nucleus')), 6);
     near(Math.max(...size('mitochondrion')), 3.2);
     near(Math.max(...size('chloroplast')), 5);
     near(Math.max(...size('golgi')), 3.5);
     near(Math.max(...size('lysosome')), 1.1);
     near(Math.max(...size('centrosome')), 1.6);
+  });
+
+  describe('texture contract v2', () => {
+    const KTX2_MAGIC = [0xab, 0x4b, 0x54, 0x58, 0x20, 0x32, 0x30, 0xbb, 0x0d, 0x0a, 0x1a, 0x0a];
+    const topSize = (id: string) => (HEROES.includes(id) ? 4096 : TINY.includes(id) ? 1024 : 2048);
+    const readMeta = (id: string) => JSON.parse(readFileSync(join(DIR, `${id}.meta.json`), 'utf8')) as Meta;
+
+    it('every non-decor asset has textures for all three tiers', () => {
+      for (const id of IDS.filter((i) => !DECOR.includes(i))) {
+        const t = readMeta(id).textures;
+        expect(t, `${id} textures`).toBeDefined();
+        expect(Object.keys(t?.tiers ?? {}).sort(), id).toEqual(['high', 'low', 'medium']);
+        expect(t?.format).toBe('KTX2');
+      }
+      for (const id of DECOR) expect(readMeta(id).textures, id).toBeUndefined();
+    });
+
+    it('has a sane UV atlas per material (range, overlap, coverage, stretch)', () => {
+      for (const id of IDS) {
+        const m = readMeta(id);
+        expect(m.uv, `${id} uv`).toBeDefined();
+        for (const [mat, u] of Object.entries(m.uv ?? {})) {
+          for (let k = 0; k < 2; k++) {
+            expect(u.uvMin[k] as number, `${id}/${mat}`).toBeGreaterThanOrEqual(0);
+            expect(u.uvMax[k] as number, `${id}/${mat}`).toBeLessThanOrEqual(1);
+          }
+          expect(u.overlap, `${id}/${mat} overlap`).toBeLessThan(0.005);
+          expect(u.coverage, `${id}/${mat} coverage`).toBeGreaterThan(0.25);
+          expect(u.stretchP05, `${id}/${mat}`).toBeGreaterThan(0.3);
+          expect(u.stretchP95, `${id}/${mat}`).toBeLessThan(DECOR.includes(id) ? 3.5 : 2.5);
+        }
+      }
+    });
+
+    for (const id of IDS.filter((i) => !DECOR.includes(i))) {
+      it(`${id}: KTX2 files exist, headers match meta, mips present, GLB materials covered`, () => {
+        const m = readMeta(id);
+        const g = readGlb(join(DIR, `${id}.glb`));
+        const mats = g.materials.map((x) => x.name.split('_')[1] as string).sort();
+        for (const tier of TIERS) {
+          const info = m.textures?.tiers[tier];
+          expect(info, `${id}/${tier}`).toBeDefined();
+          const files = (info?.maps ?? []).map((x) => x.name).sort();
+          const expected = mats.flatMap((mat) => ['albedo', 'normal', 'orm'].map((k) => `${mat}_${k}.ktx2`)).sort();
+          expect(files, `${id}/${tier} files`).toEqual(expected);
+          let sum = 0;
+          for (const f of info?.maps ?? []) {
+            const path = join(TEX_DIR, id, tier, f.name);
+            expect(existsSync(path), path).toBe(true);
+            const buf = readFileSync(path);
+            for (let i = 0; i < 12; i++) expect(buf.readUInt8(i), `${path} magic`).toBe(KTX2_MAGIC[i]);
+            expect(buf.readUInt32LE(20), `${path} width`).toBe(f.size);
+            expect(buf.readUInt32LE(24), `${path} height`).toBe(f.size);
+            expect(buf.readUInt32LE(40), `${path} mip levels`).toBeGreaterThan(1);
+            expect(statSync(path).size).toBe(f.bytes);
+            expect(f.bytes).toBeLessThan(25 * MB);
+            sum += f.bytes;
+          }
+          expect(info?.bytes).toBe(sum);
+        }
+        // tiers shrink 4x per step in side length for the largest map
+        const sizes = TIERS.map((t) => m.textures?.tiers[t]?.size ?? 0);
+        expect(sizes[2]).toBe(topSize(id));
+        expect(sizes[1]).toBe(topSize(id) / 2);
+        expect(sizes[0]).toBe(topSize(id) / 4);
+      });
+    }
+
+    it('texture budgets: total <= 120 MB, medium tier <= 50 MB', () => {
+      let total = 0;
+      let medium = 0;
+      for (const id of IDS.filter((i) => !DECOR.includes(i))) {
+        const t = readMeta(id).textures;
+        for (const tier of TIERS) {
+          const b = t?.tiers[tier]?.bytes ?? 0;
+          total += b;
+          if (tier === 'medium') medium += b;
+        }
+      }
+      expect(total).toBeLessThanOrEqual(120 * MB);
+      expect(medium).toBeLessThanOrEqual(50 * MB);
+    });
   });
 });

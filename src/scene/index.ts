@@ -1,3 +1,4 @@
+export type { LoadProgress } from './sceneLoader';
 export { Stage, type StageData, type StageOptions, type StageEvents, type StageStats, type ViewState } from './stage';
 export { solveLayout, worstOverlap, fitsInShell, overlapOf, shellSdf, ORGANELLE_BOOST, type PlacedInstance, type LayoutCell } from './layout';
 export { makePlaceholderAsset, isShellId } from './placeholders';

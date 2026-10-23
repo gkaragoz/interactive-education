@@ -28,6 +28,8 @@ export interface UiContext {
   baseUrl: string;
   /** The URL pins `?quality=`: the menu shows it but cannot change it. */
   qualityLocked: boolean;
+  /** prefers-reduced-motion: no tip fades. */
+  reducedMotion: boolean;
 }
 
 export interface Component {

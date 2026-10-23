@@ -1,0 +1,12 @@
+{
+  "name": "bilim-textures",
+  "private": true,
+  "type": "module",
+  "description": "KTX2 / Basis Universal encoder driver for the baked organelle textures (separate from the app package.json)",
+  "scripts": {
+    "encode": "node encode.mjs"
+  },
+  "dependencies": {
+    "basis_universal": "1.16.4-1"
+  }
+}

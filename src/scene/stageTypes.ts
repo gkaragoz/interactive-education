@@ -1,5 +1,7 @@
 import type { CellInfo, CellTypeId, OrganelleInfo } from '../data/types';
 import type { QualityName } from '../core';
+import type { LoadProgress } from './sceneLoader';
+import type { TextureBackend } from './textureStore';
 
 export interface StageData {
   cell(id: CellTypeId): CellInfo;
@@ -12,6 +14,8 @@ export interface StageOptions {
   quality: QualityName;
   data: StageData;
   reducedMotion: boolean;
+  /** Tests pass plain textures here instead of KTX2 files (null disables textures). */
+  textureBackend?: TextureBackend | null;
   /** Let the adaptive governor step the quality preset down and up (off when the URL fixes `?quality=`). */
   autoQuality: boolean;
 }
@@ -41,8 +45,8 @@ export interface StageEvents {
   /** The user clicked an organelle (id) or empty space / the selected one again (null). */
   select(id: string | null): void;
   hover(id: string | null): void;
-  /** Loading progress 0..1, or null when done. */
-  loading(fraction: number | null): void;
+  /** Where loading stands (phase and byte-based fraction), or null when done. */
+  loading(progress: LoadProgress | null): void;
   stats(stats: StageStats): void;
   /** A model file was missing or broken and a simple shape is shown instead. */
   fallback(id: string): void;

@@ -22,6 +22,7 @@ import {
   type Object3D,
   type Texture,
   type WebGLRenderer,
+  Vector2,
 } from 'three';
 
 /**
@@ -67,10 +68,18 @@ export class Cutaway {
   private readonly geometry = new PlaneGeometry(1, 1);
   private nextOrder = 1;
   private organelleCaps = true;
+  private readonly grain: Texture | null;
   private capSize = 80;
   private capY = 0;
 
-  constructor(private readonly colorFor: (key: string) => string) {
+  constructor(
+    private readonly colorFor: (key: string) => string,
+    /** Fine relief for the cut faces so a section looks like clay, not a flat disc. */
+    grain: Texture | null = null,
+  ) {
+    // Own texture object (shared image): the repeat must not change the organelles' micro-normal.
+    this.grain = grain ? grain.clone() : null;
+    if (this.grain) this.grain.repeat.set(14, 14);
     this.root.visible = false;
   }
 
@@ -122,6 +131,8 @@ export class Cutaway {
       color: new Color(this.colorFor(key)),
       roughness: 0.88,
       metalness: 0,
+      normalMap: this.grain,
+      normalScale: new Vector2(0.9, 0.9),
       side: DoubleSide,
       stencilWrite: true,
       stencilRef: 0,
@@ -225,6 +236,7 @@ export class Cutaway {
       cap.material.dispose();
     }
     this.geometry.dispose();
+    this.grain?.dispose();
     this.caps.clear();
     this.root.removeFromParent();
   }

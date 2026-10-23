@@ -11,7 +11,7 @@ const state = (patch: Partial<AppState> = {}): AppState => ({
   route: 'explore', cellId: 'plant', level: 'temel', selectedId: 'nucleus', hidden: new Set(), viewMode: 'cutaway', hideOthers: false,
   cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto', ...patch,
 });
-const ctx = (catalog = new Catalog(bundle), qualityLocked = false) => ({ catalog, actions, baseUrl: './', qualityLocked });
+const ctx = (catalog = new Catalog(bundle), qualityLocked = false) => ({ catalog, actions, baseUrl: './', qualityLocked, reducedMotion: true });
 
 describe('license labels', () => {
   it('spells out public-domain licenses and leaves the data alone', () => {

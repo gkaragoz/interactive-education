@@ -1,0 +1,40 @@
+{
+  "id": "cytoskeleton",
+  "tris": {
+    "LOD0": 47796,
+    "LOD1": 10416,
+    "LOD2": 5652
+  },
+  "bboxMin": [
+    -6.0851,
+    -6.0939,
+    -6.0743
+  ],
+  "bboxMax": [
+    6.085,
+    6.0939,
+    6.0743
+  ],
+  "boundsRadius": 10.1085,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1283484,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9927,
+        0.9981
+      ],
+      "coverage": 0.7733,
+      "overlap": 0.0,
+      "stretchP95": 2.719,
+      "stretchP05": 0.92,
+      "uvPerUnit": 0.08831
+    }
+  }
+}

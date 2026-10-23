@@ -68,7 +68,7 @@ export const cells: CellInfo[] = [
     placements: [
       { organelleId: 'vacuole', count: 1, zone: 'center', scale: [2.7, 2, 3] },
       { organelleId: 'nucleus', count: 1, zone: 'periphery' },
-      { organelleId: 'chloroplast', count: 14, zone: 'periphery' },
+      { organelleId: 'chloroplast', count: 18, zone: 'periphery' },
       { organelleId: 'mitochondrion', count: 10, zone: 'cytoplasm' },
       { organelleId: 'rough-er', count: 3, zone: 'nucleus-near' },
       { organelleId: 'smooth-er', count: 3, zone: 'periphery' },

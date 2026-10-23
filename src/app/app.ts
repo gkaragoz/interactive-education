@@ -143,7 +143,7 @@ export async function startApp(opts: AppOptions): Promise<void> {
     },
   };
 
-  const shell = createShell(opts.root, { catalog, actions, baseUrl: opts.baseUrl, qualityLocked: params.qualityFixed });
+  const shell = createShell(opts.root, { catalog, actions, baseUrl: opts.baseUrl, qualityLocked: params.qualityFixed, reducedMotion });
 
   try {
     stage = new Stage({

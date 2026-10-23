@@ -1,23 +1,173 @@
 {
   "id": "plasmid",
   "tris": {
-    "LOD0": 8320,
-    "LOD1": 2080,
-    "LOD2": 1248
+    "LOD0": 6552,
+    "LOD1": 1212,
+    "LOD2": 636
   },
   "bboxMin": [
-    -0.328,
-    -0.144,
-    -0.3358
+    -0.3284,
+    -0.1444,
+    -0.3341
   ],
   "bboxMax": [
-    0.328,
-    0.144,
-    0.3358
+    0.3284,
+    0.1445,
+    0.334
   ],
-  "boundsRadius": 0.3413,
+  "boundsRadius": 0.3399,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 240264
+  "bytes": 172852,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.8498,
+        0.9981
+      ],
+      "coverage": 0.823,
+      "overlap": 0,
+      "stretchP95": 1.348,
+      "stretchP05": 0.827,
+      "uvPerUnit": 0.78762
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 153407
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 86156
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 109667
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 547443
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 372315
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 387381
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1882890
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1545420
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1240690
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.2,
+    "paintSeconds": 5.6,
+    "totalSeconds": 10.8
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/plasmid/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 63204,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20965,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 26004,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 16235,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 241091,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 68918,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 123730,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 48443,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 868454,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 194060,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 538071,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 136323,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
 }

@@ -96,7 +96,8 @@ test('the bacterium opens at the advanced level and the URL reflects the state',
 });
 
 test('the cutaway slider cuts the cell and the picture changes', async ({ page }) => {
-  const problems = await openApp(page);
+  test.setTimeout(180_000);
+  const problems = await openApp(page, '?perf&quality=low');
   // The cut view is the default (a horizontal cut with the cell seen from above).
   const slider = page.locator('#cut-slider');
   await expect(slider).toBeVisible();
@@ -265,7 +266,8 @@ test('keyboard: the canvas takes focus and arrow keys orbit the camera', async (
 });
 
 test('labels toggle and compare view open without errors', async ({ page }) => {
-  const problems = await openApp(page, '?perf&cell=animal&level=ileri');
+  test.setTimeout(180_000);
+  const problems = await openApp(page, '?perf&cell=animal&level=ileri&quality=low');
   await page.getByRole('button', { name: 'Etiketler' }).click();
   await expect(page.locator('.leader-label:visible').first()).toBeVisible();
   await page.getByRole('button', { name: 'Etiketler' }).click();
@@ -456,4 +458,96 @@ test('below 1100 px a friendly note replaces the layout, and a bare ?perf stays 
   expect(page.url()).toMatch(/[?&]perf(&|#|$)/);
   expect(page.url()).not.toContain('perf=');
   await context.close();
+});
+
+for (const width of [1280, 1366]) {
+  test(`at ${width} px every label is fully visible: inside the stage and clear of the toolbars and the view panel`, async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width, height: width === 1280 ? 720 : 768 } });
+    const page = await context.newPage();
+    const problems = await openApp(page, '?perf&quality=low&level=ileri');
+    for (const mode of ['Tam', 'Kesit']) {
+      await page.getByRole('button', { name: mode, exact: true }).click();
+      if (!(await page.getByRole('button', { name: 'Etiketler' }).getAttribute('aria-pressed'))?.includes('true')) await page.getByRole('button', { name: 'Etiketler' }).click();
+      await page.waitForTimeout(1200);
+      const bad = await page.evaluate(() => {
+        const box = (el: Element): DOMRect => el.getBoundingClientRect();
+        const stage = box(document.querySelector('.stage-card')!);
+        const blockers = [...document.querySelectorAll('.toolbar, .view-panel')].map(box);
+        const hit = (a: DOMRect, b: DOMRect): boolean => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+        return [...document.querySelectorAll<HTMLElement>('.leader-label')]
+          .filter((l) => l.style.display !== 'none')
+          .filter((l) => {
+            const b = box(l);
+            const clipped = l.scrollWidth > l.clientWidth + 1;
+            return clipped || b.left < stage.left || b.right > stage.right || b.top < stage.top || b.bottom > stage.bottom || blockers.some((t) => hit(b, t));
+          })
+          .map((l) => l.textContent);
+      });
+      expect(bad, `${mode} at ${width}`).toEqual([]);
+    }
+    expect(problems).toEqual([]);
+    await context.close();
+  });
+}
+
+test('offline: the second visit works without a network (service worker, production build)', async ({ browser }) => {
+  test.setTimeout(240_000);
+  const context = await browser.newContext({ serviceWorkers: 'allow', viewport: { width: 1400, height: 800 } });
+  const page = await context.newPage();
+  await openApp(page, '?perf&quality=low');
+  await page.evaluate(async () => {
+    const reg = await navigator.serviceWorker.ready;
+    reg.active?.postMessage({ type: 'precache-extra' });
+  });
+  // Wait until the models are cached too (the worker caches them after the idle message).
+  await expect
+    .poll(
+      async () =>
+        page.evaluate(async () => {
+          const names = (await caches.keys()).filter((n) => n.startsWith('bilim-'));
+          if (names.length === 0) return 0;
+          const cache = await caches.open(names[0]!);
+          return (await cache.keys()).filter((r) => /models\/organelles\/.+\.glb$/.test(r.url)).length;
+        }),
+      { timeout: 60_000 },
+    )
+    .toBeGreaterThan(5);
+  await context.setOffline(true);
+  await page.reload();
+  await page.waitForFunction(() => document.body.dataset.ready === 'true', null, { timeout: 80_000 });
+  await expect(page.locator('h1')).toHaveText('Bilim Atölyesi · Hücre');
+  await expect(page.locator('canvas.stage-canvas')).toBeVisible();
+  expect((await frameStats(page)).distinct).toBeGreaterThan(40);
+  await context.close();
+});
+
+test('40 alternating cell and quality switches leave GPU textures and geometries in a small constant band, without a crash', async ({ page }) => {
+  test.setTimeout(900_000);
+  let crashed = false;
+  page.on('crash', () => (crashed = true));
+  const problems = await openApp(page, '?perf&level=ileri&quality=low');
+  const counts = (): Promise<{ textures: number; geometries: number }> =>
+    page.evaluate(() => {
+      const m = (window.__bilim.stage as unknown as { renderer: { info: { memory: { textures: number; geometries: number } } } }).renderer.info.memory;
+      return { textures: m.textures, geometries: m.geometries };
+    });
+  const cells = ['Hayvan', 'Bakteri', 'Bitki'];
+  const levels = ['low', 'medium', 'high'] as const;
+  const samples: { textures: number; geometries: number }[] = [];
+  for (let i = 0; i < 40; i++) {
+    await page.getByRole('button', { name: new RegExp(`${cells[i % 3]} hücresi`) }).first().click();
+    await page.evaluate((level) => (window.__bilim.stage as unknown as { setQualityLevel(l: string): void }).setQualityLevel(level), levels[i % 3]!);
+    await page.waitForTimeout(1500);
+    if (i >= 8) samples.push(await counts());
+  }
+  await page.waitForTimeout(3000);
+  samples.push(await counts());
+  const textures = samples.map((s) => s.textures);
+  const geometries = samples.map((s) => s.geometries);
+  // After every cell and quality has been visited once the counts only wobble (tiers mid-swap), they never climb.
+  expect(Math.max(...textures) - Math.min(...textures), `textures ${textures.join(',')}`).toBeLessThanOrEqual(90);
+  expect(Math.max(...geometries) - Math.min(...geometries), `geometries ${geometries.join(',')}`).toBeLessThanOrEqual(60);
+  expect(textures.at(-1)!).toBeLessThanOrEqual(Math.min(...textures) + 60);
+  expect(crashed).toBe(false);
+  expect(problems).toEqual([]);
 });

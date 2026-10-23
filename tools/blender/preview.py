@@ -7,6 +7,7 @@ Views: iso (3/4 from above), cut (half removed to see the inside), side (from th
 SHEET=1 additionally writes out/contact_sheet.png (every id that has an iso render).
 """
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -86,7 +87,59 @@ def setup_render(size, samples):
     return sc
 
 
+TEXDIR = None            # TEX=<tier> reads tools/blender/out/tex/<id>/<tier>/<mat>_<map>.png
+CUR_ASSET = ""
+TEXTIER = "high"
+
+
+def _img(path, srgb):
+    im = bpy.data.images.load(str(path))
+    im.colorspace_settings.name = "sRGB" if srgb else "Non-Color"
+    return im
+
+
+def textured_material(name, kind):
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    d = TEXDIR / CUR_ASSET / TEXTIER
+    tx = {}
+    for key, srgb in (("albedo", True), ("normal", False), ("orm", False)):
+        n = nt.nodes.new("ShaderNodeTexImage")
+        n.image = _img(d / f"{kind}_{key}.png", srgb)
+        n.interpolation = "Linear"
+        tx[key] = n
+    nm = nt.nodes.new("ShaderNodeNormalMap")
+    nm.uv_map = "UVMap"
+    nt.links.new(tx["normal"].outputs["Color"], nm.inputs["Color"])
+    if not os.environ.get("NONORM"):
+        nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
+    sp = nt.nodes.new("ShaderNodeSeparateColor")
+    nt.links.new(tx["orm"].outputs["Color"], sp.inputs["Color"])
+    nt.links.new(sp.outputs["Green"], b.inputs["Roughness"])
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    mix.blend_type = "MULTIPLY"
+    mix.inputs[0].default_value = 0.0 if os.environ.get('NOAO') else 0.8
+    nt.links.new(tx["albedo"].outputs["Color"], mix.inputs[6])
+    ao = nt.nodes.new("ShaderNodeCombineColor")
+    for k in range(3):
+        nt.links.new(sp.outputs["Red"], ao.inputs[k])
+    nt.links.new(ao.outputs[0], mix.inputs[7])
+    nt.links.new(mix.outputs[2], b.inputs["Base Color"])
+    b.inputs["Specular IOR Level"].default_value = 0.4
+    b.inputs["Coat Weight"].default_value = 0.0
+    b.inputs["Subsurface Weight"].default_value = 0.05
+    if kind == "gel":
+        nt.links.new(tx["albedo"].outputs["Alpha"], b.inputs["Alpha"])
+        m.surface_render_method = "BLENDED"
+    return m
+
+
 def preview_material(name, kind, color_name):
+    if TEXDIR is not None and (TEXDIR / CUR_ASSET / TEXTIER / f"{kind}_albedo.png").exists():
+        return textured_material(name, kind)
     m = bpy.data.materials.new(name)
     m.use_nodes = True
     nt = m.node_tree
@@ -168,6 +221,8 @@ def camera(radius, view, lens=70):
 
 
 def render_one(asset, view, lod, size, samples, path):
+    global CUR_ASSET
+    CUR_ASSET = asset
     reset()
     setup_render(size, samples)
     meta = json.loads((MODELS / f"{asset}.meta.json").read_text())
@@ -215,6 +270,10 @@ def main():
     ids = a["IDS"].split(",") if a.get("IDS") else ALL_IDS
     views = a.get("VIEWS", "iso").split(",")
     lod = int(a.get("LOD", 0))
+    global TEXDIR, TEXTIER
+    if a.get("TEX"):
+        TEXDIR = Path(a["TEXROOT"]) if a.get("TEXROOT") else HERE / "out" / "tex"
+        TEXTIER = a["TEX"]
     size = int(a.get("SIZE", 800))
     samples = int(a.get("SAMPLES", 48))
     for asset in ids:

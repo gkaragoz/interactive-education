@@ -5,17 +5,50 @@ import math
 import numpy as np
 
 
-# ---------------------------------------------------------------------------------------------- basics
+# ---------------------------------------------------------------------------------------------- chart registry
+# Every primitive records, per face corner, its parametric chart coordinates (cube face (a,b) lattice, tube (ring, side)).
+# The registry is keyed by the face array identity and survives xf / merge / flipf, so texture charts need no plumbing.
+_REG = {}
+
+
+def reg(f, fuv, cid):
+    _REG[id(f)] = (f, fuv, cid)
+    return f
+
+
+def chart_of(f):
+    """(fuv (M,3,2), cid (M,)) for a face array built from registered primitives, or None."""
+    e = _REG.get(id(f))
+    return None if e is None else (e[1], e[2])
+
+
+def flipf(f):
+    """Reverse the winding of a face array (keeps the chart data)."""
+    g = f[:, ::-1].copy()
+    c = chart_of(f)
+    if c is not None:
+        reg(g, c[0][:, ::-1].copy(), c[1])
+    return g
+
+
 def merge(*surfs):
     """Concatenate surfaces as disjoint components."""
-    vs, fs, off = [], [], 0
+    vs, fs, off, charts, coff = [], [], 0, [], 0
     for v, f in surfs:
         vs.append(v)
         fs.append(f + off)
         off += len(v)
+        c = chart_of(f)
+        charts.append(c)
+        if c is not None:
+            charts[-1] = (c[0], c[1] + coff)
+            coff += int(c[1].max()) + 1 if len(c[1]) else 0
     if not vs:
         return np.zeros((0, 3)), np.zeros((0, 3), dtype=np.int64)
-    return np.concatenate(vs), np.concatenate(fs)
+    out = np.concatenate(fs)
+    if all(c is not None for c in charts):
+        reg(out, np.concatenate([c[0] for c in charts]), np.concatenate([c[1] for c in charts]))
+    return np.concatenate(vs), out
 
 
 def xf(surf, scale=1.0, rot=None, pos=(0.0, 0.0, 0.0)):
@@ -104,7 +137,8 @@ def cube_sphere(n):
                   z * np.sqrt(np.maximum(1 - x * x / 2 - y * y / 2 + x * x * y * y / 3, 0))], axis=1)
     a, b = np.meshgrid(np.arange(n), np.arange(n), indexing="ij")
     a, b = a.ravel(), b.ravel()
-    faces = []
+    faces, fuvs, cids = [], [], []
+    qa = np.array([(0, 0), (1, 0), (1, 1), (0, 1)], dtype=np.float64)
     for axis in range(3):
         for side in (0, n):
             def at(da, db):
@@ -114,11 +148,20 @@ def cube_sphere(n):
                 c[u], c[w] = a + da, b + db
                 return idx[c[0], c[1], c[2]]
             q = [at(0, 0), at(1, 0), at(1, 1), at(0, 1)]
+            qq = qa
             if side == 0:
                 q = q[::-1]
+                qq = qa[::-1]
             faces.append(np.stack([q[0], q[1], q[2]], 1))
             faces.append(np.stack([q[0], q[2], q[3]], 1))
-    return d, np.concatenate(faces)
+            ab = np.stack([a, b], 1).astype(np.float64)
+            cid = axis * 2 + (1 if side else 0)
+            for tri in ((0, 1, 2), (0, 2, 3)):
+                fuvs.append(np.stack([ab + qq[k] for k in tri], 1))
+                cids.append(np.full(len(a), cid))
+    f_all = np.concatenate(faces)
+    reg(f_all, np.concatenate(fuvs), np.concatenate(cids))
+    return d, f_all
 
 
 def sphere(n, fn=None):
@@ -239,6 +282,9 @@ def tube_t(path, radius, sides=12, closed=False, cap=3, aspect=None, up=None, tw
     q00, q10 = J * sides + AA, J * sides + AA2
     q01, q11 = J2 * sides + AA, J2 * sides + AA2
     F = [np.stack([q00, q01, q11], -1).reshape(-1, 3), np.stack([q00, q11, q10], -1).reshape(-1, 3)]
+    J1, A1 = J.astype(np.float64), AA.astype(np.float64)
+    fuv_parts = [np.stack([np.stack([J1, A1], -1), np.stack([J1 + 1, A1], -1), np.stack([J1 + 1, A1 + 1], -1)], 2).reshape(-1, 3, 2),
+                 np.stack([np.stack([J1, A1], -1), np.stack([J1 + 1, A1 + 1], -1), np.stack([J1, A1 + 1], -1)], 2).reshape(-1, 3, 2)]
     if not closed:
         p0 = len(V)
         if cap > 0:
@@ -252,13 +298,20 @@ def tube_t(path, radius, sides=12, closed=False, cap=3, aspect=None, up=None, tw
         s2 = (s + 1) % sides
         F.append(np.stack([np.full(sides, p0), s, s2], 1))
         F.append(np.stack([np.full(sides, p0 + 1), (rings - 1) * sides + s2, (rings - 1) * sides + s], 1))
+        sf = s.astype(np.float64)
+        z = np.zeros(sides)
+        fuv_parts.append(np.stack([np.stack([z - 1, sf + 0.5], 1), np.stack([z, sf], 1), np.stack([z, sf + 1], 1)], 1))
+        fuv_parts.append(np.stack([np.stack([z + rings, sf + 0.5], 1), np.stack([z + rings - 1, sf + 1], 1),
+                                   np.stack([z + rings - 1, sf], 1)], 1))
     ring_t = np.linspace(0, 1, m, endpoint=not closed)
     if not closed and cap > 0:
         ring_t = np.concatenate([np.zeros(cap), ring_t, np.ones(cap)])
     tv = np.repeat(ring_t, sides)
     if not closed:
         tv = np.concatenate([tv, [0.0, 1.0]])
-    return orient((V, np.concatenate(F))), tv
+    f_all = np.concatenate(F)
+    reg(f_all, np.concatenate(fuv_parts), np.zeros(len(f_all), dtype=np.int64))
+    return orient((V, f_all)), tv
 
 
 def signed_volume(v, f):
@@ -269,12 +322,12 @@ def orient(surf):
     """Flip a single closed component to outward if its signed volume is negative."""
     v, f = surf
     if signed_volume(v, f) < 0:
-        f = f[:, ::-1].copy()
+        f = flipf(f)
     return v, f
 
 
 def flip(surf):
-    return surf[0], surf[1][:, ::-1].copy()
+    return surf[0], flipf(surf[1])
 
 
 # ---------------------------------------------------------------------------------------------- checks

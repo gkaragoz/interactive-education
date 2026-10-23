@@ -1,23 +1,284 @@
 {
   "id": "lysosome",
   "tris": {
-    "LOD0": 41148,
-    "LOD1": 7740,
-    "LOD2": 2868
+    "LOD0": 34044,
+    "LOD1": 6120,
+    "LOD2": 2544
   },
   "bboxMin": [
-    -0.5683,
-    -0.5579,
-    -0.5651
+    -0.5676,
+    -0.5565,
+    -0.5658
   ],
   "bboxMax": [
-    0.5683,
-    0.5579,
-    0.5651
+    0.5676,
+    0.5565,
+    0.5659
   ],
-  "boundsRadius": 0.5784,
+  "boundsRadius": 0.5801,
   "closed": true,
   "generator": "tools/blender/make_organelles.py",
   "seed": 20260101,
-  "bytes": 850208
+  "bytes": 968700,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9278,
+        0.9981
+      ],
+      "coverage": 0.73,
+      "overlap": 0,
+      "stretchP95": 1.029,
+      "stretchP05": 0.951,
+      "uvPerUnit": 0.3337
+    },
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9973,
+        0.9981
+      ],
+      "coverage": 0.8013,
+      "overlap": 0,
+      "stretchP95": 1.082,
+      "stretchP05": 0.929,
+      "uvPerUnit": 0.43243
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 179042
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 52626
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 22667
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 166843
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 87202
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 115802
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 685987
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 244597
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 63393
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 599769
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 393269
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 429145
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2579721
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 995313
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 171288
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2073054
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1681619
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1512378
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.7,
+    "paintSeconds": 11.5,
+    "totalSeconds": 18.4
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lysosome/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 134703,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 21819,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 23286,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 20542,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 36637,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 27055,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 5364,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 442295,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 71292,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 100663,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 65896,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 98632,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 91947,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 13865,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1540985,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 196459,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 438159,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 177537,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 304568,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 387655,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 36607,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
 }

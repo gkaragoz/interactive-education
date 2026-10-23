@@ -19,11 +19,24 @@ export interface OrganelleAsset {
   halfExtents: [number, number, number];
   /** True when built from primitives because the GLB was missing or failed. */
   placeholder: boolean;
+  /** The asset's meta.json when it had one (texture tiers, byte sizes). */
+  meta: AssetMeta | null;
   dispose(): void;
+}
+
+/** Texture tiers listed in an asset's meta.json (contract v2): file sizes drive the loading progress. */
+export interface TextureTierInfo {
+  bytes: number;
+  size: number;
+  /** Files of the tier: `{ name: 'clay_albedo.ktx2', size, bytes, codec }` (plain names are accepted too). */
+  maps: (string | { name: string; bytes?: number; size?: number })[];
 }
 
 export interface AssetMeta {
   id: string;
+  /** GLB size in bytes (used for the byte-based loading progress). */
+  bytes?: number;
+  textures?: { tiers: Partial<Record<'low' | 'medium' | 'high', TextureTierInfo>> };
   boundsRadius: number;
   bboxMin: [number, number, number];
   bboxMax: [number, number, number];

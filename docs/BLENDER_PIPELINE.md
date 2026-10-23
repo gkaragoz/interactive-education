@@ -36,3 +36,55 @@ Previews (Cycles on the GPU) go to `tools/blender/out/` (gitignored); `cut` bise
 - Names: letters, digits, `_`, `-` only; materials `<id>_clay` / `<id>_gel`.
 - Modules are dropped from `sys.modules` at start (an open Blender keeps stale imports). Add new modules to `MODULES`/`FAMILIES` in `make_organelles.py`.
 - Cutaway: nested shells (nucleus envelope/inner, mitochondrion outer/inner) are separate closed meshes; the app's stencil cap must handle nesting. Shell `meta.json` carries `shell.halfExtents` (animal ellipsoid 11x8.5x9.5, plant rounded box 13x7x10, wall +0.74, bacterium capsule).
+
+## Texture pipeline v2 (unwrapped UVs, baked hand-painted maps, KTX2)
+
+Contract: `docs/ASSETS.md` ("Contract v2"). Verdict and before/after images: `docs/QUALITY_GATE.md`.
+
+### Run
+```
+B="C:/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+# 1. geometry + UV atlas + (optionally) bake/paint every tier as PNG   (GPU: CUDA, GTX 1080 Ti)
+$B -b --factory-startup --python tools/blender/make_organelles.py -- IDS=nucleus OUT=tools/blender/out/stage TEX=1
+#    TEX=1 enables the textures (PNG tiers go to tools/blender/out/tex/<id>/<tier>/), TEXMAX=1024 caps the size for quick
+#    iterations, GBUF=1 keeps the baked G-buffers (tools/blender/out/gbuf/*.npz) for the dev loop below.
+# 2. KTX2 / Basis Universal (npm package `basis_universal` = native basisu, no other tools needed)
+cd tools/textures && npm install && node encode.mjs --ids=nucleus   # -> public/textures/<id>/<tier>/*.ktx2 + meta.json `textures`
+# 3. copy the staged GLB + meta.json into public/models/organelles/ (encode.mjs writes meta.textures into that folder)
+# dev loop without re-baking: python tools/blender/devpaint.py nucleus clay
+# preview with textures: preview.py ... MODELS=<stage dir> TEX=high [TEXROOT=<tex dir>]  (NONORM=1 / NOAO=1 isolate a map)
+# three.js check (KTX2 + normal convention): serve the repo root (python -m http.server 8123) and open
+#   http://localhost:8123/tools/textures/viewer/index.html?id=nucleus&tier=high&view=iso
+```
+Always write to a staging dir first (`OUT=`), run `npx vitest run tests/assets.test.ts`, then copy.
+
+### How it works
+1. **Charts, not unwrapping.** Every `geo` primitive records chart coordinates per face corner (cube-sphere face lattice, tube
+   ring/side) in a registry keyed by the face array (`geo.reg/chart_of`, survives `xf`, `merge`, `flipf`). `charts.py` turns each
+   chart into a rectangle of its measured 3D size (median Jacobian), chops long strips (aspect <= 3), makes every chart
+   right-handed (glTF tangent frames are `B = N x T`), shelf-packs all rectangles of a material with one global scale (uniform
+   texel density, gutter 0.004) and writes the UVs. Overlap is zero by construction (checked again by `uvtools.uv_stats`), coverage
+   is 60-80 %. LOD1/LOD2 get the LOD0 atlas by affine transfer from the nearest LOD0 triangle (`uvtools.transfer_uv`).
+   UVs are snapped to 1/8192 plus a different sub-quantum shift in u and v: exact texel-centre-on-edge ties otherwise leave
+   one-texel holes along quad diagonals in the bake.
+2. **G-buffer bake** (`texbake.py`, Cycles EMIT, 1 sample, GPU): position, normal, base colour (pre-AO), AO/aux/aux2, alpha/part id
+   plus an exact coverage mask (margin 0). Vertex data comes from generic attributes (`bk_*`), which the glTF exporter ignores.
+3. **Painting in numpy** (`texpaint.py`, `texmotifs.py`, `texnoise.py`) on the G-buffer, per texel, from the 3D position, so strokes
+   are continuous across chart borders. Chart margins are filled by linear extrapolation of the position (not by copying edge
+   texels), otherwise constant strips show up at seams. Layers: pigment drift + cellular daubs, flow-aligned brush streaks, thin
+   dry-brush breaks, cavity contours with a hue shift, speckles, canvas weave and dithering (no 8-bit banding rings), then
+   per-organelle motifs (`texmotifs.py`: nuclear plates, wall plates and grooves, cristae stripes, grana ring grooves, ER folds
+   and ribosome speckle, Golgi fenestrations, flagellin rows ...). Stroke/relief height becomes a tangent-space normal map
+   (finite differences in texel space scaled by the real texel size); AO comes from the baked vertex AO.
+4. **Tiers**: painted once at the high size, `low`/`medium` are 2x2 box downsamples (albedo in linear light, normals
+   renormalised). Secondary materials (< 30 % of the surface) are half size.
+5. **KTX2**: `tools/textures/encode.mjs` calls `basisu` (v1.16.4, npm `basis_universal`): albedo and ORM = ETC1S, normals = UASTC
+   with RDO below 4096 and ETC1S normal-map mode at 4096 (UASTC at 4096 is ~10 MB per map and breaks the 120 MB budget).
+
+### Gotchas
+- three.js: the GLB has no TANGENT attribute, so the frame comes from UV derivatives and `normalScale.y` must be -1
+  (`GLTFLoader` already does this for its own materials; if the app builds materials itself it must set `normalScale.set(1, -1)`).
+- Keep `texture.flipY = false` (KTX2 is stored in glTF v-down orientation).
+- Normal maps compress badly with dithering at 4096 (UASTC); that is why the 4096 tier uses ETC1S.
+- `python` in Git Bash resolves `/tmp` differently from Windows tools; use `C:/Users/<you>/AppData/Local/Temp` for scratch files.
+- Baking + painting a 4096 hero takes 3-7 minutes (bake 30-130 s, paint 120-250 s); see the timings table in QUALITY_GATE.md.
