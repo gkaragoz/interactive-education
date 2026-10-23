@@ -8,3 +8,4 @@ __pycache__/
 tools/blender/out/
 tools/blender/blend/
 tools/textures/node_modules/
+shots/
