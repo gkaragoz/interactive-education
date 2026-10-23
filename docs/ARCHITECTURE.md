@@ -62,3 +62,8 @@ Hash routes: `#/` (explore), `#/kaynakca`, `#/kaynakca/<sourceId>` (deep link, f
 - Module screen (`ui/moduleView.ts`): title with track tabs and options top left (an option may set `trackIds`), tools top right, phase card and chart strip (only series the track names in `chartPoints`) above the timeline dock; the dock has play, step, a scrub bar with phase segments, speed, loop. Shortcuts: Space, left/right, plus/minus, `?` for the help sheet. Phase changes are announced in a live region.
 - Lazy loading: home and header need no three.js; `scene` (three) and `ModuleHost` are dynamic imports. `vite build`: main chunk ~125 KB (41 KB gz), three ~812 KB (238 KB gz) loaded on first stage use, module chunks separate.
 - Thumbnails: `node tools/thumbs.mjs [moduleId ...]` (needs `npm run preview` and a GPU browser).
+
+## v0.7 notes
+- `core/settingsStorage.ts` holds the saved quality, level and Sorular choices; `AppState.questionsOn` reaches `ModuleHost.setQuestions` which updates `ModuleSession.setQuestionsEnabled` and the view.
+- `scene/moduleAssets.ts` streams painted organelle textures (`organelle`, `organelleInstances`); `scene/moduleStage.ts` has `setSafeInsets` and `prewarm`.
+- E2E: `playwright.config.ts` has two projects (`smoke`, `modules`), runs on SwiftShader with `quality=low` and 180 s per test; `E2E_GPU=1 npm run e2e` uses the real GPU. `tools/ui-shots.mjs` takes full-UI GPU screenshots of every module at several sizes; `tools/perf.mjs` is `npm run perf`.

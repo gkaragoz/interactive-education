@@ -45,6 +45,8 @@ MODULE_IDS = ["chromosome", "chromosome-single", "chromatin", "kinetochore-fibre
               "sarcomere", "myosin-head", "actin-filament", "troponin-tropomyosin", "muscle-fibre-bundle", "neuron", "synapse-terminal",
               "neurotransmitter", "na-channel", "na-channel-open", "k-channel", "k-channel-open", "reflex-arc-parts", "punnett-tile", "allele-token"]
 MODULE_FAMILIES = ["mod_mitosis", "mod_membrane", "mod_dna", "mod_energy", "mod_muscle", "mod_neuro", "mod_genetics"]
+LAB_FAMILIES = ["lab_glass", "lab_equip", "lab_props", "lab_particles", "lab_solids"]
+LAB_IDS = []          # filled from the families' BUILDERS (registry order)
 FAMILY_SET = [FAMILIES]
 
 
@@ -117,17 +119,31 @@ def main():
     for k in ("TEXMAX", "GBUF"):
         if k in args:
             os.environ[k] = args[k]
-    modules = args.get("SET") == "modules"          # SET=modules: public/models/modules, textures tools/blender/out/tex_modules
+    lab = args.get("SET") == "lab"                  # SET=lab: public/models/lab, textures tools/blender/out/tex_lab
+    modules = args.get("SET") == "modules" or lab   # SET=modules: public/models/modules, textures tools/blender/out/tex_modules
+    sub = "lab" if lab else "modules"
     if modules:
-        FAMILY_SET[0] = MODULE_FAMILIES
-    ids = args["IDS"].split(",") if args.get("IDS") else (MODULE_IDS if modules else ALL_IDS)
-    out_dir = args.get("OUT") or str(ROOT / "public" / "models" / ("modules" if modules else "organelles"))
-    texroot = (args.get("TEXOUT") or str(HERE / "out" / ("tex_modules" if modules else "tex"))) if args.get("TEX") else None
+        FAMILY_SET[0] = LAB_FAMILIES if lab else MODULE_FAMILIES
+    default_ids = []
+    if lab:
+        for fam in LAB_FAMILIES:
+            try:
+                default_ids += list(importlib.import_module(fam).BUILDERS)
+            except ModuleNotFoundError as exc:
+                if exc.name != fam:
+                    raise
+    ids = args["IDS"].split(",") if args.get("IDS") else (default_ids if lab else MODULE_IDS if modules else ALL_IDS)
+    out_dir = args.get("OUT") or str(ROOT / "public" / "models" / (sub if modules else "organelles"))
+    texroot = (args.get("TEXOUT") or str(HERE / "out" / (f"tex_{sub}" if modules else "tex"))) if args.get("TEX") else None
     if modules:
         bpyout.KEEP_PIVOT[0] = True
         import texgen
-        for fam in MODULE_FAMILIES:
-            texgen.SIZE_TABLE.update(importlib.import_module(fam).TEXTURE_SIZES)
+        for fam in FAMILY_SET[0]:
+            try:
+                texgen.SIZE_TABLE.update(importlib.import_module(fam).TEXTURE_SIZES)
+            except ModuleNotFoundError as exc:
+                if exc.name != fam:
+                    raise
     reg = registry()
     errors = []
     for asset in ids:

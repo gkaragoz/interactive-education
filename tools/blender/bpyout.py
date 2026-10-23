@@ -161,7 +161,7 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None, tex
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     glb = out_dir / f"{asset}.glb"
-    uvmeta, tex_info, texel_scale = {}, None, {}
+    uvmeta, tex_info, texel_scale, uvrects = {}, None, {}, {}
     with Scratch():
         mats = {k: make_material(f"{asset}_{k}", k) for k in sorted({p.mat for ps in lods.values() for p in ps})}
         root = bpy.data.objects.new(asset, None)
@@ -179,6 +179,14 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None, tex
             uvs, uv_scale = charts.make_uvs(grp_parts, margin)
             for p, u in zip(grp_parts, uvs):
                 uv_by_part[p.name] = u
+                rd = getattr(p, "rect_dir", None)             # parts the app textures itself (display, letter face): report the UV rectangle of the facing faces
+                if rd is not None:
+                    fn_ = np.cross(p.V[p.F[:, 1]] - p.V[p.F[:, 0]], p.V[p.F[:, 2]] - p.V[p.F[:, 0]])
+                    fn_ = fn_ / np.maximum(np.linalg.norm(fn_, axis=1, keepdims=True), 1e-12)
+                    sel = (fn_ @ np.asarray(rd, float)) > 0.9
+                    if sel.any():
+                        uu = u[sel].reshape(-1, 2)
+                        uvrects[p.name] = [round(float(uu[:, 0].min()), 4), round(1 - float(uu[:, 1].max()), 4), round(float(uu[:, 0].max()), 4), round(1 - float(uu[:, 1].min()), 4)]   # [u0, v0, u1, v1] in glTF texture coordinates (v down)
             texel_scale[m_] = uv_scale
         for k in LODS:
             grp = bpy.data.objects.new(f"LOD{k}", None)
@@ -233,6 +241,8 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None, tex
                 bboxMin=[round(float(x), 4) for x in (lo - centre)], bboxMax=[round(float(x), 4) for x in (hi - centre)],
                 boundsRadius=round(float(np.linalg.norm(allv - centre, axis=1).max()), 4), closed=True,
                 generator="tools/blender/make_organelles.py", seed=seed, bytes=size, uv=uvmeta)
+    if uvrects:
+        meta["uvRects"] = uvrects
     if tex_info:
         meta["textureSource"] = tex_info
     meta.update(extra_meta or {})

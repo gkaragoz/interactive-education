@@ -24,3 +24,6 @@
 
 ## v0.6.1
 - DNA ve Kalıtım modüllerinde ilk kare artık dolu; kart küçük resimleri güncellendi.
+
+## v0.7.0
+- Sorular açık/kapalı ayarı, kompakt düzen ve güvenli alan kamerası, modüllerde boyalı organel dokuları, npm run perf ve shader ısınma, e2e sağlamlaştırma.

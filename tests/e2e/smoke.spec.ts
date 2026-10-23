@@ -633,10 +633,11 @@ test('home: module cards, Yakında cards without routes, remembered level, previ
   await expect(page.locator('.hero')).toBeVisible();
   await expect(page.locator('[data-module-card=cell]')).toBeVisible();
   expect(await page.locator('[data-module-card=__demo]').count()).toBe(0);
-  const soon = page.locator('[data-soon]').first();
-  await expect(soon).toContainText('Yakında');
-  await expect(soon).toHaveAttribute('aria-disabled', 'true');
-  expect(await soon.locator('a').count()).toBe(0);
+  // Every module is released now, so each one has a real card and none is 'Yakında'.
+  for (const id of ['mitosis-meiosis', 'membrane-transport', 'dna-protein', 'energy', 'muscle', 'nervous', 'genetics']) {
+    await expect(page.locator(`[data-module-card=${id}]`)).toBeVisible();
+  }
+  expect(await page.locator('[data-soon]').count()).toBe(0);
   // The level choice is remembered across reloads.
   await page.locator('.level-switch').getByRole('button', { name: 'İleri', exact: true }).click();
   await page.reload();
@@ -644,7 +645,8 @@ test('home: module cards, Yakında cards without routes, remembered level, previ
   // Unreleased (preview) modules appear only with ?demo.
   await page.goto('./?demo#/');
   await page.reload();
-  await expect(page.locator('[data-module-card].module-card .badge', { hasText: 'Önizleme' }).first()).toBeVisible();
+  // (every real module is released, so ?demo adds no card: the framework test module never shows on the home page)
+  expect(await page.locator('[data-module-card=__demo]').count()).toBe(0);
 });
 
 test('explorer: the info drawer opens on selection and closes with Esc and the button; the rail collapses', async ({ page }) => {

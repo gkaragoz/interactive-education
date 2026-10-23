@@ -85,3 +85,6 @@ Cytoskeleton, vesicles and particles exist only at medium and high. Their drift 
 
 ## Bundle (step 2)
 Main chunk 125 KB (41 KB gz), three.js 812 KB (238 KB gz, lazy), module chunks lazy per module.
+
+## Sorular (v0.7)
+Ayarlar has a second group, Sorular: Açık (default) or Kapalı. Kapalı means the "Kendini dene" and "Tahmin et" prompts never pause or cover the animation in any module; the list in the side drawer still opens them. Stored under `bilim.questions` (`1`/`0`), overridden for a visit by `?sorular=0|1`.

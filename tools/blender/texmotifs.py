@@ -70,6 +70,9 @@ HINTS = {
 }
 
 
+CUSTOM = {}          # (asset, part) -> fn(S, r, hint, gel) -> True when it fully painted the part (lab glass, labels, tiles ...)
+
+
 def hints(asset, part, L):
     return dict(HINTS.get((asset, part), {}))
 
@@ -143,6 +146,10 @@ def _section(S, r, hint):
 def apply(asset, name, S, r, hint, gel):
     S["N"] = S["N"]
     r["N"] = S["N"]
+    fn = CUSTOM.get((asset, name)) or CUSTOM.get((None, name))
+    if fn is not None and fn(S, r, hint, gel):
+        r["col"] = np.clip(r["col"], 0, 1)
+        return
     if hint.get("cut") is not None:
         _section(S, r, hint)
     if gel:

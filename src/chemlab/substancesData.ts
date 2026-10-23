@@ -1,0 +1,85 @@
+/** Raw rows of the substance database (numbers read from the Wikipedia page in `wp`; see substances.ts header). */
+import type { Rgb } from './ions';
+import type { Hazard, Phase, SolPoint } from './substances';
+
+export interface RowOpts {
+  rgb?: Rgb; sol?: readonly SolPoint[]; dH?: number; ions?: ReadonlyArray<readonly [string, number]>; misc?: boolean;
+  acid?: 'strong' | 'weak'; base?: 'strong' | 'weak'; pKa?: number; haz?: readonly Hazard[]; virt?: boolean; cp?: number;
+  mp?: number; bp?: number; note?: string;
+}
+export interface Row { id: string; nameTr: string; formula: string; phase: Phase; density: number | null; wp: string; kz?: string[]; o?: RowOpts }
+
+const SOL = ['KİM.10.2.4', 'KİM.10.2.5'];
+const AB = ['FB.8.5.5', 'KİM.11.2.10'];
+const MET = ['KİM.12.1.1', 'KİM.12.1.2'];
+const RX = ['KİM.10.1.3', 'KİM.10.2.4'];
+const GAS = ['FB.8.5.2', 'KİM.10.1.1'];
+
+export const SUBSTANCE_ROWS: readonly Row[] = [
+  // liquids, acids and bases
+  { id: 'water', nameTr: 'Su', formula: 'H2O', phase: 'liquid', density: 0.998, wp: 'Water', kz: ['FB.7.5.8', 'KİM.10.2.1'], o: { rgb: [235, 245, 255], cp: 4.18, mp: 0, bp: 100, misc: true } },
+  { id: 'ethanol', nameTr: 'Etanol (etil alkol)', formula: 'C2H5OH', phase: 'liquid', density: 0.789, wp: 'Ethanol', kz: ['KİM.10.2.1'], o: { rgb: [240, 245, 250], haz: ['flammable'], misc: true, bp: 78.4, cp: 2.44 } },
+  { id: 'acetic-acid', nameTr: 'Asetik asit (sirke asidi)', formula: 'CH3COOH', phase: 'liquid', density: 1.049, wp: 'Acetic_acid', kz: AB, o: { acid: 'weak', pKa: 4.756, haz: ['corrosive', 'flammable'], misc: true, mp: 16.6, bp: 118, cp: 2.05 } },
+  { id: 'citric-acid', nameTr: 'Sitrik asit (limon tuzu)', formula: 'C6H8O7', phase: 'solid', density: 1.665, wp: 'Citric_acid', kz: AB, o: { acid: 'weak', pKa: 3.13, haz: ['irritant'], sol: [[20, 145]], note: 'Page: 59.2 % w/w at 20 C = 145 g per 100 g water. Treated as monoprotic (pKa1 only).' } },
+  { id: 'hcl', nameTr: 'Hidrojen klorür (tuz ruhu)', formula: 'HCl', phase: 'gas', density: null, wp: 'Hydrochloric_acid', kz: AB, o: { acid: 'strong', ions: [['H+', 1], ['Cl-', 1]], haz: ['corrosive'], note: 'Only the solution (hydrochloric acid) is on the shelf.' } },
+  { id: 'h2so4', nameTr: 'Sülfürik asit', formula: 'H2SO4', phase: 'liquid', density: 1.84, wp: 'Sulfuric_acid', kz: AB, o: { acid: 'strong', ions: [['H+', 2], ['SO4(2-)', 1]], haz: ['corrosive'], misc: true, cp: 1.4, note: 'Second dissociation treated as complete (school level).' } },
+  { id: 'hno3', nameTr: 'Nitrik asit', formula: 'HNO3', phase: 'liquid', density: 1.51, wp: 'Nitric_acid', kz: AB, o: { acid: 'strong', ions: [['H+', 1], ['NO3-', 1]], haz: ['corrosive', 'oxidiser'], misc: true, virt: true } },
+  { id: 'naoh', nameTr: 'Sodyum hidroksit (sud kostik)', formula: 'NaOH', phase: 'solid', density: 2.13, wp: 'Sodium_hydroxide', kz: AB, o: { base: 'strong', haz: ['corrosive'], sol: [[0, 41.8], [25, 100], [100, 337]], dH: -44.5, ions: [['Na+', 1], ['OH-', 1]], mp: 323, note: 'dH sign: page calls it highly exothermic; the magnitude is a typical handbook value (unverified).' } },
+  { id: 'koh', nameTr: 'Potasyum hidroksit', formula: 'KOH', phase: 'solid', density: 2.044, wp: 'Potassium_hydroxide', kz: AB, o: { base: 'strong', haz: ['corrosive'], sol: [[0, 97], [25, 121], [50, 138.3], [100, 162.9]], ions: [['K+', 1], ['OH-', 1]], mp: 410 } },
+  { id: 'nh3', nameTr: 'Amonyak', formula: 'NH3', phase: 'gas', density: null, wp: 'Ammonia', kz: AB, o: { base: 'weak', pKa: 9.25, haz: ['toxic', 'corrosive'], note: 'pKa 9.25 is that of NH4+ (the ammonium chloride page gives 9.24). Only a dilute solution is on the shelf.' } },
+  { id: 'caoh2', nameTr: 'Kalsiyum hidroksit (sönmüş kireç)', formula: 'Ca(OH)2', phase: 'solid', density: 2.211, wp: 'Calcium_hydroxide', kz: SOL, o: { base: 'strong', haz: ['irritant'], sol: [[0, 0.189], [20, 0.173], [100, 0.066]], ions: [['Ca(2+)', 1], ['OH-', 2]], mp: 580 } },
+  // salts
+  { id: 'nacl', nameTr: 'Sodyum klorür (sofra tuzu)', formula: 'NaCl', phase: 'solid', density: 2.17, wp: 'Sodium_chloride', kz: ['FB.7.5.8', ...SOL], o: { sol: [[0, 35.7], [25, 36.0], [60, 37.1], [100, 39.1]], dH: 3.9, ions: [['Na+', 1], ['Cl-', 1]], mp: 800.7, note: '36.0 g/100 mL at 25 C is on the page (360 g/L); the other points are handbook values (unverified here).' } },
+  { id: 'kcl', nameTr: 'Potasyum klorür', formula: 'KCl', phase: 'solid', density: 1.984, wp: 'Potassium_chloride', kz: SOL, o: { sol: [[0, 27.77], [20, 33.97], [100, 54.02]], dH: 17.2, ions: [['K+', 1], ['Cl-', 1]], mp: 770, note: 'dH is a typical handbook value (unverified).' } },
+  { id: 'kno3', nameTr: 'Potasyum nitrat', formula: 'KNO3', phase: 'solid', density: 2.109, wp: 'Potassium_nitrate', kz: ['FB.7.5.9', ...SOL], o: { haz: ['oxidiser'], sol: [[0, 13.3], [20, 31.6], [25, 38.3], [60, 110], [80, 169], [100, 243.9]], dH: 34.9, ions: [['K+', 1], ['NO3-', 1]], mp: 334, note: '0/20/25/100 C points are on the page (133/316/383/2439 g/L); 60 and 80 C are handbook values (unverified). dH is a typical handbook value (unverified).' } },
+  { id: 'nano3', nameTr: 'Sodyum nitrat', formula: 'NaNO3', phase: 'solid', density: 2.257, wp: 'Sodium_nitrate', kz: SOL, o: { haz: ['oxidiser'], sol: [[0, 73], [25, 91.2]], ions: [['Na+', 1], ['NO3-', 1]], mp: 308, note: 'Page gives g/100 g water.' } },
+  { id: 'na2so4', nameTr: 'Sodyum sülfat', formula: 'Na2SO4', phase: 'solid', density: 2.664, wp: 'Sodium_sulfate', kz: SOL, o: { sol: [[0, 4.76], [25, 28.1]], ions: [['Na+', 2], ['SO4(2-)', 1]], mp: 884, note: 'Anhydrous values; the decahydrate transition near 32 C is ignored.' } },
+  { id: 'cuso4', nameTr: 'Bakır(II) sülfat', formula: 'CuSO4', phase: 'solid', density: 3.6, wp: 'Copper(II)_sulfate', kz: [...RX, ...MET], o: { rgb: [235, 238, 235], haz: ['irritant', 'toxic'], sol: [[10, 16.8], [20, 20.1], [60, 40.4], [100, 77]], ions: [['Cu(2+)', 1], ['SO4(2-)', 1]], note: 'Anhydrous; the page values are g/L for the anhydrous salt.' } },
+  { id: 'cuno32', nameTr: 'Bakır(II) nitrat', formula: 'Cu(NO3)2', phase: 'solid', density: 3.05, wp: 'Copper(II)_nitrate', kz: MET, o: { rgb: [100, 160, 220], haz: ['oxidiser', 'irritant'], sol: [[20, 138]], ions: [['Cu(2+)', 1], ['NO3-', 2]], note: 'Density and solubility are approximate (the page says only "very soluble"); unverified.' } },
+  { id: 'znso4', nameTr: 'Çinko sülfat', formula: 'ZnSO4', phase: 'solid', density: 3.54, wp: 'Zinc_sulfate', kz: [...RX, ...MET], o: { haz: ['irritant'], sol: [[20, 57.7]], ions: [['Zn(2+)', 1], ['SO4(2-)', 1]], mp: 680 } },
+  { id: 'zncl2', nameTr: 'Çinko klorür', formula: 'ZnCl2', phase: 'solid', density: 2.907, wp: 'Zinc_chloride', kz: MET, o: { haz: ['corrosive'], sol: [[25, 432]], ions: [['Zn(2+)', 1], ['Cl-', 2]], mp: 290, note: 'Page gives g/100 g water.' } },
+  { id: 'feso4', nameTr: 'Demir(II) sülfat', formula: 'FeSO4', phase: 'solid', density: 3.65, wp: 'Iron(II)_sulfate', kz: MET, o: { rgb: [225, 230, 215], sol: [[20, 29.5]], ions: [['Fe(2+)', 1], ['SO4(2-)', 1]], note: 'Page: 29.5 g/100 g for all forms; density of the anhydrous salt is approximate (unverified).' } },
+  { id: 'fecl3', nameTr: 'Demir(III) klorür', formula: 'FeCl3', phase: 'solid', density: 2.9, wp: 'Iron(III)_chloride', kz: SOL, o: { rgb: [150, 90, 40], haz: ['corrosive', 'irritant'], sol: [[25, 91.2]], ions: [['Fe(3+)', 1], ['Cl-', 3]], mp: 307.6, note: 'Density approximate (unverified).' } },
+  { id: 'mgcl2', nameTr: 'Magnezyum klorür', formula: 'MgCl2', phase: 'solid', density: 2.32, wp: 'Magnesium_chloride', kz: SOL, o: { sol: [[0, 52.9], [20, 54.3], [100, 72.6]], ions: [['Mg(2+)', 1], ['Cl-', 2]], mp: 714 } },
+  { id: 'alcl3', nameTr: 'Alüminyum klorür', formula: 'AlCl3', phase: 'solid', density: 2.48, wp: 'Aluminium_chloride', kz: SOL, o: { haz: ['corrosive'], sol: [[0, 43.9], [20, 45.8], [60, 48.1], [100, 49]], ions: [['Al(3+)', 1], ['Cl-', 3]] } },
+  { id: 'cacl2', nameTr: 'Kalsiyum klorür', formula: 'CaCl2', phase: 'solid', density: 2.15, wp: 'Calcium_chloride', kz: SOL, o: { haz: ['irritant'], sol: [[20, 74.5]], dH: -82.8, ions: [['Ca(2+)', 1], ['Cl-', 2]], note: 'dH magnitude is a typical handbook value (unverified); density approximate.' } },
+  { id: 'bacl2', nameTr: 'Baryum klorür', formula: 'BaCl2', phase: 'solid', density: 3.856, wp: 'Barium_chloride', kz: SOL, o: { haz: ['toxic'], virt: true, sol: [[0, 31.2], [20, 35.8], [100, 59.4]], ions: [['Ba(2+)', 1], ['Cl-', 2]], mp: 962 } },
+  { id: 'agno3', nameTr: 'Gümüş nitrat', formula: 'AgNO3', phase: 'solid', density: 4.35, wp: 'Silver_nitrate', kz: [...RX, ...MET], o: { haz: ['corrosive', 'oxidiser'], virt: true, sol: [[0, 122], [10, 170], [25, 256], [40, 373], [100, 912]], ions: [['Ag+', 1], ['NO3-', 1]], mp: 209.7 } },
+  { id: 'na2co3', nameTr: 'Sodyum karbonat (çamaşır sodası)', formula: 'Na2CO3', phase: 'solid', density: 2.54, wp: 'Sodium_carbonate', kz: AB, o: { base: 'weak', pKa: 10.33, haz: ['irritant'], sol: [[0, 7], [15, 16.4], [20, 21.5]], dH: -26.7, ions: [['Na+', 2], ['CO3(2-)', 1]], mp: 851, note: '-26.7 kJ/mol, the 0 and 15 C points and pKa 10.33 are on the page; the 20 C value and density are approximate (unverified).' } },
+  { id: 'k2co3', nameTr: 'Potasyum karbonat', formula: 'K2CO3', phase: 'solid', density: 2.43, wp: 'Potassium_carbonate', kz: AB, o: { base: 'weak', pKa: 10.25, haz: ['irritant'], sol: [[20, 110.3], [100, 149.2]], ions: [['K+', 2], ['CO3(2-)', 1]], mp: 891 } },
+  { id: 'nahco3', nameTr: 'Sodyum hidrojenkarbonat (kabartma tozu)', formula: 'NaHCO3', phase: 'solid', density: 2.2, wp: 'Sodium_bicarbonate', kz: ['FB.8.5.2', 'KİM.10.1.1'], o: { base: 'weak', pKa: 6.351, sol: [[0, 6.9], [20, 9.6], [60, 16.5]], dH: 16.4, ions: [['Na+', 1], ['HCO3-', 1]], note: 'Solubility 69/96/165 g/L at 0/20/60 C and pKa 6.351 are on the page; density and dH are approximate (unverified).' } },
+  { id: 'ch3coona', nameTr: 'Sodyum asetat', formula: 'CH3COONa', phase: 'solid', density: 1.528, wp: 'Sodium_acetate', kz: AB, o: { base: 'weak', sol: [[0, 119], [20, 123.3], [60, 137.2], [100, 162.9]], ions: [['Na+', 1], ['CH3COO-', 1]], mp: 324 } },
+  { id: 'nh4cl', nameTr: 'Amonyum klorür (nişadır)', formula: 'NH4Cl', phase: 'solid', density: 1.519, wp: 'Ammonium_chloride', kz: AB, o: { acid: 'weak', pKa: 9.24, haz: ['irritant'], sol: [[0, 29.4], [25, 38.3], [40, 45.4], [100, 74.1]], ions: [['NH4+', 1], ['Cl-', 1]] } },
+  { id: 'nh4no3', nameTr: 'Amonyum nitrat', formula: 'NH4NO3', phase: 'solid', density: 1.725, wp: 'Ammonium_nitrate', kz: SOL, o: { haz: ['oxidiser'], sol: [[0, 118], [20, 192], [40, 297], [60, 410]], dH: 25.7, ions: [['NH4+', 1], ['NO3-', 1]], mp: 169.6, note: 'The page says dissolution is highly endothermic (cold packs); the 25.7 kJ/mol magnitude is a typical handbook value (unverified).' } },
+  { id: 'ki', nameTr: 'Potasyum iyodür', formula: 'KI', phase: 'solid', density: 3.13, wp: 'Potassium_iodide', kz: ['KİM.11.1.7'], o: { sol: [[0, 128], [20, 140], [60, 176]], ions: [['K+', 1], ['I-', 1]] } },
+  { id: 'soap', nameTr: 'Sabun (sodyum laurat, bulaşık deterjanı modeli)', formula: 'NaC12H23O2', phase: 'solid', density: 1.1, wp: 'Sodium_laurate', kz: ['FB.8.5.6'], o: { base: 'weak', pKa: 5.3, sol: [[20, 3]], ions: [['Na+', 1], ['laurate-', 1]], note: 'Model of dish soap (a real detergent is a mixture); density, solubility and pKa are our teaching values (unverified).' } },
+  // insoluble solids (precipitates)
+  { id: 'caco3', nameTr: 'Kalsiyum karbonat (kireç taşı, tebeşir)', formula: 'CaCO3', phase: 'solid', density: 2.711, wp: 'Calcium_carbonate', kz: ['KİM.10.1.3', 'KİM.10.2.4'], o: { sol: [[25, 0.0013]], ions: [['Ca(2+)', 1], ['CO3(2-)', 1]], mp: 1339, note: '0.013 g/L at 25 C on the page.' } },
+  { id: 'agcl', nameTr: 'Gümüş klorür', formula: 'AgCl', phase: 'solid', density: 5.56, wp: 'Silver_chloride', kz: SOL, o: { virt: true, sol: [[25, 0.00019]], ions: [['Ag+', 1], ['Cl-', 1]], note: 'Our arithmetic from Ksp = 1.77e-10 on the page.' } },
+  { id: 'baso4', nameTr: 'Baryum sülfat', formula: 'BaSO4', phase: 'solid', density: 4.49, wp: 'Barium_sulfate', kz: SOL, o: { virt: true, sol: [[25, 0.00024]], ions: [['Ba(2+)', 1], ['SO4(2-)', 1]], note: 'Our arithmetic from Ksp = 1.08e-10 on the page.' } },
+  { id: 'cuoh2', nameTr: 'Bakır(II) hidroksit', formula: 'Cu(OH)2', phase: 'solid', density: 3.368, wp: 'Copper(II)_hydroxide', kz: SOL, o: { rgb: [90, 150, 225], sol: [[25, 0.0000017]], ions: [['Cu(2+)', 1], ['OH-', 2]], note: 'Our arithmetic from Ksp = 2.2e-20 on the page.' } },
+  { id: 'cuco3', nameTr: 'Bakır(II) karbonat', formula: 'CuCO3', phase: 'solid', density: 4.0, wp: 'Copper(II)_carbonate', kz: SOL, o: { rgb: [90, 175, 150], sol: [[25, 0.000023]], ions: [['Cu(2+)', 1], ['CO3(2-)', 1]], note: 'Our arithmetic from Ksp = 10^-11.45 on the page; density approximate.' } },
+  { id: 'mgoh2', nameTr: 'Magnezyum hidroksit', formula: 'Mg(OH)2', phase: 'solid', density: 2.3446, wp: 'Magnesium_hydroxide', kz: SOL, o: { sol: [[25, 0.00064], [100, 0.004]], ions: [['Mg(2+)', 1], ['OH-', 2]] } },
+  { id: 'znoh2', nameTr: 'Çinko hidroksit', formula: 'Zn(OH)2', phase: 'solid', density: 3.053, wp: 'Zinc_hydroxide', kz: SOL, o: { sol: [[25, 0.00016]], ions: [['Zn(2+)', 1], ['OH-', 2]], note: 'Our arithmetic from Ksp = 1.8e-14 on the page.' } },
+  { id: 'feoh3', nameTr: 'Demir(III) hidroksit', formula: 'Fe(OH)3', phase: 'solid', density: 3.4, wp: 'Iron(III)_oxide-hydroxide', kz: SOL, o: { rgb: [150, 80, 40], sol: [[25, 0.0000001]], ions: [['Fe(3+)', 1], ['OH-', 3]], note: 'Practically insoluble; density and solubility are teaching values (unverified).' } },
+  { id: 'mgo', nameTr: 'Magnezyum oksit', formula: 'MgO', phase: 'solid', density: 3.6, wp: 'Magnesium_oxide', kz: ['KİM.10.1.3', 'KİM.12.1.1'], o: { mp: 2852, note: 'Treated as not dissolving; it reacts with acids.' } },
+  { id: 'mno2', nameTr: 'Mangan(IV) oksit', formula: 'MnO2', phase: 'solid', density: 5.03, wp: 'Manganese(IV)_oxide', kz: ['KİM.11.1.7'], o: { rgb: [50, 45, 40], haz: ['irritant'], note: 'Catalyst for peroxide decomposition; density approximate (unverified).' } },
+  // organic solids
+  { id: 'sucrose', nameTr: 'Sakkaroz (çay şekeri)', formula: 'C12H22O11', phase: 'solid', density: 1.587, wp: 'Sucrose', kz: ['FB.7.5.8', 'FB.7.5.9'], o: { sol: [[20, 201], [60, 287], [80, 362]], dH: 5.9, note: '2.01 g/mL at 20 C is on the page; 60 and 80 C and dH are handbook values (unverified).' } },
+  { id: 'glucose', nameTr: 'Glikoz (üzüm şekeri)', formula: 'C6H12O6', phase: 'solid', density: 1.54, wp: 'Glucose', kz: ['FB.7.5.8'], o: { sol: [[20, 47.9], [25, 90.9]], note: 'The page lists 479 g/L (20 C) and 909 g/L (25 C); the two disagree, both points are kept.' } },
+  // metals
+  { id: 'mg', nameTr: 'Magnezyum', formula: 'Mg', phase: 'solid', density: 1.738, wp: 'Magnesium', kz: MET, o: { rgb: [205, 205, 210], haz: ['flammable'], mp: 650, cp: 1.02 } },
+  { id: 'al', nameTr: 'Alüminyum', formula: 'Al', phase: 'solid', density: 2.7, wp: 'Aluminium', kz: MET, o: { rgb: [200, 202, 206], mp: 660, cp: 0.9 } },
+  { id: 'zn', nameTr: 'Çinko', formula: 'Zn', phase: 'solid', density: 7.14, wp: 'Zinc', kz: MET, o: { rgb: [170, 175, 185], mp: 420, cp: 0.39 } },
+  { id: 'fe', nameTr: 'Demir', formula: 'Fe', phase: 'solid', density: 7.87, wp: 'Iron', kz: MET, o: { rgb: [120, 120, 126], mp: 1538, cp: 0.45 } },
+  { id: 'cu', nameTr: 'Bakır', formula: 'Cu', phase: 'solid', density: 8.96, wp: 'Copper', kz: MET, o: { rgb: [184, 115, 51], mp: 1085, cp: 0.385 } },
+  { id: 'ag', nameTr: 'Gümüş', formula: 'Ag', phase: 'solid', density: 10.49, wp: 'Silver', kz: MET, o: { rgb: [215, 215, 220], virt: true, mp: 962, cp: 0.235 } },
+  // peroxide, bleach, gases
+  { id: 'h2o2', nameTr: 'Hidrojen peroksit', formula: 'H2O2', phase: 'liquid', density: 1.45, wp: 'Hydrogen_peroxide', kz: ['KİM.11.1.1', 'KİM.11.1.7'], o: { haz: ['oxidiser', 'corrosive'], misc: true, rgb: [235, 245, 255], note: 'Only the 3 % solution is on the shelf.' } },
+  { id: 'naclo', nameTr: 'Sodyum hipoklorit (çamaşır suyu etken maddesi)', formula: 'NaClO', phase: 'solid', density: 1.1, wp: 'Sodium_hypochlorite', kz: ['FB.8.5.5'], o: { base: 'weak', pKa: 7.53, haz: ['corrosive', 'oxidiser'], virt: true, sol: [[20, 29.3]], ions: [['Na+', 1], ['ClO-', 1]], note: 'Used for blocked combinations only; solubility and density approximate (unverified).' } },
+  { id: 'h2', nameTr: 'Hidrojen', formula: 'H2', phase: 'gas', density: null, wp: 'Hydrogen', kz: GAS, o: { haz: ['flammable'], cp: 14.3 } },
+  { id: 'o2', nameTr: 'Oksijen', formula: 'O2', phase: 'gas', density: null, wp: 'Oxygen', kz: GAS, o: { haz: ['oxidiser'], cp: 0.92 } },
+  { id: 'co2', nameTr: 'Karbondioksit', formula: 'CO2', phase: 'gas', density: null, wp: 'Carbon_dioxide', kz: GAS, o: { cp: 0.84 } },
+  { id: 'cl2', nameTr: 'Klor', formula: 'Cl2', phase: 'gas', density: null, wp: 'Chlorine', kz: ['FB.8.5.5'], o: { haz: ['toxic', 'oxidiser'], virt: true, rgb: [200, 220, 120], cp: 0.48, note: 'Never produced by the engine; named only in blocked-combination messages.' } },
+  { id: 'n2', nameTr: 'Azot', formula: 'N2', phase: 'gas', density: null, wp: 'Nitrogen', kz: GAS, o: { cp: 1.04 } },
+];
