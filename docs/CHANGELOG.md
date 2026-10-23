@@ -15,3 +15,6 @@
 
 ## v0.4.0
 - Module DNA ve protein sentezi: DNA yapısı, replikasyon, transkripsiyon, translasyon ve mutasyon.
+
+## v0.5.0
+- Module Enerji dönüşümleri: fotosentez, hücresel solunum, fermantasyon ve kemosentez.
