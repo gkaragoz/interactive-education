@@ -12,9 +12,10 @@ for (const id of ids) {
   const url = id === 'cell' ? `${base}?perf&cell=animal&level=ileri&quality=high#/modul/cell` : `${base}?demo&level=ileri&quality=high#/modul/${id}`;
   await page.goto(url);
   await page.waitForFunction(() => document.body.dataset.ready === 'true' || document.body.dataset.moduleReady, null, { timeout: 120000 });
+  if (id !== 'cell') await page.waitForFunction(() => window.__bilimModules?.session, null, { timeout: 120000 });
   if (id !== 'cell') await page.evaluate(() => { const m = window.__bilimModules; m?.session.player.seek(m.session.track.duration * 0.4); });
   await page.waitForTimeout(6000);
-  await page.addStyleTag({ content: '.floating,.topbar,.dock-bar,.toast,.stage-head,.hint,.perf-overlay,.note{visibility:hidden!important}' });
+  await page.addStyleTag({ content: '.label-layer,.leader-label,.floating,.topbar,.dock-bar,.toast,.stage-head,.hint,.perf-overlay,.note{visibility:hidden!important}' });
   await page.waitForTimeout(800);
   const png = await page.screenshot({ clip: id === 'cell' ? { x: 585, y: 250, width: 730, height: 540 } : { x: 330, y: 70, width: 940, height: 640 } });
   const b64 = await page.evaluate(async (data) => {

@@ -6,3 +6,6 @@
 - Module `mitosis-meiosis`: mitoz, mayoz I, mayoz II, ayrılmama (İleri) in 3D with 2n=4 / 2n=6.
 - Painted module assets (chromosome, spindle, kinetochore fibre, nuclear envelope fragment ...).
 - Other modules (membrane transport, DNA and protein, energy, muscle, nervous system, genetics) are built and previewable with `?demo`; they are released one version at a time.
+
+## v0.2.1
+- Rendered card stills for every module (fixes 404s for missing thumbnails on the home page); `tools/thumbs.mjs` waits for the module session.
