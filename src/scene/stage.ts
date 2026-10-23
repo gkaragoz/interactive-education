@@ -59,6 +59,7 @@ export class Stage {
   private width = 1;
   private height = 1;
   private pixelRatio = 1;
+  private insets: [number, number] = [0, 0];
   /** Camera, picking and benchmark helpers for tests and the console. */
   readonly debug: StageDebug;
 
@@ -117,6 +118,15 @@ export class Stage {
   on(events: Partial<StageEvents>): void { this.events = { ...this.events, ...events }; }
 
   get qualityLevel(): QualityName { return this.q.level; }
+
+  /** Pixels covered by floating panels on the left and right: the picture is centred in the free space between them. */
+  setOverlayInsets(left: number, right: number): void {
+    this.insets = [left, right];
+    this.labels.setInsets(left, right);
+    this.applyInsets();
+  }
+
+  private applyInsets(): void { this.rig.setShift(this.isCompare ? 0 : (this.insets[1] - this.insets[0]) / 2 / Math.max(this.width, 1), 0); }
 
   get isCompare(): boolean { return this.secondary !== null; }
 
@@ -229,10 +239,7 @@ export class Stage {
 
   private applyView(): void { this.sv.applyToScenes(); }
 
-  resetView(): void {
-    this.rig.resetView();
-    this.requestRender();
-  }
+  resetView(): void { this.rig.resetView(); this.requestRender(); }
 
   private fitCamera(snap: boolean): void {
     const r = this.isCompare ? COMPARE_RADIUS * 1.15 : 0;
@@ -268,9 +275,9 @@ export class Stage {
     this.requestRender();
   }
 
-  private pickAt(clientX: number, clientY: number): { id: string; index: number } | null {
+  private pickAt(x: number, y: number): { id: string; index: number } | null {
     const rect = this.canvas.getBoundingClientRect();
-    return this.paneSet.pick(clientX - rect.left, clientY - rect.top, rect.height, [this.primary, this.secondary]);
+    return this.paneSet.pick(x - rect.left, y - rect.top, rect.height, [this.primary, this.secondary]);
   }
 
   // ---- frame loop ---------------------------------------------------------------------------------------------

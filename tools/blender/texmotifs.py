@@ -4,7 +4,26 @@ import numpy as np
 from texnoise import aniso, fbm, sstep, vnoise, worley_fast
 
 # (asset, part) -> hint overrides; w = stroke width (um), relief = paint height (um), axis = flow axis
+NEUTRAL = dict(jit=0.0, dab=0.06, dabc=(1, 1, 1), under=(1, 1, 1), warm=0.0, strokeval=0.04, dry=0.1, contour=0.4,
+               dark=(0.72, 0.72, 0.76), rough=0.5)
 HINTS = {
+    ("chromosome", "arms"): dict(NEUTRAL, w=0.05, relief=0.003, axis=(0, 1, 0), along=True),
+    ("chromosome-single", "arms"): dict(NEUTRAL, w=0.05, relief=0.003, axis=(0, 1, 0), along=True),
+    ("chromosome", "kinetochore"): dict(w=0.03, relief=0.002, rough=0.4),
+    ("chromosome-single", "kinetochore"): dict(w=0.03, relief=0.002, rough=0.4),
+    ("chromatin", "fine"): dict(w=0.04, relief=0.002),
+    ("chromatin", "coarse"): dict(w=0.08, relief=0.004),
+    ("kinetochore-fibre", "microtubules"): dict(w=0.03, relief=0.0015, axis=(1, 0, 0), along=True),
+    ("spindle-pole", "mother"): dict(w=0.03, relief=0.0015, axis=(1, 0, 0), along=True),
+    ("spindle-pole", "daughter"): dict(w=0.03, relief=0.0015, axis=(0, 0, 1), along=True),
+    ("spindle-pole", "aster"): dict(w=0.03, relief=0.0015),
+    ("cleavage-furrow-ring", "actin"): dict(w=0.04, relief=0.002, axis=(0, 1, 0)),
+    ("cleavage-furrow-ring", "myosin"): dict(w=0.03, relief=0.002),
+    ("cell-plate", "plate"): dict(w=0.12, relief=0.004, dab=0.3),
+    ("cell-plate", "vesicles"): dict(w=0.03, relief=0.002),
+    ("nuclear-envelope-fragment", "outer"): dict(w=0.14, relief=0.006, dab=0.28),
+    ("nuclear-envelope-fragment", "inner"): dict(w=0.14, relief=0.005, dab=0.2),
+    ("nuclear-envelope-fragment", "pores"): dict(w=0.03, relief=0.002),
     ("nucleus", "envelope"): dict(w=0.30, relief=0.014, axis=(0, 1, 0), dry=0.4, dab=0.30, jit=0.10),
     ("nucleus", "inner"): dict(w=0.30, relief=0.006, jit=0.05, dab=0.1, dry=0.2, contour=0.3),
     ("nucleus", "nucleolus"): dict(w=0.14, relief=0.006, rough=0.30, dry=0.2, contour=0.5),
@@ -104,9 +123,28 @@ def _dots(S, r, size, thresh, depth, light=0.0, seed=51):
     return core
 
 
+def _section(S, r, hint):
+    """Cut-open assets: the squashed front half is a flat cap at z = hint['cut']; paint it as a section (pale flesh + hatching)."""
+    cz = hint["cut"]
+    sec = (S["N"][:, 2] > 0.9) & (np.abs(S["P"][:, 2] - cz) < 0.012)
+    if not sec.any():
+        return
+    P = S["P"][sec]
+    hatch = 0.5 + 0.5 * np.sin((P[:, 0] + P[:, 1]) * 55.0)
+    flesh = np.array([0.97, 0.94, 0.86], np.float32)
+    c = r["col"][sec] * 0.42 + flesh * 0.58
+    r["col"][sec] = c * (1 - 0.10 * sstep(0.7, 0.95, hatch))[:, None]
+    r["h"][sec] *= 0.05
+    r["rough"][sec] = 0.8
+    r["ao"][sec] = 1.0
+    r["alpha"][sec] = np.maximum(r["alpha"][sec], 0.92)
+
+
 def apply(asset, name, S, r, hint, gel):
     S["N"] = S["N"]
     r["N"] = S["N"]
+    if hint.get("cut") is not None:
+        _section(S, r, hint)
     if gel:
         r["alpha"] = np.clip(r["alpha"] * (1 + 0.30 * r["stroke"] + 0.08 * r["br"]), 0.02, 1.0)
         r["h"] *= 0.5
@@ -114,7 +152,24 @@ def apply(asset, name, S, r, hint, gel):
         r["col"] = r["col"] + 0.05 * sstep(0.2, 0.7, r["stroke"])[:, None]
         return
     key = (asset, name)
-    if key == ("nucleus", "envelope"):
+    if name == "arms" and asset.startswith("chromosome"):               # G-bands + helical coil on a neutral albedo
+        tv, av = S["aux"], S["aux2"]
+        z = np.zeros_like(tv)
+        band = sstep(0.05, 0.65, vnoise(np.stack([tv * 38.0, z + 3.7, z], 1).astype(np.float32), 31))
+        helix = 0.5 + 0.5 * np.sin(2 * np.pi * (tv * 30.0 + av))
+        coil = sstep(0.62, 0.95, helix)
+        r["col"] = r["col"] * (1 - 0.20 * band - 0.13 * coil)[:, None]
+        r["h"] -= hint["relief"] * (1.6 * coil + 0.7 * band)
+        r["rough"] = r["rough"] + 0.1 * coil
+    elif key == ("kinetochore-fibre", "microtubules"):
+        _stripes(S, r, (1, 0, 0), 38.0, 0.18, wobble=0.1)
+    elif key[0] == "spindle-pole" and name in ("mother", "daughter"):
+        _stripes(S, r, (1, 0, 0) if name == "mother" else (0, 0, 1), 14.0, 0.2, wobble=0.2)
+    elif key == ("cell-plate", "plate"):
+        _dots(S, r, 0.1, 0.4, 0.14, seed=91)
+    elif key[0] == "nuclear-envelope-fragment" and name in ("outer", "inner"):
+        _plates(S, r, 1.0 / 0.42, hint["relief"] * 3.0, 0.2, 0.08)
+    elif key == ("nucleus", "envelope"):
         edge, cid = _plates(S, r, 1.0 / 1.15, hint["relief"] * 6.5, 0.30, 0.10)
         r["col"] = r["col"] + np.array([0.06, 0.03, 0.09], np.float32) * (sstep(0.5, 0.9, edge) * sstep(0.1, 0.7, cid))[:, None]
     elif key == ("nucleus", "nucleolus"):

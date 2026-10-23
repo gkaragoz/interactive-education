@@ -5,3 +5,4 @@ export { createInfoCard } from './infoCard';
 export { createSettingsMenu } from './settings';
 export { createMicroscopePanel } from './bottomRow';
 export { renderAbout } from './about';
+export type { ModuleView, ModuleViewHandlers } from './moduleView';

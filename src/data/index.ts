@@ -7,6 +7,10 @@ import { micrographs } from './micrographs';
 
 export type * from './types';
 export { sources, kazanimlar, organelles, cells, micrographs };
+export type * from './moduleTypes';
+export { modules, getModule } from './modules';
+export { aminoAcids, codonTable, transcribeTemplate, translateMrna } from './modules/dna-protein.codons';
+export { geneExamples, mutationExamples } from './modules/dna-protein.examples';
 
 const byId = <T extends { id: string }>(list: T[]): Map<string, T> => new Map(list.map((item) => [item.id, item]));
 

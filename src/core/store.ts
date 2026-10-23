@@ -6,6 +6,8 @@ export type ViewMode = 'full' | 'cutaway' | 'isolate';
 
 export interface AppState {
   route: Route;
+  /** Which module the header shows as current (`cell` for the explorer). */
+  moduleId: string;
   cellId: CellTypeId;
   level: LevelId;
   /** Selected organelle (or shell part) id. */
@@ -21,6 +23,8 @@ export interface AppState {
   autoRotate: boolean;
   compareOn: boolean;
   compareCellId: CellTypeId;
+  /** The info drawer: opens when something is selected, the learner can close it without deselecting. */
+  infoOpen: boolean;
   qualityMode: QualityMode;
 }
 

@@ -1,0 +1,181 @@
+{
+  "id": "neurotransmitter",
+  "tris": {
+    "LOD0": 4296,
+    "LOD1": 972,
+    "LOD2": 516
+  },
+  "bboxMin": [
+    -0.2244,
+    -0.1564,
+    -0.1187
+  ],
+  "bboxMax": [
+    0.2549,
+    0.1444,
+    0.1219
+  ],
+  "boundsRadius": 0.2687,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 128036,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9738,
+        0.9923
+      ],
+      "coverage": 0.6632,
+      "overlap": 0,
+      "stretchP95": 1.053,
+      "stretchP05": 0.934,
+      "uvPerUnit": 1.35453
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 27241
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 22900
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 19148
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 98593
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 95332
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 65718
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 340604
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 381047
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 209060
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2,
+    "paintSeconds": 1.6,
+    "totalSeconds": 3.9
+  },
+  "pivot": "centre",
+  "axes": "~0.4 across, no preferred orientation",
+  "units": "um (exaggerated)",
+  "tintable": true,
+  "tintParts": [
+    "ligand"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/neurotransmitter/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 17386,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5012,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7979,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4395,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 62107,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16795,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 34149,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 11163,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 219332,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 54076,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 137804,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 27452,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

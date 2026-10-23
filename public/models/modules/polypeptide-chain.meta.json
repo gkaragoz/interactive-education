@@ -1,0 +1,181 @@
+{
+  "id": "polypeptide-chain",
+  "tris": {
+    "LOD0": 26240,
+    "LOD1": 6512,
+    "LOD2": 2544
+  },
+  "bboxMin": [
+    -1.2524,
+    -0.5337,
+    -0.5508
+  ],
+  "bboxMax": [
+    1.0986,
+    0.543,
+    0.5283
+  ],
+  "boundsRadius": 1.32,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 773360,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9806
+      ],
+      "coverage": 0.8061,
+      "overlap": 0,
+      "stretchP95": 1.07,
+      "stretchP05": 0.931,
+      "uvPerUnit": 0.38424
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 175872
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 100438
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 114935
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 637494
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 442994
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 439726
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2218214
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1915738
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1609644
+          }
+        }
+      }
+    },
+    "bakeSeconds": 8.9,
+    "paintSeconds": 13,
+    "totalSeconds": 24
+  },
+  "pivot": "chain centre",
+  "axes": "~2.4 long along X, 20 residues with coloured side chains (part residues), neutral backbone (tintable)",
+  "units": "um",
+  "tintable": true,
+  "tintParts": [
+    "backbone"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/polypeptide-chain/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 73875,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 25630,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27564,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 20681,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 285950,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 82216,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 134283,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 69451,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1058455,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 229977,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 637210,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 191268,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

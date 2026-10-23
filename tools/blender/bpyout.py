@@ -14,6 +14,7 @@ import charts
 NAME_OK = re.compile(r"^[A-Za-z0-9_\-]+$")
 LODS = (0, 1, 2)
 GRID = 16384.0
+KEEP_PIVOT = [False]      # modules: the builder's origin is the pivot (documented in meta.json), do not re-centre
 
 
 class Scratch:
@@ -147,7 +148,7 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None, tex
     to LOD1/2, writes <asset>.glb + <asset>.meta.json. `tex(ctx)` (optional) bakes and paints the textures."""
     problems = []
     allv0 = np.concatenate([p.V for p in lods[0]])
-    centre0 = np.round((allv0.min(0) + allv0.max(0)) / 2 * GRID) / GRID
+    centre0 = np.zeros(3) if KEEP_PIVOT[0] else np.round((allv0.min(0) + allv0.max(0)) / 2 * GRID) / GRID
     for parts in lods.values():             # centre on the LOD0 bbox and snap to a grid (meshopt compresses it far better)
         for p in parts:
             p.V = np.round((p.V - centre0) * GRID) / GRID
@@ -171,7 +172,11 @@ def build_and_export(asset, lods, out_dir, generator, seed, extra_meta=None, tex
         uv_by_part = {}
         for m_ in sorted({p.mat for p in lods[0]}):          # analytic chart atlas per material (LOD0)
             grp_parts = [p for p in lods[0] if p.mat == m_]
-            uvs, uv_scale = charts.make_uvs(grp_parts)
+            margin = 0.004
+            if KEEP_PIVOT[0]:                 # modules: small atlases need a wider gutter (>= ~8 texels of the largest tier / low-tier bleeding)
+                import texgen
+                margin = min(max(8.0 / texgen.tier_sizes(asset)['high'], 0.004), 0.04)
+            uvs, uv_scale = charts.make_uvs(grp_parts, margin)
             for p, u in zip(grp_parts, uvs):
                 uv_by_part[p.name] = u
             texel_scale[m_] = uv_scale

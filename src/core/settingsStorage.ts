@@ -26,3 +26,23 @@ export function saveQualityMode(mode: QualityMode, storage?: Pick<Storage, 'setI
     // Nothing persists; the choice still applies to this page.
   }
 }
+
+const LEVEL_KEY = 'bilim.level';
+
+/** The learner's last level choice (Temel / İleri), or null; guarded like every storage access. */
+export function loadLevel(storage?: Pick<Storage, 'getItem'>): 'temel' | 'ileri' | null {
+  try {
+    const value = (storage ?? localStorage).getItem(LEVEL_KEY);
+    return value === 'temel' || value === 'ileri' ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveLevel(level: 'temel' | 'ileri', storage?: Pick<Storage, 'setItem'>): void {
+  try {
+    (storage ?? localStorage).setItem(LEVEL_KEY, level);
+  } catch {
+    // not persisted
+  }
+}

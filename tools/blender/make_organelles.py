@@ -16,7 +16,7 @@ if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
 MODULES = ["noise", "geo", "shapes", "paint", "glbinfo", "charts", "uvtools", "texnoise", "texmotifs", "texpaint", "texbake", "texgen", "bpyout", "org_nucleus", "org_energy", "org_membranes",
-           "org_misc", "org_vesicles", "org_motility", "org_prokaryote", "org_shells", "org_decor"]
+           "org_misc", "org_vesicles", "org_motility", "org_prokaryote", "org_shells", "org_decor", "mod_mitosis", "mod_membrane", "mod_dna", "mod_energy", "mod_muscle", "mod_neuro", "mod_genetics", "extrude", "clip"]
 for _m in MODULES:                      # an open Blender keeps stale imports between runs
     sys.modules.pop(_m, None)
 
@@ -34,9 +34,23 @@ ALL_IDS = ["nucleus", "mitochondrion", "rough-er", "smooth-er", "golgi", "riboso
            "membrane-plant", "wall-plant", "envelope-bacterium", "cytoskeleton", "vesicle"]
 
 
+MODULE_IDS = ["chromosome", "chromosome-single", "chromatin", "kinetochore-fibre", "spindle-pole", "cleavage-furrow-ring",
+              "cell-plate", "nuclear-envelope-fragment",
+              "bilayer-patch", "bilayer-tile", "channel-protein", "carrier-protein", "carrier-protein-b", "pump-protein", "receptor-protein",
+              "dna-helix", "dna-single-strand", "helicase", "dna-polymerase", "rna-polymerase", "nucleotide", "mrna-strand", "trna",
+              "amino-acid", "polypeptide-chain", "ribosome-subunits",
+              "atp-synthase", "etc-complex-1", "etc-complex-2", "etc-complex-3", "etc-complex-4", "cytochrome-c", "ubiquinone",
+              "photosystem-1", "photosystem-2", "rubisco", "atp", "glucose", "co2", "o2", "h2o", "pyruvate", "thylakoid-stack",
+              "mitochondrion-crista-detail",
+              "sarcomere", "myosin-head", "actin-filament", "troponin-tropomyosin", "muscle-fibre-bundle", "neuron", "synapse-terminal",
+              "neurotransmitter", "na-channel", "na-channel-open", "k-channel", "k-channel-open", "reflex-arc-parts", "punnett-tile", "allele-token"]
+MODULE_FAMILIES = ["mod_mitosis", "mod_membrane", "mod_dna", "mod_energy", "mod_muscle", "mod_neuro", "mod_genetics"]
+FAMILY_SET = [FAMILIES]
+
+
 def registry():
     reg = {}
-    for fam in FAMILIES:
+    for fam in FAMILY_SET[0]:
         try:
             mod = importlib.import_module(fam)
         except ModuleNotFoundError as exc:
@@ -103,9 +117,17 @@ def main():
     for k in ("TEXMAX", "GBUF"):
         if k in args:
             os.environ[k] = args[k]
-    ids = args["IDS"].split(",") if args.get("IDS") else ALL_IDS
-    out_dir = args.get("OUT") or str(ROOT / "public" / "models" / "organelles")
-    texroot = (args.get("TEXOUT") or str(HERE / "out" / "tex")) if args.get("TEX") else None
+    modules = args.get("SET") == "modules"          # SET=modules: public/models/modules, textures tools/blender/out/tex_modules
+    if modules:
+        FAMILY_SET[0] = MODULE_FAMILIES
+    ids = args["IDS"].split(",") if args.get("IDS") else (MODULE_IDS if modules else ALL_IDS)
+    out_dir = args.get("OUT") or str(ROOT / "public" / "models" / ("modules" if modules else "organelles"))
+    texroot = (args.get("TEXOUT") or str(HERE / "out" / ("tex_modules" if modules else "tex"))) if args.get("TEX") else None
+    if modules:
+        bpyout.KEEP_PIVOT[0] = True
+        import texgen
+        for fam in MODULE_FAMILIES:
+            texgen.SIZE_TABLE.update(importlib.import_module(fam).TEXTURE_SIZES)
     reg = registry()
     errors = []
     for asset in ids:

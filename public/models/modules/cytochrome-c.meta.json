@@ -1,0 +1,177 @@
+{
+  "id": "cytochrome-c",
+  "tris": {
+    "LOD0": 3804,
+    "LOD1": 774,
+    "LOD2": 342
+  },
+  "bboxMin": [
+    -0.3845,
+    -0.3407,
+    -0.4055
+  ],
+  "bboxMax": [
+    0.3698,
+    0.3906,
+    0.3932
+  ],
+  "boundsRadius": 0.4851,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 116788,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9637,
+        0.9923
+      ],
+      "coverage": 0.642,
+      "overlap": 0,
+      "stretchP95": 1.269,
+      "stretchP05": 0.85,
+      "uvPerUnit": 0.49339
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 34349
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 18992
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 23938
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 126602
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 84169
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 85079
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 450314
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 346002
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 285665
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.9,
+    "paintSeconds": 1.5,
+    "totalSeconds": 4.6
+  },
+  "pivot": "protein centre",
+  "axes": "~0.8 across, heme disc facing +Z",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/cytochrome-c/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 17608,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5598,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6943,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 5067,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 61469,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 18056,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 29037,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 14376,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 219875,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 58144,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 122109,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 39622,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

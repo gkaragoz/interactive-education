@@ -3,7 +3,7 @@ import { parseParams, parseRoute, parseRouteAnchor, routeHash } from '../src/cor
 
 describe('parseParams', () => {
   it('returns defaults for an empty query', () => {
-    expect(parseParams('')).toEqual({ cell: 'plant', level: 'temel', perf: false, quality: 'medium', qualityFixed: false, route: 'explore' });
+    expect(parseParams('')).toEqual({ cell: 'plant', level: 'temel', perf: false, quality: 'medium', qualityFixed: false, route: 'home' });
   });
 
   it('reads cell, level, quality and perf', () => {
@@ -27,8 +27,8 @@ describe('parseParams', () => {
   it('parses routes from the hash', () => {
     expect(parseParams('', '#/kaynakca').route).toBe('kaynakca');
     expect(parseParams('', '#/hakkinda').route).toBe('hakkinda');
-    expect(parseParams('', '#/nonsense').route).toBe('explore');
-    expect(parseRoute('')).toBe('explore');
+    expect(parseParams('', '#/nonsense').route).toBe('home');
+    expect(parseRoute('')).toBe('home');
   });
 
   it('round-trips routes and deep links to a source', () => {

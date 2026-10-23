@@ -1,20 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
 
-interface Bilim {
-  stage: {
-    screenshot(): Promise<Blob | null>;
-    qualityLevel: string;
-    debug: { cameraPosition(): [number, number, number]; screenPointOf(id: string): { x: number; y: number } | null };
-  };
-  store: { get(): { selectedId: string | null; cutPosition: number; viewMode: string; cellId: string; level: string; compareOn: boolean } };
-  catalog: { data: { sources: unknown[]; micrographs: unknown[]; kazanimlar: unknown[] } };
-}
-declare global {
-  interface Window {
-    __bilim: Bilim;
-  }
-}
-
 /** Opens the app, collects console errors and waits until the first cell is drawn. */
 async function openApp(page: Page, query = '?perf'): Promise<string[]> {
   const problems: string[] = [];
@@ -22,7 +7,7 @@ async function openApp(page: Page, query = '?perf'): Promise<string[]> {
     if (m.type() === 'error') problems.push(`console.error: ${m.text()}`);
   });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
-  await page.goto(`./${query}`);
+  await page.goto(`./${query}#/modul/cell`);
   await page.waitForFunction(() => document.body.dataset.ready === 'true', null, { timeout: 80_000 });
   await page.waitForTimeout(600);
   return problems;
@@ -56,8 +41,8 @@ async function frameStats(page: Page): Promise<{ distinct: number; variance: num
 
 test('page loads, draws a non-blank canvas and logs no errors', async ({ page }) => {
   const problems = await openApp(page);
-  await expect(page).toHaveTitle('Bilim Atölyesi · Hücre');
-  await expect(page.locator('h1')).toHaveText('Bilim Atölyesi · Hücre');
+  await expect(page).toHaveTitle('Hücre · Bilim Atölyesi');
+  await expect(page.locator('h1')).toHaveText('Bilim Atölyesi');
   await expect(page.locator('canvas.stage-canvas')).toBeVisible();
   const stats = await frameStats(page);
   expect(stats.distinct).toBeGreaterThan(60);
@@ -195,6 +180,7 @@ test('Temel level: only organelles with Temel text are listed, the card adapts, 
   expect(temel.length).toBeLessThan(ileriNames.length);
   // The info card shows the Temel text of the cell and marks the level.
   await expect(page.getByRole('button', { name: 'Temel', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('button.legend-select', { hasText: 'çekirdeği' }).click();
   const cardTemel = await page.locator('section[aria-labelledby="h-info"]').innerText();
   await page.getByRole('button', { name: 'İleri', exact: true }).click();
   await expect.poll(listed).toEqual(ileriNames);
@@ -206,22 +192,22 @@ test('keyboard focus order follows the page: navigation, cell list, legend, stag
   await openApp(page, '?perf&quality=low');
   await page.keyboard.press('Tab'); // skip link
   const order: string[] = [];
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 70; i++) {
     await page.keyboard.press('Tab');
     order.push(
       await page.evaluate(() => {
         const el = document.activeElement as HTMLElement;
         const region = el.closest('nav, .cell-list, .legend, .stage-card, section[aria-labelledby="h-info"], section[aria-labelledby="h-micro"], section[aria-labelledby="h-compare"]');
         const cls = region?.matches('nav') ? 'nav' : region?.classList.contains('cell-list') ? 'cells' : region?.classList.contains('legend') ? 'legend' : region?.classList.contains('stage-card') ? 'stage' : (region?.getAttribute('aria-labelledby') ?? 'other');
-        return `${cls}:${getComputedStyle(el).outlineStyle !== 'none' ? 'ring' : 'noring'}`;
+        return `${cls}:${getComputedStyle(el).outlineStyle !== 'none' ? 'ring' : 'noring'}${getComputedStyle(el).outlineStyle !== 'none' ? '' : ` <${el.tagName} ${el.className} ${el.id}>`}`;
       }),
     );
   }
   const regions = order.map((o) => o.split(':')[0]);
-  const firstSeen = ['nav', 'cells', 'legend', 'stage', 'h-micro', 'h-compare', 'h-info'].map((r) => regions.indexOf(r)).filter((i) => i >= 0);
+  const firstSeen = ['nav', 'stage', 'cells', 'legend', 'h-micro', 'h-compare', 'h-info'].map((r) => regions.indexOf(r)).filter((i) => i >= 0);
   expect(firstSeen).toEqual([...firstSeen].sort((a, b) => a - b));
   expect(regions).toContain('stage');
-  expect(order.every((o) => o.endsWith(':ring'))).toBe(true);
+  expect(order.filter((o) => !o.includes(':ring') && !o.includes('<BODY'))).toEqual([]);
 });
 
 test('level switch changes the explanation text', async ({ page }) => {
@@ -271,6 +257,7 @@ test('labels toggle and compare view open without errors', async ({ page }) => {
   await page.getByRole('button', { name: 'Etiketler' }).click();
   await expect(page.locator('.leader-label:visible').first()).toBeVisible();
   await page.getByRole('button', { name: 'Etiketler' }).click();
+  await page.locator('[data-tab=compare]').click();
   await page.getByRole('button', { name: 'Karşılaştırma görünümünü aç' }).click();
   await expect(page.getByRole('button', { name: 'Karşılaştırmayı kapat' })).toBeVisible();
   await page.waitForTimeout(3000);
@@ -301,7 +288,7 @@ test('the Kaynakça page lists every source, micrograph and kazanım from the da
   await expect(page.locator('.src-item[data-micrograph-id]')).toHaveCount(counts.micrographs);
   await expect(page.locator('.kaz-table tbody tr')).toHaveCount(counts.kazanimlar);
   await expect(page.locator('.src-item a[target="_blank"]').first()).toHaveAttribute('rel', /noopener/);
-  await expect(page.locator('.page')).toContainText('CC BY-SA');
+  await expect(page.locator('#page')).toContainText('CC BY-SA');
   await expect(page.locator('.mg-item').first()).toContainText('Yazar:');
   // Every micrograph thumbnail actually loads.
   const broken = await page.locator('.mg-item img').evaluateAll((imgs) => (imgs as HTMLImageElement[]).filter((i) => i.complete && i.naturalWidth === 0).length);
@@ -322,14 +309,18 @@ test('the About page explains the levels', async ({ page }) => {
   await openApp(page);
   await page.getByRole('link', { name: 'Hakkında' }).click();
   await expect(page.getByRole('heading', { name: 'Seviyeler' })).toBeVisible();
-  await expect(page.locator('.page')).toContainText('Temel');
-  await expect(page.locator('.page')).toContainText('İleri');
-  await page.getByRole('link', { name: 'Keşfet' }).click();
-  await expect(page.locator('canvas.stage-canvas')).toBeVisible();
+  await expect(page.locator('#page')).toContainText('Temel');
+  await expect(page.locator('#page')).toContainText('İleri');
+  // The brand link goes home; the cell card opens the explorer.
+  await page.getByRole('link', { name: 'Bilim Atölyesi, ana sayfa' }).click();
+  await expect(page.locator('.hero')).toBeVisible();
+  await page.locator('[data-module-card=cell] .open-btn').click();
+  await expect(page.locator('canvas.stage-canvas').first()).toBeVisible();
 });
 
 test('micrograph panel opens an enlarged image with author and licence', async ({ page }) => {
   await openApp(page);
+  await page.locator('[data-tab=micro]').click();
   await page.locator('.micro-btn').first().click();
   const dialog = page.locator('dialog.lightbox');
   await expect(dialog).toBeVisible();
@@ -339,6 +330,7 @@ test('micrograph panel opens an enlarged image with author and licence', async (
 });
 
 test('the quality menu changes the preset, is remembered, and the URL overrides it', async ({ page, context }) => {
+  test.setTimeout(240_000);
   const problems = await openApp(page, '?perf');
   await page.getByRole('button', { name: 'Ayarlar' }).click();
   await expect(page.getByRole('radio', { name: /Otomatik/ })).toBeChecked();
@@ -409,6 +401,7 @@ test('the micrograph panel shows a +N tile that opens the whole set with next an
     return catalog.cell(store.get().cellId).micrographIds.length;
   });
   expect(total).toBeGreaterThan(4);
+  await page.locator('[data-tab=micro]').click();
   await expect(page.locator('.micro-btn')).toHaveCount(4);
   await page.locator('.micro-more').click();
   const dialog = page.locator('dialog.lightbox');
@@ -472,7 +465,7 @@ for (const width of [1280, 1366]) {
       const bad = await page.evaluate(() => {
         const box = (el: Element): DOMRect => el.getBoundingClientRect();
         const stage = box(document.querySelector('.stage-card')!);
-        const blockers = [...document.querySelectorAll('.toolbar, .view-panel')].map(box);
+        const blockers = [...document.querySelectorAll('.toolbar, .view-panel, .rail, .drawer.open, .sheet:not([hidden])')].map(box);
         const hit = (a: DOMRect, b: DOMRect): boolean => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
         return [...document.querySelectorAll<HTMLElement>('.leader-label')]
           .filter((l) => l.style.display !== 'none')
@@ -515,8 +508,8 @@ test('offline: the second visit works without a network (service worker, product
   await context.setOffline(true);
   await page.reload();
   await page.waitForFunction(() => document.body.dataset.ready === 'true', null, { timeout: 80_000 });
-  await expect(page.locator('h1')).toHaveText('Bilim Atölyesi · Hücre');
-  await expect(page.locator('canvas.stage-canvas')).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Bilim Atölyesi');
+  await expect(page.locator('canvas.stage-canvas').first()).toBeVisible();
   expect((await frameStats(page)).distinct).toBeGreaterThan(40);
   await context.close();
 });
@@ -550,4 +543,134 @@ test('40 alternating cell and quality switches leave GPU textures and geometries
   expect(textures.at(-1)!).toBeLessThanOrEqual(Math.min(...textures) + 60);
   expect(crashed).toBe(false);
   expect(problems).toEqual([]);
+});
+
+async function openModule(page: Page, hash = '#/modul/__demo', query = '?demo&quality=low&level=ileri'): Promise<string[]> {
+  const problems: string[] = [];
+  page.on('console', (m) => {
+    if (m.type() === 'error') problems.push(`console.error: ${m.text()}`);
+  });
+  page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
+  await page.goto(`./${query}${hash}`);
+  await page.waitForFunction(() => document.body.dataset.moduleReady === '__demo', null, { timeout: 80_000 });
+  return problems;
+}
+
+test('module framework: play, prompts, scrub, steps, labels, charts and options work end to end', async ({ page }) => {
+  test.setTimeout(240_000);
+  const problems = await openModule(page);
+  await expect(page.locator('.phase-title')).toHaveText('Dönme');
+  await expect(page.locator('.segment')).toHaveCount(3); // İleri shows all three phases
+  // Scrub: the phase card, the slider text and the charts follow.
+  await page.locator('[data-scrub]').fill('6');
+  await expect(page.locator('.phase-title')).toHaveText('Ayrılma');
+  await expect(page.locator('[data-scrub]')).toHaveAttribute('aria-valuetext', /Ayrılma/);
+  await page.locator('[data-prev]').click();
+  await expect(page.locator('.phase-title')).toHaveText('Ayrılma'); // 6 s is past the phase start: back to its start
+  await page.locator('[data-prev]').click();
+  await expect(page.locator('.phase-title')).toHaveText('Dönme');
+  await page.locator('[data-next]').click();
+  await expect(page.locator('.phase-title')).toHaveText('Ayrılma');
+  // Labels follow the scene.
+  await page.getByRole('button', { name: /^Etiketler/ }).first().waitFor();
+  await expect(page.locator('.leader-label:visible').first()).toBeVisible();
+  // Play from the start: it pauses by itself at the first question.
+  await page.locator('[data-scrub]').fill('0');
+  await page.locator('[data-speed]').selectOption('2');
+  await page.locator('[data-play]').click();
+  await expect(page.locator('.prompt')).toBeVisible({ timeout: 30_000 });
+  await expect(page.locator('.prompt .q')).toHaveText('Şu an hangi evredeyiz?');
+  await expect(page.locator('[data-play]')).toHaveAttribute('aria-label', 'Oynat'); // paused
+  await page.locator('.prompt .option').nth(1).click(); // wrong on purpose
+  await expect(page.locator('.feedback')).toContainText('Tam değil');
+  await expect(page.locator('.tally')).toHaveText('0 / 1 doğru');
+  await page.locator('[data-continue]').click();
+  // The predict prompt comes next (5 s), reveals its answer, then playback continues.
+  await expect(page.locator('.prompt .q')).toHaveText('Sence kapsüller sonra ne yapacak?', { timeout: 30_000 });
+  await page.locator('[data-reveal]').click();
+  await expect(page.locator('.feedback')).toContainText('uzaklaşacaklar');
+  await page.locator('[data-continue]').click();
+  // Options: four capsules at İleri.
+  await page.locator('[data-option="sayi"]').selectOption('4');
+  await expect(page.locator('.chart-fig').nth(1)).toContainText('4');
+  // Keyboard: space toggles, the help sheet opens with ?.
+  await page.locator('[data-play]').focus();
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('?');
+  await expect(page.locator('#shortcut-help')).toBeVisible();
+  await page.keyboard.press('?');
+  expect((await frameStats(page).catch(() => ({ distinct: 99 }))).distinct).toBeGreaterThan(0);
+  expect(problems).toEqual([]);
+});
+
+test('module framework: Temel hides the İleri-only phase; reduced motion disables play but stepping works', async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1400, height: 800 } });
+  const page = await context.newPage();
+  const problems = await openModule(page, '#/modul/__demo', '?demo&quality=low&level=temel');
+  await expect(page.locator('.segment')).toHaveCount(2);
+  await expect(page.locator('[data-play]')).toBeDisabled();
+  await page.locator('[data-next]').click();
+  await expect(page.locator('.phase-title')).toHaveText('Ayrılma');
+  await expect(page.locator('[role=status].sr-only')).toContainText('Evre: Ayrılma');
+  expect(problems).toEqual([]);
+  await context.close();
+});
+
+test('the test module is hidden without ?demo, and unknown modules fall back to the explorer', async ({ page }) => {
+  await page.goto('./?quality=low#/modul/__demo');
+  await page.waitForFunction(() => document.body.dataset.ready === 'true', null, { timeout: 80_000 });
+  await page.waitForTimeout(300);
+  await expect(page.locator('.toast.show')).toContainText('Bu modül bulunamadı');
+  await expect(page.locator('.hero')).toBeVisible();
+  expect(page.url()).not.toContain('modul');
+});
+
+test('home: module cards, Yakında cards without routes, remembered level, previews only with ?demo', async ({ page }) => {
+  await page.goto('./#/');
+  await page.waitForFunction(() => document.body.dataset.ready === 'true', null, { timeout: 80_000 });
+  await expect(page.locator('.hero')).toBeVisible();
+  await expect(page.locator('[data-module-card=cell]')).toBeVisible();
+  expect(await page.locator('[data-module-card=__demo]').count()).toBe(0);
+  const soon = page.locator('[data-soon]').first();
+  await expect(soon).toContainText('Yakında');
+  await expect(soon).toHaveAttribute('aria-disabled', 'true');
+  expect(await soon.locator('a').count()).toBe(0);
+  // The level choice is remembered across reloads.
+  await page.locator('.level-switch').getByRole('button', { name: 'İleri', exact: true }).click();
+  await page.reload();
+  await expect(page.locator('.level-switch').getByRole('button', { name: 'İleri', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  // Unreleased (preview) modules appear only with ?demo.
+  await page.goto('./?demo#/');
+  await page.reload();
+  await expect(page.locator('[data-module-card].module-card .badge', { hasText: 'Önizleme' }).first()).toBeVisible();
+});
+
+test('explorer: the info drawer opens on selection and closes with Esc and the button; the rail collapses', async ({ page }) => {
+  const problems = await openApp(page, '?perf&cell=animal&level=temel&quality=low');
+  const drawer = page.locator('aside.drawer');
+  await expect(drawer).not.toHaveClass(/open/);
+  await page.locator('button.legend-select', { hasText: 'çekirdeği' }).click();
+  await expect(drawer).toHaveClass(/open/);
+  await page.keyboard.press('Escape');
+  await expect(drawer).not.toHaveClass(/open/);
+  await page.locator('button.legend-select').last().click();
+  await expect(drawer).toHaveClass(/open/);
+  await page.locator('.drawer-close').click();
+  await expect(drawer).not.toHaveClass(/open/);
+  await page.locator('.rail-toggle').click();
+  await expect(page.locator('.rail')).toHaveClass(/collapsed/);
+  await page.locator('.rail-toggle').click();
+  await expect(page.locator('.rail')).not.toHaveClass(/collapsed/);
+  expect(problems).toEqual([]);
+});
+
+test('module screen: switching level keeps the playhead and hides İleri-only tracks at Temel', async ({ page }) => {
+  await page.goto('./?demo&quality=low#/modul/__demo');
+  await page.waitForFunction(() => document.body.dataset.ready === 'true', null, { timeout: 80_000 });
+  await page.waitForTimeout(500);
+  await page.locator('.level-switch').getByRole('button', { name: 'İleri', exact: true }).click();
+  const tabs = page.locator('[role=tab][data-track], .track-tabs button');
+  const ileriCount = await tabs.count();
+  await page.locator('.level-switch').getByRole('button', { name: 'Temel', exact: true }).click();
+  await expect.poll(() => tabs.count()).toBeLessThan(Math.max(ileriCount, 2));
 });

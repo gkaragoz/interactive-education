@@ -1,0 +1,181 @@
+{
+  "id": "mrna-strand",
+  "tris": {
+    "LOD0": 13992,
+    "LOD1": 2760,
+    "LOD2": 1380
+  },
+  "bboxMin": [
+    -0.0367,
+    -0.0554,
+    -0.0595
+  ],
+  "bboxMax": [
+    1.0101,
+    0.0663,
+    0.0638
+  ],
+  "boundsRadius": 1.0109,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 405972,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9965,
+        0.9981
+      ],
+      "coverage": 0.7006,
+      "overlap": 0,
+      "stretchP95": 1.203,
+      "stretchP05": 0.881,
+      "uvPerUnit": 1.80198
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 35687
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 26149
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 24580
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 130671
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 117102
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 90368
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 464917
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 514199
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 324110
+          }
+        }
+      }
+    },
+    "bakeSeconds": 8,
+    "paintSeconds": 2.6,
+    "totalSeconds": 11.7
+  },
+  "pivot": "5' end (x = 0)",
+  "axes": "unit length along +X, loopy ribbon (radius ~0.04), 12 codons of three beads (coloured), 5' cap at x = 0; scale X to fit",
+  "units": "1 along X",
+  "tintable": true,
+  "tintParts": [
+    "strand"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/mrna-strand/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 22186,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 6130,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 10863,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 5193,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 87966,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 21172,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 50891,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15903,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 336454,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 70788,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 212519,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 53147,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "id": "thylakoid-stack",
+  "tris": {
+    "LOD0": 26900,
+    "LOD1": 5956,
+    "LOD2": 2004
+  },
+  "bboxMin": [
+    -1.7336,
+    -0.74,
+    -1.791
+  ],
+  "bboxMax": [
+    1.2063,
+    0.74,
+    0.012
+  ],
+  "boundsRadius": 1.9005,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 707904,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9779
+      ],
+      "coverage": 0.7098,
+      "overlap": 0,
+      "stretchP95": 1.498,
+      "stretchP05": 0.707,
+      "uvPerUnit": 0.1206
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 631499
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 255107
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 327919
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2263175
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1079395
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1028782
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 7674556
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 4312371
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 2978478
+          }
+        }
+      }
+    },
+    "bakeSeconds": 18.2,
+    "paintSeconds": 26.2,
+    "totalSeconds": 48.7
+  },
+  "pivot": "stack centre",
+  "axes": "8 sacs of radius ~1 stacked along Y (1.5 tall), cut open at z = 0 (open towards +Z, painted section: membrane outline + pale lumen); stroma lamellae on the -Z side",
+  "units": "um",
+  "tintable": false,
+  "cutOpen": "z=0, open towards +Z",
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/thylakoid-stack/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 226829,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 76012,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 100128,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 50689,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 759407,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 220121,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 395183,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 144103,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1328655,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 731925,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 211842,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 384888,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

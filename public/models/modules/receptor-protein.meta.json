@@ -1,0 +1,177 @@
+{
+  "id": "receptor-protein",
+  "tris": {
+    "LOD0": 4556,
+    "LOD1": 876,
+    "LOD2": 366
+  },
+  "bboxMin": [
+    -0.4643,
+    -0.9421,
+    -0.2037
+  ],
+  "bboxMax": [
+    0.4632,
+    1.0009,
+    0.2079
+  ],
+  "boundsRadius": 1.0661,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 131212,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.8286
+      ],
+      "coverage": 0.6225,
+      "overlap": 0,
+      "stretchP95": 1.252,
+      "stretchP05": 0.908,
+      "uvPerUnit": 0.42485
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 131716
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 76184
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 78969
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 482160
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 330090
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 281708
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1707896
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1356479
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 924764
+          }
+        }
+      }
+    },
+    "bakeSeconds": 7.4,
+    "paintSeconds": 9.7,
+    "totalSeconds": 20.6
+  },
+  "pivot": "membrane centre under the Y fork",
+  "axes": "stalk along Y through the membrane, arms fork towards +Y; binding pocket marker at (0,0.6,0); ~1.3 tall",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/receptor-protein/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 57705,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 18350,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 24806,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 14549,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 222841,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 58543,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 121600,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 42698,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 814787,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 156220,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 539691,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 118876,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

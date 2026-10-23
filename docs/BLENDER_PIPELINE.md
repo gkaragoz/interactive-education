@@ -88,3 +88,42 @@ Always write to a staging dir first (`OUT=`), run `npx vitest run tests/assets.t
 - Normal maps compress badly with dithering at 4096 (UASTC); that is why the 4096 tier uses ETC1S.
 - `python` in Git Bash resolves `/tmp` differently from Windows tools; use `C:/Users/<you>/AppData/Local/Temp` for scratch files.
 - Baking + painting a 4096 hero takes 3-7 minutes (bake 30-130 s, paint 120-250 s); see the timings table in QUALITY_GATE.md.
+
+## Module assets (`SET=modules`)
+```
+B="C:/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+$B -b --factory-startup --python tools/blender/make_organelles.py -- SET=modules OUT=tools/blender/out/stage_mod TEX=1      # IDS=a,b optional
+node tools/textures/encode.mjs --src=tools/blender/out/tex_modules --dst=public/textures/modules --models=tools/blender/out/stage_mod
+cp tools/blender/out/stage_mod/* public/models/modules/        # GLB + meta.json (meta.textures written by encode.mjs)
+npx vitest run tests/assetsModules.test.ts tests/assets.test.ts
+$B -b --factory-startup --python tools/blender/preview.py -- IDS=chromosome VIEWS=iso MODELS=<abs stage dir> TEXROOT=<abs tex dir> TEX=high
+# three.js check: tools/textures/viewer/index.html?set=modules&id=chromosome&tier=high
+```
+`SET=modules` switches the registry to `mod_mitosis.py` (next batches get their own `mod_*.py` listed in `MODULE_FAMILIES` / `MODULE_IDS` of
+`make_organelles.py`), writes to `public/models/modules`, keeps the author origin as pivot (`bpyout.KEEP_PIVOT`) and takes per-asset texture
+sizes from the module's `TEXTURE_SIZES`. `META` in the module file carries `pivot`, `axes`, `units`, `tintable`, `tintParts`.
+New in this pass: `Part.proj = axis` switches a flat plate-like part (slabs, discs) to projection charts (`charts.projection_charts`:
+planar top/bottom + rim sectors) instead of the cube-face lattice charts, which stretched thin slabs and left dashed artefacts;
+`geo.tube_ta` also returns the angle fraction around the tube (used for the helical coil bands of the chromosome painter).
+Timings (v0.2 set): geometry + UV + bake + paint 3 min for all 8, KTX2 encoding 50 s.
+
+### Batch 2 notes
+`mod_membrane.py` (bilayer, membrane proteins) and `mod_dna.py` (DNA, enzymes, RNA, amino acids) are registered in `MODULE_FAMILIES` /
+`MODULE_IDS`; `register neutral(asset, part)` (in `mod_membrane.py`) adds a neutral-light painter profile for tintable parts. Changes to the
+shared tools: `geo.cube_sphere(n, cube=True)` returns the uniform cube lattice (flat plates with evenly spaced vertices: a superellipsoid
+crowds them at the centre); `charts.projection_charts` now works per connected component and keeps dome flanks in the broad-face chart;
+`texpaint` supports a `fold=(px, pz)` hint (paint from a triangle-wave folded position so a tile has no seam). Typical LOD problem in
+this batch: parts with many tiny blobs (beads, H-bond dots, domes) hit the resolution floors; builders drop every other bead or the small
+extras at low q. Timing: batch 2 (18 assets) = 8 min geometry + bake + paint, 4.5 min KTX2 encoding.
+
+### Batch 3 notes
+`mod_energy.py`; new shared tool `clip.py` (`clip_cap(surf, z0)` / `clip_part(part, z0)`): plane clipping of closed meshes with ear-clipped flat caps,
+vertex data interpolated (`vmap`), chart data carried over (caps get planar charts), used for cut-open views (the painter turns `hint['cut']` caps into a
+painted section, `texmotifs._section`). Small atlases get a wider gutter in module sets (`margin = clamp(8 / top_size, 0.004, 0.04)` in `bpyout`):
+a 256 px atlas with a 1 px gutter bled the mean fill colour into the atoms. Timing: batch 3 (18 assets) about 11 min geometry + bake + paint, 1.5 min KTX2.
+
+### Batch 4 notes
+`mod_muscle.py`, `mod_neuro.py`, `mod_genetics.py`. New shared tool `extrude.py` (`extrude_polygon`, `half_annulus`): closed prism from a polygon cross-section with ear-clipped
+caps and registry charts (used for the cut-away sarcolemma of `muscle-fibre-bundle`). `clip.py` is reused for the allele token. LOD control for many-small-parts assets
+(`sarcomere`: thin filaments, heads, titin) scales the part counts continuously with q (`min(1, 2q)`) so LOD1 and LOD2 differ clearly; the `sarcomere` and `neuron` GLBs
+are near the 1.5 MB cap (1.31 / 1.41 MB). Timing: batch 4 (15 assets) about 14 min geometry + bake + paint, 4 min KTX2 encoding.

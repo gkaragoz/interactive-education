@@ -2,26 +2,15 @@ import { h, type AppState } from '../core';
 import type { LevelId, LevelText, OrganelleInfo } from '../data/types';
 import type { Component, UiContext } from './types';
 
-const LEVELS: { id: LevelId; label: string }[] = [
-  { id: 'temel', label: 'Temel' },
-  { id: 'ileri', label: 'İleri' },
-];
-
 function pickText(info: OrganelleInfo, level: LevelId): LevelText | undefined {
   return info.text[level] ?? info.text.ileri ?? info.text.temel;
 }
 
 export function createInfoCard(ctx: UiContext): Component {
   const { catalog, actions } = ctx;
-  const levelButtons = new Map<LevelId, HTMLButtonElement>();
-  const switcher = h('div', { class: 'level-switch', role: 'group', 'aria-label': 'Açıklama seviyesi' });
-  for (const level of LEVELS) {
-    const btn = h('button', { type: 'button', 'aria-pressed': 'false', onclick: () => actions.setLevel(level.id) }, level.label);
-    levelButtons.set(level.id, btn);
-    switcher.append(btn);
-  }
   const body = h('div', { class: 'scroll', 'aria-live': 'polite' });
-  const el = h('section', { class: 'card', style: 'display:flex;flex-direction:column;min-height:0', 'aria-labelledby': 'h-info' }, h('h2', { class: 'card-title', id: 'h-info' }, 'Organel ayrıntıları'), switcher, body);
+  const closeBtn = h('button', { type: 'button', class: 'icon-btn drawer-close', 'aria-label': 'Bilgi panelini kapat', title: 'Kapat (Esc)', onclick: () => actions.closeInfo() }, '×');
+  const el = h('section', { class: 'card info-card', 'aria-labelledby': 'h-info' }, h('div', { class: 'drawer-head' }, h('h2', { class: 'card-title', id: 'h-info' }, 'Ayrıntılar'), closeBtn), body);
   let builtFor = '';
 
   const kazChips = (ids: string[]): HTMLElement =>
@@ -79,10 +68,6 @@ export function createInfoCard(ctx: UiContext): Component {
     el,
     update(state: AppState): void {
       const cell = catalog.cell(state.cellId);
-      for (const [id, btn] of levelButtons) {
-        btn.setAttribute('aria-pressed', String(state.level === id));
-        btn.disabled = !cell.levels.includes(id);
-      }
       const key = `${state.cellId}:${state.level}:${state.selectedId ?? ''}`;
       if (key === builtFor) return;
       builtFor = key;

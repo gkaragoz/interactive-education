@@ -5,3 +5,7 @@ export { makePlaceholderAsset, isShellId } from './placeholders';
 export { CellScene } from './cellScene';
 export { Cutaway } from './cutaway';
 export { heightField, normalPixels } from './normalMap';
+export type { ModuleContext, ModuleScene, ModuleDefinition, ModuleLabel, QualityPreset, Vec3 } from './moduleScene';
+export { seededRng } from './moduleScene';
+export { ModuleAssets, type InstanceSet } from './moduleAssets';
+export { ModuleStage, type CameraPresetId, type ModuleStageOptions } from './moduleStage';

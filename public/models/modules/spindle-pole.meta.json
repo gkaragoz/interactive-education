@@ -1,0 +1,177 @@
+{
+  "id": "spindle-pole",
+  "tris": {
+    "LOD0": 19680,
+    "LOD1": 3544,
+    "LOD2": 1914
+  },
+  "bboxMin": [
+    -1.1038,
+    -1.0504,
+    -1.0454
+  ],
+  "bboxMax": [
+    1.2769,
+    1.1804,
+    1.2592
+  ],
+  "boundsRadius": 1.3157,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 470756,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.982
+      ],
+      "coverage": 0.7475,
+      "overlap": 0,
+      "stretchP95": 2.705,
+      "stretchP05": 0.812,
+      "uvPerUnit": 0.30139
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 184792
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 86651
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 108977
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 692216
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 385796
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 402636
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2483149
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1620878
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1404902
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.5,
+    "paintSeconds": 5.9,
+    "totalSeconds": 13.4
+  },
+  "pivot": "centre of the centriole pair",
+  "axes": "centrioles along X and Z; aster rays in all directions (ray length ~1.3)",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/spindle-pole/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 79754,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 23890,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 36215,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19649,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 275048,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 80559,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 127692,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 66797,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 924560,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 236094,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 506009,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 182457,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

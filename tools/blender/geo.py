@@ -122,7 +122,7 @@ def bumps(d, centers, amp, width, profile=None):
 
 
 # ---------------------------------------------------------------------------------------------- sphere family
-def cube_sphere(n):
+def cube_sphere(n, cube=False):
     """Spherified cube lattice: 6n^2 quads (12n^2 tris), 6n^2+2 vertices, no poles. Returns (unit dirs, F)."""
     n = max(int(n), 1)
     idx = -np.ones((n + 1, n + 1, n + 1), dtype=np.int64)
@@ -161,7 +161,7 @@ def cube_sphere(n):
                 cids.append(np.full(len(a), cid))
     f_all = np.concatenate(faces)
     reg(f_all, np.concatenate(fuvs), np.concatenate(cids))
-    return d, f_all
+    return (p, f_all) if cube else (d, f_all)
 
 
 def sphere(n, fn=None):
@@ -236,6 +236,11 @@ def tube(path, radius, sides=12, closed=False, cap=3, aspect=None, up=None, twis
 
 
 def tube_t(path, radius, sides=12, closed=False, cap=3, aspect=None, up=None, twist=0.0):
+    s, tv, _ = tube_ta(path, radius, sides, closed, cap, aspect, up, twist)
+    return s, tv
+
+
+def tube_ta(path, radius, sides=12, closed=False, cap=3, aspect=None, up=None, twist=0.0):
     """Like tube() but also returns the per-vertex path parameter t in [0,1] (colouring along the length).
     Swept circle along `path` (M,3) with per-point `radius` (M,) (or scalar). Open tubes get rounded caps (`cap`
     extra rings + a pole). `aspect` (M,) stretches the binormal radius (flat ribbons); `twist` = total radians of
@@ -311,7 +316,10 @@ def tube_t(path, radius, sides=12, closed=False, cap=3, aspect=None, up=None, tw
         tv = np.concatenate([tv, [0.0, 1.0]])
     f_all = np.concatenate(F)
     reg(f_all, np.concatenate(fuv_parts), np.zeros(len(f_all), dtype=np.int64))
-    return orient((V, f_all)), tv
+    av = np.tile(np.arange(sides) / sides, rings)             # angle fraction around the tube (helical motifs)
+    if not closed:
+        av = np.concatenate([av, [0.0, 0.0]])
+    return orient((V, f_all)), tv, av
 
 
 def signed_volume(v, f):

@@ -1,0 +1,177 @@
+{
+  "id": "nuclear-envelope-fragment",
+  "tris": {
+    "LOD0": 39360,
+    "LOD1": 9528,
+    "LOD2": 4980
+  },
+  "bboxMin": [
+    -0.9533,
+    -0.3575,
+    -0.9579
+  ],
+  "bboxMax": [
+    0.9628,
+    0.0366,
+    0.9636
+  ],
+  "boundsRadius": 1.0169,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1111108,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.996,
+        0.9981
+      ],
+      "coverage": 0.6073,
+      "overlap": 0,
+      "stretchP95": 1.192,
+      "stretchP05": 0.89,
+      "uvPerUnit": 0.20456
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 137949
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 92472
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 86268
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 513366
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 371581
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 304437
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1851986
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1466501
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1010293
+          }
+        }
+      }
+    },
+    "bakeSeconds": 7.1,
+    "paintSeconds": 5.2,
+    "totalSeconds": 13.3
+  },
+  "pivot": "patch centre (outer membrane apex)",
+  "axes": "outward normal +Y, curvature centre at (0, -1.6, 0), patch ~1.9 wide",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/nuclear-envelope-fragment/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 74268,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 19841,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 39775,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 14652,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 253352,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 64023,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 145571,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 43758,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 864681,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 170161,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 565208,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 129312,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

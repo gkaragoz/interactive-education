@@ -1,0 +1,177 @@
+{
+  "id": "pump-protein",
+  "tris": {
+    "LOD0": 15556,
+    "LOD1": 2868,
+    "LOD2": 1716
+  },
+  "bboxMin": [
+    -0.6783,
+    -1.1938,
+    -0.6036
+  ],
+  "bboxMax": [
+    0.7244,
+    0.641,
+    0.6155
+  ],
+  "boundsRadius": 1.2452,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 439412,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9899,
+        0.9981
+      ],
+      "coverage": 0.6689,
+      "overlap": 0,
+      "stretchP95": 1.432,
+      "stretchP05": 0.917,
+      "uvPerUnit": 0.20036
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 149815
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 74157
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 102559
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 576295
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 339569
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 379640
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2103636
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1455161
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1336171
+          }
+        }
+      }
+    },
+    "bakeSeconds": 12.8,
+    "paintSeconds": 12.8,
+    "totalSeconds": 28.3
+  },
+  "pivot": "membrane centre",
+  "axes": "axis Y: extracellular face +Y (up to +0.55), cytoplasmic lobes towards -Y (down to -1.05), ATP site is part atp-site; ~1.6 tall",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/pump-protein/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 61501,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20406,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 23716,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 17379,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 229368,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 65395,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 107463,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 56510,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 812899,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 183679,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 471478,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 157742,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

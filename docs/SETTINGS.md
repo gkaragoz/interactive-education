@@ -82,3 +82,6 @@ Quality maps to a texture tier: Düşük = low, Orta = medium, Yüksek = high (h
 ## Ambient motion
 
 Cytoskeleton, vesicles and particles exist only at medium and high. Their drift is paced at about 30 frames a second and stops 20 seconds after the last user action; with `prefers-reduced-motion` nothing drifts or waves.
+
+## Bundle (step 2)
+Main chunk 125 KB (41 KB gz), three.js 812 KB (238 KB gz, lazy), module chunks lazy per module.

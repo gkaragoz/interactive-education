@@ -1,0 +1,177 @@
+{
+  "id": "na-channel-open",
+  "tris": {
+    "LOD0": 11764,
+    "LOD1": 2418,
+    "LOD2": 1314
+  },
+  "bboxMin": [
+    -0.5151,
+    -0.7413,
+    -0.507
+  ],
+  "bboxMax": [
+    0.5153,
+    0.609,
+    0.5081
+  ],
+  "boundsRadius": 0.788,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 361592,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9921,
+        0.9962
+      ],
+      "coverage": 0.7855,
+      "overlap": 0,
+      "stretchP95": 1.665,
+      "stretchP05": 0.871,
+      "uvPerUnit": 0.27822
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 169375
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 93589
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 117054
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 619584
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 405275
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 412266
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2150227
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1700824
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1356550
+          }
+        }
+      }
+    },
+    "bakeSeconds": 13.3,
+    "paintSeconds": 8.1,
+    "totalSeconds": 22.8
+  },
+  "pivot": "membrane centre on the pore axis",
+  "axes": "same footprint as na-channel, OPEN: paddles up and out, gate ring wide, inactivation ball close below the pore",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/na-channel-open/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 67200,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20994,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27133,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19073,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 252808,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 70202,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 122412,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 60194,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 910096,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 201716,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 541906,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 166474,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

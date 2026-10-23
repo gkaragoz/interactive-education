@@ -1,52 +1,9 @@
 import type { Source } from './types';
+import { ACCESSED, commons, openstax, wpEn, wpTr } from './sources-helpers';
+import { moduleSources } from './sources-modules';
 
 // Every cited reference. URLs were fetched and confirmed to exist on the `accessed` date.
 // Learner text is written in our own words; these are the pages we learned from (ADR 0004).
-const ACCESSED = '2026-10-23';
-
-const wpTr = (id: string, title: string, page: string): Source => ({
-  id: `wp-tr-${id}`,
-  kind: 'wikipedia',
-  title: `${title} (Vikipedi)`,
-  url: `https://tr.wikipedia.org/wiki/${page}`,
-  publisher: 'Vikipedi',
-  license: 'CC BY-SA 4.0',
-  lang: 'tr',
-  accessed: ACCESSED,
-});
-
-const wpEn = (id: string, title: string, page: string): Source => ({
-  id: `wp-en-${id}`,
-  kind: 'wikipedia',
-  title: `${title} (Wikipedia)`,
-  url: `https://en.wikipedia.org/wiki/${page}`,
-  publisher: 'Wikipedia',
-  license: 'CC BY-SA 4.0',
-  lang: 'en',
-  accessed: ACCESSED,
-});
-
-const openstax = (id: string, title: string, page: string): Source => ({
-  id: `os-${id}`,
-  kind: 'openstax',
-  title: `Biology 2e, ${title}`,
-  url: `https://openstax.org/books/biology-2e/pages/${page}`,
-  publisher: 'OpenStax (Clark, Douglas, Choi)',
-  license: 'CC BY-NC-SA 4.0',
-  lang: 'en',
-  accessed: ACCESSED,
-});
-
-const commons = (id: string, title: string, file: string, author: string, license: string): Source => ({
-  id: `commons-${id}`,
-  kind: 'commons',
-  title: `${title} (Wikimedia Commons)`,
-  url: `https://commons.wikimedia.org/wiki/File:${file}`,
-  publisher: author,
-  license,
-  lang: 'en',
-  accessed: ACCESSED,
-});
 
 export const sources: Source[] = [
   // MEB programmes (official public documents)
@@ -124,6 +81,8 @@ export const sources: Source[] = [
   openstax('4-2', '4.2 Prokaryotic Cells', '4-2-prokaryotic-cells'),
   openstax('4-3', '4.3 Eukaryotic Cells', '4-3-eukaryotic-cells'),
   openstax('4-4', '4.4 The Endomembrane System and Proteins', '4-4-the-endomembrane-system-and-proteins'),
+
+  ...moduleSources,
 
   // Wikimedia Commons file pages for micrographs
   commons('onion', 'Living cells of onion epidermis', 'Living_cells_of_onion_epidermis_(33605021164).jpg', 'Berkshire Community College Bioscience Image Library', 'CC0'),

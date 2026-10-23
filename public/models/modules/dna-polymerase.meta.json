@@ -1,0 +1,177 @@
+{
+  "id": "dna-polymerase",
+  "tris": {
+    "LOD0": 11592,
+    "LOD1": 2892,
+    "LOD2": 1512
+  },
+  "bboxMin": [
+    -0.9144,
+    -0.924,
+    -0.9149
+  ],
+  "bboxMax": [
+    0.921,
+    0.8075,
+    0.6306
+  ],
+  "boundsRadius": 1.0446,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 371936,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9386
+      ],
+      "coverage": 0.7514,
+      "overlap": 0,
+      "stretchP95": 1.082,
+      "stretchP05": 0.876,
+      "uvPerUnit": 0.24664
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 151852
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 70878
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 77743
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 565479
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 303581
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 271441
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1951876
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1212954
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 863971
+          }
+        }
+      }
+    },
+    "bakeSeconds": 15.1,
+    "paintSeconds": 10.2,
+    "totalSeconds": 26.7
+  },
+  "pivot": "centre of the DNA groove",
+  "axes": "groove along Y between fingers (-X) and thumb (+X), palm at -Z, open towards +Z; ~1.6 tall; active-site marker in the groove",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/dna-polymerase/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 58479,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20515,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 22797,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15167,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 209968,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 65512,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 99977,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 44479,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 741918,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 186077,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 435508,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 120333,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

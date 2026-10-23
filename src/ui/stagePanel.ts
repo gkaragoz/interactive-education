@@ -7,6 +7,8 @@ import type { Component, UiContext } from './types';
 export interface StagePanel extends Component {
   /** Container the 3D stage mounts its canvas into. */
   viewport: HTMLElement;
+  /** Empty toolbar next to the tools; the shell fills it with the bottom-drawer tabs. */
+  tabSlot: HTMLElement;
   setLoading(progress: LoadProgress | null): void;
   /** Overlay with a custom message (e.g. connection lost); null clears it. */
   setStatus(text: string | null): void;
@@ -43,7 +45,7 @@ export function createStagePanel(ctx: UiContext): StagePanel {
   const cutInput = h('input', { type: 'range', min: '0', max: '0.85', step: '0.01', id: 'cut-slider', 'aria-label': 'Kesit konumu' });
   cutInput.addEventListener('input', () => actions.setCut(Number(cutInput.value)));
   const cutRow = h('div', { class: 'cut-row', hidden: true }, h('label', { for: 'cut-slider' }, 'Kesit konumu'), cutInput);
-  const viewPanel = h('section', { class: 'view-panel', 'aria-label': 'Görünüm' }, h('h3', {}, 'Görünüm modu'), seg, cutRow);
+  const viewPanel = h('section', { class: 'view-panel floating', 'aria-label': 'Görünüm' }, h('h3', {}, 'Görünüm modu'), seg, cutRow);
 
   const rotateBtn = toolButton('Döndür', 'rotate', actions.toggleAutoRotate, 'Kendiliğinden dönmeyi aç / kapat');
   const hideOthersBtn = toolButton('Diğerlerini gizle', 'hideOthers', actions.toggleHideOthers, 'Seçili organel dışındakileri gizle');
@@ -51,8 +53,12 @@ export function createStagePanel(ctx: UiContext): StagePanel {
   const labelsBtn = toolButton('Etiketler', 'tag', actions.toggleLabels, 'Organel etiketlerini aç / kapat');
   const shotBtn = toolButton('Ekran görüntüsü', 'camera', actions.screenshot, 'PNG olarak indir');
   for (const b of [rotateBtn, hideOthersBtn, labelsBtn]) b.setAttribute('aria-pressed', 'false');
-  const leftBar = h('div', { class: 'toolbar left', role: 'toolbar', 'aria-label': 'Görünüm araçları' }, rotateBtn, hideOthersBtn, resetBtn);
-  const rightBar = h('div', { class: 'toolbar right', role: 'toolbar', 'aria-label': 'Etiket ve kayıt' }, labelsBtn, shotBtn);
+  const infoBtn = toolButton('Bilgi', 'info', () => (infoBtn.getAttribute('aria-pressed') === 'true' ? actions.closeInfo() : actions.openInfo()), 'Bilgi panelini aç / kapat');
+  infoBtn.setAttribute('aria-pressed', 'false');
+  const tools = h('div', { class: 'toolbar', role: 'toolbar', 'aria-label': 'Görünüm araçları' }, rotateBtn, hideOthersBtn, resetBtn, labelsBtn, shotBtn, infoBtn);
+  /** Where the shell puts the "Mikroskop / Karşılaştır" tab buttons. */
+  const tabSlot = h('div', { class: 'toolbar tab-slot', role: 'tablist', 'aria-label': 'Alt paneller' });
+  const dockBar = h('div', { class: 'dock-bar floating' }, tools, tabSlot);
 
   const captionA = h('span');
   const captionB = h('span');
@@ -62,11 +68,12 @@ export function createStagePanel(ctx: UiContext): StagePanel {
   const loadingScreen = createLoadingScreen(ctx.reducedMotion);
   const loading = loadingScreen.el;
 
-  const el = h('section', { class: 'card stage-card', 'aria-label': '3B hücre sahnesi' }, viewport, head, tip, captions, viewPanel, leftBar, rightBar, loading);
+  const el = h('section', { class: 'card stage-card', 'aria-label': '3B hücre sahnesi' }, viewport, head, tip, captions, viewPanel, dockBar, loading);
 
   return {
     el,
     viewport,
+    tabSlot,
     setLoading(progress: LoadProgress | null): void {
       loadingScreen.setProgress(progress);
       el.setAttribute('aria-busy', String(progress !== null));
@@ -93,6 +100,7 @@ export function createStagePanel(ctx: UiContext): StagePanel {
       hideOthersBtn.disabled = state.selectedId === null;
       labelsBtn.setAttribute('aria-pressed', String(state.labels));
       labelsBtn.disabled = state.compareOn;
+      infoBtn.setAttribute('aria-pressed', String(state.infoOpen));
       modeButtons.get('isolate')?.toggleAttribute('disabled', state.selectedId === null && state.viewMode !== 'isolate');
       const tipKey = `${state.cellId}:${state.level}`;
       if (tipKey !== tipsFor) {

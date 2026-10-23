@@ -1,0 +1,183 @@
+{
+  "id": "sarcomere",
+  "tris": {
+    "LOD0": 46488,
+    "LOD1": 9648,
+    "LOD2": 5766
+  },
+  "bboxMin": [
+    -1.3,
+    -0.6623,
+    -0.6605
+  ],
+  "bboxMax": [
+    1.3,
+    0.6614,
+    0.6614
+  ],
+  "boundsRadius": 1.4285,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1340616,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9942,
+        0.9962
+      ],
+      "coverage": 0.5563,
+      "overlap": 0,
+      "stretchP95": 1.71,
+      "stretchP05": 0.821,
+      "uvPerUnit": 0.16413
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 145443
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 68095
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 110777
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 539759
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 332214
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 411462
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1957655
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1442601
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1459376
+          }
+        }
+      }
+    },
+    "bakeSeconds": 42.5,
+    "paintSeconds": 16.2,
+    "totalSeconds": 62.9
+  },
+  "pivot": "centre (M-line)",
+  "axes": "axis X: Z-discs at x = +-1.25 (2.5 long, exaggerated resting length), thin filaments grow inward from each Z-disc (part actin), 7 thick filaments (myosin) with heads (bare zone |x| < 0.12), titin springs, M-line; filaments pack in a hexagon of radius ~0.45 in YZ",
+  "units": "um (exaggerated)",
+  "tintable": true,
+  "tintParts": [
+    "actin",
+    "myosin",
+    "heads"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/sarcomere/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 67040,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20884,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 25540,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 20616,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 229366,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 70929,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 92469,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 65968,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 803498,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 209031,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 416489,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 177978,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

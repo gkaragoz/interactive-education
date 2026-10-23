@@ -1,0 +1,177 @@
+{
+  "id": "rubisco",
+  "tris": {
+    "LOD0": 22368,
+    "LOD1": 4992,
+    "LOD2": 2400
+  },
+  "bboxMin": [
+    -0.7075,
+    -0.9125,
+    -0.7058
+  ],
+  "bboxMax": [
+    0.7085,
+    0.9122,
+    0.7083
+  ],
+  "boundsRadius": 1.1037,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 640344,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.9615
+      ],
+      "coverage": 0.7617,
+      "overlap": 0,
+      "stretchP95": 1.055,
+      "stretchP05": 0.939,
+      "uvPerUnit": 0.22128
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 166694
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 82370
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 107091
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 620671
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 369625
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 397405
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2219794
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1573325
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1399493
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.8,
+    "paintSeconds": 6.6,
+    "totalSeconds": 12.6
+  },
+  "pivot": "centre of the enzyme",
+  "axes": "cube-like, 8 large subunits (green) with small subunits (ochre) capping +-Y; ~1.5 across",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/rubisco/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 64322,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 21597,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 23601,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19124,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 236792,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 72844,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 101391,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 62557,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 828394,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 212639,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 445388,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 170367,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

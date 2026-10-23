@@ -1,0 +1,82 @@
+import type { ModuleInfo } from '../moduleTypes';
+import { muscleChecks, musclePredicts } from './muscle.checks';
+import { eklemTrack, kasilmaTrack } from './muscle.tracks';
+
+// Module 'muscle'. Own wording (ADR 0004). Programme limits: FB.5.3.3 (grade 5) does not enter how muscles work;
+// BİY.11.1.10 (grade 11) models contraction with A/I/H bands, Z line, actin/myosin and the sarcomere and says the
+// cellular molecular mechanism and energy sources are not covered, so those appear only as labelled "Ek bilgi".
+export const muscle: ModuleInfo = {
+  id: 'muscle',
+  nameTr: 'Kas ve Hareket',
+  tagline: 'Kaslar nasıl kısalır, kollar nasıl hareket eder?',
+  introTr:
+    'Kaslar kısalarak kemikleri çeker ve eklemlerde hareket oluşturur. Önce tek bir sarkomerin içinde ince ve kalın filamentlerin nasıl kaydığını, sonra biseps ve triseps çiftinin dirseği nasıl büküp açtığını izle.',
+  levels: ['temel', 'ileri'],
+  tracks: [kasilmaTrack, eklemTrack],
+  charts: [
+    { id: 'sarkomer-boyu', labelTr: 'Sarkomer boyu', unitTr: 'model µm', color: '#7c4dbd', min: 0, max: 3, trackIds: ['kasilma'] },
+    { id: 'a-bandi', labelTr: 'A bandı', unitTr: 'model µm', color: '#c25a8a', min: 0, max: 3, trackIds: ['kasilma'] },
+    { id: 'i-bandi', labelTr: 'I bandı', unitTr: 'model µm', color: '#3f8fa8', min: 0, max: 3, trackIds: ['kasilma'] },
+    { id: 'h-bandi', labelTr: 'H bandı', unitTr: 'model µm', color: '#d9822b', min: 0, max: 3, trackIds: ['kasilma'] },
+    { id: 'dirsek-acisi', labelTr: 'Dirsek açısı', unitTr: 'derece (şematik)', color: '#5a9e3b', min: 0, max: 180, trackIds: ['eklem-hareketi'] },
+    { id: 'biseps', labelTr: 'Biseps etkinliği', unitTr: '% (şematik)', color: '#d9822b', min: 0, max: 100, trackIds: ['eklem-hareketi'] },
+    { id: 'triseps', labelTr: 'Triseps etkinliği', unitTr: '% (şematik)', color: '#4a90c2', min: 0, max: 100, trackIds: ['eklem-hareketi'] },
+  ],
+  checks: muscleChecks,
+  predicts: musclePredicts,
+  options: [],
+  kazanimIds: ['FB.5.3.3', 'BİY.11.1.9', 'BİY.11.1.10'],
+  sourceIds: [
+    'meb-fen-2026',
+    'meb-biyoloji-2026',
+    'wp-tr-iskelet-kasi',
+    'wp-tr-kas-kasilmasi',
+    'wp-tr-sarkomer',
+    'wp-tr-eklem',
+    'wp-tr-biceps',
+    'wp-en-sarcomere',
+    'wp-en-sliding-filament',
+    'wp-en-skeletal-muscle',
+    'wp-en-muscle-contraction',
+    'wp-en-biceps',
+    'wp-en-triceps',
+    'wp-en-motor-unit',
+    'wp-en-tendon',
+    'os-ap-10-2',
+    'os-ap-10-3',
+  ],
+  simplifications: [
+    'Bant ve sarkomer uzunlukları örnek model değerleridir (dinlenmede 2,4; en kısa hâlde 2,0 birim); gerçek değerler kasa ve duruma göre değişir.',
+    'Bir kas lifinde çok sayıda sarkomer art arda dizilidir; animasyon tek sarkomeri ve büyütülmüş filament düzenini gösterir.',
+    'Programa uygun olarak kasılmanın hücresel moleküler ayrıntıları (kalsiyum, çapraz köprü döngüsü) ve enerji kaynakları ayrıntılandırılmaz; yalnızca "Ek bilgi" olarak anılır.',
+    'Kol hareketinde yalnızca biseps ve triseps gösterilir; gerçekte birçok kas ve kiriş birlikte çalışır. Kas etkinliği ve dirsek açısı şematiktir.',
+    'Kasılma gücünün ayarlanması (motor ünitelerin devreye girişi) ve kasılma türleri yalnızca kısaca anılır.',
+  ],
+  glossary: [
+    { termTr: 'İskelet kası', definitionTr: 'Kirişlerle kemiğe bağlanan ve sinir sisteminin denetimiyle hareket sağlayan çizgili kas.' },
+    { termTr: 'Kiriş (tendon)', definitionTr: 'Kası kemiğe bağlayan sağlam bağ dokusu şeridi.' },
+    { termTr: 'Eklem', definitionTr: 'İki ya da daha fazla kemiğin hareket edebilecek şekilde birleştiği yer.' },
+    { termTr: 'Kasılma', definitionTr: 'Kasın uyarı sonucunda kısalması ya da gerilim üretmesi.' },
+    { termTr: 'Gevşeme', definitionTr: 'Uyarının kesilmesiyle kasılmanın sona ermesi.' },
+    { termTr: 'Miyofibril', definitionTr: 'Kas lifinin içinde uzanan ve sarkomerlerin art arda dizildiği ince lif.' },
+    { termTr: 'Sarkomer', definitionTr: 'İki Z çizgisi arasında kalan, kasın kasılma birimi.' },
+    { termTr: 'Aktin (ince filament)', definitionTr: 'Z çizgisine bağlı, sarkomerin ortasına doğru uzanan ince protein filamenti.' },
+    { termTr: 'Miyozin (kalın filament)', definitionTr: 'Sarkomerin ortasında yer alan kalın protein filamenti.' },
+    { termTr: 'Z çizgisi', definitionTr: 'Sarkomerin iki ucunu sınırlayan ve ince filamentlerin tutunduğu çizgi.' },
+    { termTr: 'A bandı', definitionTr: 'Kalın filamentlerin uzunluğuna denk gelen koyu bant; kasılırken boyu değişmez.' },
+    { termTr: 'I bandı', definitionTr: 'Yalnızca ince filamentlerin bulunduğu açık bant; kasılırken daralır.' },
+    { termTr: 'H bandı', definitionTr: 'A bandının ortasında yalnızca kalın filamentin bulunduğu açık bölge; kasılırken kapanabilir.' },
+    { termTr: 'Kayan iplikler hipotezi', definitionTr: 'Kasılmada ince filamentlerin kalın filamentler üzerinde kayarak sarkomeri kısalttığını söyleyen model.' },
+    { termTr: 'Biseps', definitionTr: 'Üst kolun ön yüzündeki, dirseği bükmeye yarayan kas.' },
+    { termTr: 'Triseps', definitionTr: 'Üst kolun arka yüzündeki, dirseği açmaya yarayan kas.' },
+    { termTr: 'Karşıt çalışan kaslar', definitionTr: 'Bir eklemi zıt yönlerde hareket ettiren ve biri kasılırken diğeri gevşeyen kas çifti.' },
+    { termTr: 'Motor ünite (ek bilgi)', definitionTr: 'Bir motor nöron ile onun uyardığı kas liflerinin oluşturduğu birim.' },
+  ],
+  funFacts: [
+    { level: 'temel', text: 'Kaslar kirişlerle kemiklere bağlanır; kasılan kas kirişi, kiriş de kemiği çekerek hareketi oluşturur.', sourceId: 'os-ap-10-2' },
+    { level: 'temel', text: 'Kolumuzu bükmek ve açmak için sırayla iki farklı kas çalışır: biri çekerken diğeri gevşer.', sourceId: 'wp-en-biceps' },
+    { level: 'ileri', text: 'İskelet kası mikroskopta çizgili görünür; çünkü sarkomerler çok düzenli bir sıra hâlinde dizilidir.', sourceId: 'wp-en-skeletal-muscle' },
+    { level: 'ileri', text: 'Kas boyu değişmese bile gerilim üretebilir; ağır bir yükü aynı konumda tutarken olan budur.', sourceId: 'wp-en-muscle-contraction' },
+    { level: 'ileri', text: 'Her iskelet kası lifi, bir somatik motor nöronun dalıyla uyarılır.', sourceId: 'os-ap-10-2' },
+  ],
+};

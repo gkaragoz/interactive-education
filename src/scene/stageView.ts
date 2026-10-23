@@ -36,9 +36,6 @@ export class StageView {
     }
     this.applyToScenes();
     rig.setAutoRotate(view.autoRotate);
-    // With a selection the picture slides left and up a little, out from under the view-mode panel and the toolbars.
-    const framed = view.selectedId !== null && !this.host.paneSet.isCompare;
-    rig.setShift(framed ? 0.1 : 0, framed ? 0.025 : 0);
     if (refocus) focusCamera(scenes().primary, rig, view.selectedId, this.focusIndex, view.viewMode === 'isolate');
   }
 

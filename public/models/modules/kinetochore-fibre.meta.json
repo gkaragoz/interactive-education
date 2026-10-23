@@ -1,0 +1,177 @@
+{
+  "id": "kinetochore-fibre",
+  "tris": {
+    "LOD0": 8428,
+    "LOD1": 2000,
+    "LOD2": 912
+  },
+  "bboxMin": [
+    -0.0135,
+    -0.0966,
+    -0.088
+  ],
+  "bboxMax": [
+    1.0165,
+    0.0709,
+    0.0886
+  ],
+  "boundsRadius": 1.0166,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 253400,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9426
+      ],
+      "coverage": 0.746,
+      "overlap": 0,
+      "stretchP95": 2.543,
+      "stretchP05": 0.992,
+      "uvPerUnit": 0.68542
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 177023
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 123326
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 95619
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 653021
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 503628
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 310390
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2240929
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1978716
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 919835
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.3,
+    "paintSeconds": 5.6,
+    "totalSeconds": 8.9
+  },
+  "pivot": "kinetochore end, x = 0",
+  "axes": "unit length along +X (kinetochore end x=0 wide and frayed, pole end x=1 converged); scale X to span pole to kinetochore",
+  "units": "1 along X",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/kinetochore-fibre/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 81490,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 22293,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 45178,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 14019,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 300162,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 75327,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 182685,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 42150,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1038418,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 218448,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 693970,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 126000,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "carrier-protein",
+  "tris": {
+    "LOD0": 5880,
+    "LOD1": 1068,
+    "LOD2": 468
+  },
+  "bboxMin": [
+    -0.6423,
+    -0.7464,
+    -0.5883
+  ],
+  "bboxMax": [
+    0.6555,
+    0.7455,
+    0.5803
+  ],
+  "boundsRadius": 0.9331,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 164560,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9742
+      ],
+      "coverage": 0.7126,
+      "overlap": 0,
+      "stretchP95": 1.663,
+      "stretchP05": 0.898,
+      "uvPerUnit": 0.24887
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 147634
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 78443
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 97905
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 541868
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 349256
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 355639
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1913589
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1472772
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1213134
+          }
+        }
+      }
+    },
+    "bakeSeconds": 7.3,
+    "paintSeconds": 10.3,
+    "totalSeconds": 20.1
+  },
+  "pivot": "membrane centre on the transport axis",
+  "axes": "axis Y, open towards +Y (outside), closed at -Y; 1.2 tall; cross-fade with carrier-protein-b",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/carrier-protein/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 59728,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 18934,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 24341,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 16453,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 222996,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 60857,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 111499,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 50640,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 806044,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 169053,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 496738,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 140253,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

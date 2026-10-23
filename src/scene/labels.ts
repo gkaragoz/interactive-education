@@ -31,6 +31,13 @@ export class LabelLayer {
   private entries: Entry[] = [];
   private enabled = false;
   private readonly tmp = new Vector3();
+  private specKey = '';
+  private insets: [number, number] = [0, 0];
+
+  /** Pixels at the left and right edge that floating panels cover; labels are kept out of them. */
+  setInsets(left: number, right: number): void {
+    this.insets = [left, right];
+  }
   private avoid: { x: number; y: number; r: number } | null = null;
 
   constructor(parent: HTMLElement) {
@@ -41,6 +48,14 @@ export class LabelLayer {
     this.root.append(this.svg);
     parent.append(this.root);
     this.root.hidden = true;
+  }
+
+  /** Rebuilds the label elements only when the set of ids and texts changed (module labels change with time). */
+  setSpecsIfChanged(specs: LabelSpec[]): void {
+    const key = specs.map((s) => `${s.id}|${s.text}`).join('\n');
+    if (key === this.specKey) return;
+    this.specKey = key;
+    this.setSpecs(specs);
   }
 
   setSpecs(specs: LabelSpec[]): void {
@@ -138,7 +153,10 @@ export class LabelLayer {
   private show(entry: Entry, x: number, y: number, labelY: number, side: number, width: number, size: { w: number; h: number }): void {
     const { w, h } = size;
     // The box always stays inside the stage; right-hand labels start at lx, left-hand ones end at lx.
-    const clamp = (v: number): number => (side < 0 ? Math.min(width - 8, Math.max(w + 8, v)) : Math.min(width - w - 8, Math.max(8, v)));
+    // Labels stay in the free area between the floating panels (the rail on the left, the drawer on the right).
+    const lo = this.insets[0] + 8;
+    const hi = width - this.insets[1] - 8;
+    const clamp = (v: number): number => (side < 0 ? Math.min(hi, Math.max(lo + w, v)) : Math.min(hi - w, Math.max(lo, v)));
     let lx = clamp(side < 0 ? x - 60 : x + 60);
     const a = this.avoid;
     // Slide the label outward until its box no longer covers the selected organelle.

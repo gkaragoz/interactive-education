@@ -1,0 +1,181 @@
+{
+  "id": "punnett-tile",
+  "tris": {
+    "LOD0": 15552,
+    "LOD1": 3888,
+    "LOD2": 2028
+  },
+  "bboxMin": [
+    -0.5,
+    -0.07,
+    -0.5
+  ],
+  "bboxMax": [
+    0.5,
+    0.0992,
+    0.5
+  ],
+  "boundsRadius": 0.6409,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 375168,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.755
+      ],
+      "coverage": 0.6026,
+      "overlap": 0,
+      "stretchP95": 1.332,
+      "stretchP05": 0.638,
+      "uvPerUnit": 0.49476
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 22068
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 14353
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 7910
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 79312
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 60296
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 25948
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 272294
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 234470
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 86504
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2,
+    "paintSeconds": 2.6,
+    "totalSeconds": 6.5
+  },
+  "pivot": "tile centre",
+  "axes": "1 x 1 square tile 0.14 thick in XZ, top face +Y with a shallow circular slot (radius 0.33, depth 0.05) for the letter; neutral albedo",
+  "units": "1 = tile width",
+  "tintable": true,
+  "tintParts": [
+    "tile"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/punnett-tile/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 13678,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4662,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6458,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2558,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 48003,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 15196,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27002,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 5805,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 176312,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 47806,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 114404,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 14102,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

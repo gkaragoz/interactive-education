@@ -1,0 +1,194 @@
+{
+  "id": "reflex-arc-parts",
+  "tris": {
+    "LOD0": 30432,
+    "LOD1": 7464,
+    "LOD2": 3996
+  },
+  "bboxMin": [
+    -4.6108,
+    -1.0348,
+    -1.4684
+  ],
+  "bboxMax": [
+    5.3895,
+    1.0387,
+    1.4185
+  ],
+  "boundsRadius": 5.3898,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 906480,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9884,
+        0.9962
+      ],
+      "coverage": 0.7211,
+      "overlap": 0,
+      "stretchP95": 1.269,
+      "stretchP05": 0.771,
+      "uvPerUnit": 0.13198
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 162787
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 66405
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 87725
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 602484
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 313084
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 321690
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2153554
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1314662
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1106409
+          }
+        }
+      }
+    },
+    "bakeSeconds": 54,
+    "paintSeconds": 8.4,
+    "totalSeconds": 64
+  },
+  "pivot": "centre of the middle piece (spinal cord)",
+  "axes": "three pieces along X: skin + Pacinian receptor + afferent fibre centred at x = -3.4 (parts skin-*), spinal-cord cross-section centred at x = 0 (parts cord-*; plane XZ, normal +Y, dorsal root and ganglion towards +Z, ventral root towards -Z), muscle effector centred at x = +3.4 (parts muscle-*, long axis X, motor end plate on top)",
+  "units": "um (exaggerated)",
+  "tintable": false,
+  "partPivots": {
+    "skin": [
+      -3.4,
+      0,
+      0
+    ],
+    "spinal-cord": [
+      0,
+      0,
+      0
+    ],
+    "muscle": [
+      3.4,
+      0,
+      0
+    ]
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/reflex-arc-parts/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 66354,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 23262,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 25343,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 17749,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 225390,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 75261,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 93452,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 56677,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 765110,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 213109,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 401491,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 150510,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

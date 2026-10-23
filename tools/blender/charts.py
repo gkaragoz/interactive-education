@@ -45,10 +45,50 @@ def _chart_metrics(V, F, fuv, faces):
     return max(su, 1e-6), max(sv, 1e-6)
 
 
+def projection_charts(V, F, axis=1, sectors=8):
+    """Chart coordinates for flat, plate-like parts (slabs, bilayers): per connected component the two broad faces (sign of the
+    face normal along `axis`) are planar projections, the thin rim band (steep faces in the outer 3 % of the radius) is cut
+    into angular sectors with (arc length, height) coordinates. Avoids cube-face stretching of thin slabs."""
+    import geo
+    a1, a2 = (axis + 1) % 3, (axis + 2) % 3
+    P = V[F]
+    n = np.cross(P[:, 1] - P[:, 0], P[:, 2] - P[:, 0])
+    n = n / np.maximum(np.linalg.norm(n, axis=1, keepdims=True), 1e-12)
+    comp = geo.components(V, F)
+    fuv = np.zeros((len(F), 3, 2))
+    cid = np.zeros(len(F), dtype=np.int64)
+    fuv[..., 0], fuv[..., 1] = P[..., a1], P[..., a2]
+    base = 0
+    for L in np.unique(comp):
+        sel = np.where(comp == L)[0]
+        Vc = V[np.unique(F[sel])]
+        c1, c2 = (Vc[:, a1].min() + Vc[:, a1].max()) / 2, (Vc[:, a2].min() + Vc[:, a2].max()) / 2
+        ext = max(Vc[:, a1].max() - Vc[:, a1].min(), Vc[:, a2].max() - Vc[:, a2].min()) / 2
+        Pc = P[sel]
+        rad = np.hypot(Pc[..., a1] - c1, Pc[..., a2] - c2)
+        rim = (np.abs(n[sel, axis]) < 0.5) & (rad.mean(1) > 0.97 * ext * 0.9)
+        cid[sel] = base + np.where(n[sel, axis] < 0, 1, 0)
+        if rim.any():
+            ang = np.arctan2(Pc[rim][..., a2] - c2, Pc[rim][..., a1] - c1)
+            mean = np.arctan2(np.sin(ang).mean(1), np.cos(ang).mean(1))
+            ang = mean[:, None] + (ang - mean[:, None] + np.pi) % (2 * np.pi) - np.pi
+            sec = np.minimum(((mean + np.pi) / (2 * np.pi) * sectors).astype(int), sectors - 1)
+            centre = (sec + 0.5) / sectors * 2 * np.pi - np.pi
+            rr = rad[rim].mean()
+            idx = sel[rim]
+            fuv[idx, :, 0] = (ang - centre[:, None]) * rr
+            fuv[idx, :, 1] = Pc[rim][..., axis]
+            cid[idx] = base + 2 + sec
+        base += 2 + sectors
+    return fuv, cid
+
+
 def build_pieces(parts):
     """List of pieces: dict(part, faces, su, sv, umin, vmin, w, h) over all parts (3D-size rectangles)."""
     pieces = []
     for pi, p in enumerate(parts):
+        if getattr(p, "proj", None) is not None:
+            p.fuv, p.cid = projection_charts(p.V, p.F, p.proj)
         if p.fuv is None:
             raise ValueError(f"part {p.name}: no chart data (a face array was built outside geo primitives)")
         for c in np.unique(p.cid):

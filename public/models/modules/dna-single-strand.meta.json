@@ -1,0 +1,185 @@
+{
+  "id": "dna-single-strand",
+  "tris": {
+    "LOD0": 10762,
+    "LOD1": 2538,
+    "LOD2": 920
+  },
+  "bboxMin": [
+    -0.5394,
+    -1.5337,
+    -0.5326
+  ],
+  "bboxMax": [
+    0.5467,
+    1.5344,
+    0.5443
+  ],
+  "boundsRadius": 1.6053,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 324020,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.7894
+      ],
+      "coverage": 0.6853,
+      "overlap": 0,
+      "stretchP95": 1.299,
+      "stretchP05": 0.746,
+      "uvPerUnit": 0.34654
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 88394
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 76857
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 69958
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 343107
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 341190
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 253724
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1273472
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1451170
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 885769
+          }
+        }
+      }
+    },
+    "bakeSeconds": 24.5,
+    "paintSeconds": 12.2,
+    "totalSeconds": 39.4
+  },
+  "pivot": "centre of the strand",
+  "axes": "loose coil along Y, 12 bases (ATGCGATCCGTA) pointing towards the axis; parts backbone, base-a/t/g/c",
+  "units": "um",
+  "tintable": true,
+  "tintParts": [
+    "backbone",
+    "base-a",
+    "base-t",
+    "base-g",
+    "base-c"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/dna-single-strand/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 51833,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16311,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 22914,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 12608,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 208415,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 57332,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 109830,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 41253,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 798038,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 165216,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 507217,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 125605,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

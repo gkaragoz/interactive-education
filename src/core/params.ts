@@ -1,7 +1,8 @@
 import type { CellTypeId, LevelId } from '../data/types';
 import { isQualityName, type QualityName } from './quality';
 
-export type Route = 'explore' | 'kaynakca' | 'hakkinda';
+/** `home` is the module list (`#/`), `explore` the cell explorer (`#/modul/cell`), `modul` any animated module. */
+export type Route = 'home' | 'explore' | 'kaynakca' | 'hakkinda' | 'modul';
 
 export interface AppParams {
   cell: CellTypeId;
@@ -31,7 +32,8 @@ export function parseParams(search: string, hash = ''): AppParams {
     perf: q.has('perf') && q.get('perf') !== '0' && q.get('perf') !== 'false',
     quality: isQualityName(quality) ? quality : 'medium',
     qualityFixed: isQualityName(quality),
-    route: parseRoute(hash),
+    // Old links such as `?cell=animal` (no hash) still open the cell explorer.
+    route: hash === '' && q.has('cell') ? 'explore' : parseRoute(hash),
   };
 }
 
@@ -39,15 +41,46 @@ export function parseRoute(hash: string): Route {
   const clean = (hash.replace(/^#\/?/, '').toLowerCase().split('/')[0] ?? '');
   if (clean === 'kaynakca') return 'kaynakca';
   if (clean === 'hakkinda') return 'hakkinda';
-  return 'explore';
+  if (clean === 'modul') return parseModuleRoute(hash)?.id === 'cell' ? 'explore' : 'modul';
+  return 'home';
 }
 
 export function routeHash(route: Route): string {
-  return route === 'explore' ? '#/' : `#/${route}`;
+  if (route === 'home') return '#/';
+  return route === 'explore' ? '#/modul/cell' : `#/${route}`;
 }
 
 /** `#/kaynakca/<sourceId>` deep-links to one bibliography entry. */
 export function parseRouteAnchor(hash: string): string | null {
   const parts = hash.replace(/^#\/?/, '').split('/');
   return parts.length > 1 && parts[1] ? decodeURIComponent(parts[1]) : null;
+}
+
+export interface ModuleRoute {
+  id: string;
+  track: string | null;
+}
+
+const SAFE_ID = /^[a-z0-9_-]{1,40}$/;
+
+/** `#/modul/<id>[/<track>]`; ids and tracks are kebab-case (or `__demo`), anything else is not a module route. */
+export function parseModuleRoute(hash: string): ModuleRoute | null {
+  const parts = hash.replace(/^#\/?/, '').split('?')[0]?.split('/') ?? [];
+  if (parts[0]?.toLowerCase() !== 'modul' || !parts[1]) return null;
+  const id = decodeSafe(parts[1]);
+  const track = parts[2] ? decodeSafe(parts[2]) : null;
+  if (!id || !SAFE_ID.test(id) || (track !== null && !SAFE_ID.test(track))) return null;
+  return { id, track };
+}
+
+function decodeSafe(part: string): string | null {
+  try {
+    return decodeURIComponent(part);
+  } catch {
+    return null;
+  }
+}
+
+export function moduleHash(id: string, track?: string | null): string {
+  return `#/modul/${encodeURIComponent(id)}${track ? `/${encodeURIComponent(track)}` : ''}`;
 }

@@ -1,0 +1,8 @@
+# Changelog
+
+## v0.2.0: shell redesign + Mitoz ve mayoz
+- Stage-first, spacious shell: home with module cards, slide-over info drawer, bottom sheet tabs, quality menu.
+- Animated module framework (timeline player, phase cards, charts, Kendini dene checks, predict prompts, safe-area camera).
+- Module `mitosis-meiosis`: mitoz, mayoz I, mayoz II, ayrılmama (İleri) in 3D with 2n=4 / 2n=6.
+- Painted module assets (chromosome, spindle, kinetochore fibre, nuclear envelope fragment ...).
+- Other modules (membrane transport, DNA and protein, energy, muscle, nervous system, genetics) are built and previewable with `?demo`; they are released one version at a time.

@@ -14,6 +14,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const q = new URLSearchParams(location.search);
 const id = q.get('id') ?? 'nucleus', tier = q.get('tier') ?? 'medium', lod = Number(q.get('lod') ?? 0);
 const useTex = q.get('tex') !== '0';
+const sub = q.get('set') === 'modules' ? 'modules/' : '';   // ?set=modules for public/models/modules
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(1);
@@ -30,13 +31,13 @@ scene.add(key);
 const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.1, 500);
 const ktx2 = new KTX2Loader().setTranscoderPath('/node_modules/three/examples/jsm/libs/basis/').detectSupport(renderer);
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-const meta = await (await fetch(`/public/models/organelles/${id}.meta.json`)).json();
-const gltf = await loader.loadAsync(`/public/models/organelles/${id}.glb`);
+const meta = await (await fetch(`/public/models/${sub ? 'modules' : 'organelles'}/${id}.meta.json`)).json();
+const gltf = await loader.loadAsync(`/public/models/${sub ? 'modules' : 'organelles'}/${id}.glb`);
 const root = gltf.scene;
 root.traverse((o) => { if (/^LOD\d$/.test(o.name)) o.visible = o.name === `LOD${lod}`; });
 const maps = {};
 async function tex(mat, kind, srgb) {
-  const t = await ktx2.loadAsync(`/public/textures/${id}/${tier}/${mat}_${kind}.ktx2`);
+  const t = await ktx2.loadAsync(`/public/textures/${sub}${id}/${tier}/${mat}_${kind}.ktx2`);
   t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace;
   t.anisotropy = 8;
   return t;
@@ -62,7 +63,7 @@ root.traverse((o) => { if (o.isMesh && o.geometry.attributes.uv && !o.geometry.a
 scene.add(root);
 const r = meta.boundsRadius;
 const dirs = { iso: [0.6, 0.5, 0.65], side: [0, 0.1, 1], top: [0, 1, 0.1], back: [-0.6, 0.4, -0.7] };
-const d = new THREE.Vector3(...(dirs[q.get('view') ?? 'iso'])).normalize().multiplyScalar(r * 3.3);
+const d = new THREE.Vector3(...(dirs[q.get('view') ?? 'iso'])).normalize().multiplyScalar(r * 4.2);
 cam.position.copy(d);
 cam.lookAt(0, 0, 0);
 renderer.render(scene, cam);

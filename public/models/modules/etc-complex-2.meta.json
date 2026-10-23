@@ -1,0 +1,177 @@
+{
+  "id": "etc-complex-2",
+  "tris": {
+    "LOD0": 6040,
+    "LOD1": 1332,
+    "LOD2": 660
+  },
+  "bboxMin": [
+    -0.399,
+    -1.3118,
+    -0.3478
+  ],
+  "bboxMax": [
+    0.4432,
+    0.55,
+    0.3345
+  ],
+  "boundsRadius": 1.3252,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 189596,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9666
+      ],
+      "coverage": 0.7011,
+      "overlap": 0,
+      "stretchP95": 1.767,
+      "stretchP05": 0.945,
+      "uvPerUnit": 0.29048
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 41858
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 18800
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 27013
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 156522
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 86231
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 96730
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 562227
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 365429
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 327612
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.7,
+    "paintSeconds": 1.4,
+    "totalSeconds": 6.4
+  },
+  "pivot": "membrane centre",
+  "axes": "membrane plane XZ; matrix lobes towards -Y; ~0.8 wide, ~1.3 tall",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/etc-complex-2/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 18970,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 6184,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7398,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 5388,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 64840,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20579,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27980,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 16281,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 234348,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 68774,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 116436,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 49138,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

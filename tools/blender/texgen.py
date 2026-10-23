@@ -19,8 +19,11 @@ TINY = {"plasmid", "pilus", "centrosome", "lysosome", "ribosome", "flagellum"}
 TIERS = ("low", "medium", "high")
 
 
+SIZE_TABLE = {}          # per-asset top size overrides (modules)
+
+
 def tier_sizes(asset):
-    top = 4096 if asset in HEROES else 1024 if asset in TINY else 2048
+    top = SIZE_TABLE.get(asset) or (4096 if asset in HEROES else 1024 if asset in TINY else 2048)
     cap = int(os.environ.get("TEXMAX", "0") or 0)
     if cap:
         top = min(top, cap)

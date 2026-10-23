@@ -1,0 +1,177 @@
+{
+  "id": "cleavage-furrow-ring",
+  "tris": {
+    "LOD0": 14496,
+    "LOD1": 3504,
+    "LOD2": 1860
+  },
+  "bboxMin": [
+    0.4534,
+    -0.072,
+    -0.931
+  ],
+  "bboxMax": [
+    1.0709,
+    0.072,
+    0.9307
+  ],
+  "boundsRadius": 1.072,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 448168,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9976,
+        0.9981
+      ],
+      "coverage": 0.735,
+      "overlap": 0,
+      "stretchP95": 1.692,
+      "stretchP05": 0.94,
+      "uvPerUnit": 0.51212
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 153598
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 81761
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 108306
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 561084
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 373578
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 413282
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1972099
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1623907
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1492599
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.4,
+    "paintSeconds": 5.2,
+    "totalSeconds": 10.7
+  },
+  "pivot": "ring centre",
+  "axes": "ring radius 1 in the XZ plane, 120-degree segment centred on +X",
+  "units": "radius 1",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/cleavage-furrow-ring/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 61022,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20604,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 24716,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15702,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 237496,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 67849,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 114558,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 55089,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 899790,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 196239,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 532838,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 170713,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

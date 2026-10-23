@@ -1,0 +1,181 @@
+{
+  "id": "bilayer-tile",
+  "tris": {
+    "LOD0": 16656,
+    "LOD1": 3840,
+    "LOD2": 2112
+  },
+  "bboxMin": [
+    -1,
+    -0.6791,
+    -1
+  ],
+  "bboxMax": [
+    1,
+    0.6815,
+    1
+  ],
+  "boundsRadius": 1.3775,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 507640,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9967,
+        0.9981
+      ],
+      "coverage": 0.7623,
+      "overlap": 0,
+      "stretchP95": 1.226,
+      "stretchP05": 0.738,
+      "uvPerUnit": 0.12886
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 121464
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 70363
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 108945
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 452372
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 314351
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 393785
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1628008
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1303867
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1314591
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.9,
+    "paintSeconds": 12,
+    "totalSeconds": 21.7
+  },
+  "pivot": "tile centre",
+  "axes": "2 x 2 tile in XZ, normal +Y, tiles seamlessly in X and Z (flush edges, periodic dome lattice, painting folded with period 2)",
+  "units": "2 across",
+  "tintable": true,
+  "tintParts": [
+    "heads"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/bilayer-tile/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 63183,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 19030,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 26785,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 17368,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 218990,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 63954,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 102171,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 52865,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 769809,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 183228,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 433160,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 153421,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "id": "dna-helix",
+  "tris": {
+    "LOD0": 21428,
+    "LOD1": 2940,
+    "LOD2": 1764
+  },
+  "bboxMin": [
+    -0.6102,
+    -1.6958,
+    -0.5983
+  ],
+  "bboxMax": [
+    0.6101,
+    1.6974,
+    0.5984
+  ],
+  "boundsRadius": 1.7754,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 536116,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9647
+      ],
+      "coverage": 0.6582,
+      "overlap": 0,
+      "stretchP95": 1.338,
+      "stretchP05": 0.415,
+      "uvPerUnit": 0.23855
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 101781
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 71486
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 84175
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 390636
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 340551
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 319581
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1460068
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1492882
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1181225
+          }
+        }
+      }
+    },
+    "bakeSeconds": 19.6,
+    "paintSeconds": 8.1,
+    "totalSeconds": 29.3
+  },
+  "pivot": "centre of the segment",
+  "axes": "helix axis Y, 20 base pairs = 2 turns, 3.2 long, radius 0.5; flat-cut ends so copies stack seamlessly every 3.2 in Y (phase continues); parts backbone-a, backbone-b, bp-at (A-T rungs), bp-gc (G-C rungs, three H-bond dots)",
+  "units": "um (exaggerated)",
+  "tintable": true,
+  "tintParts": [
+    "backbone-a",
+    "backbone-b",
+    "bp-at",
+    "bp-gc"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/dna-helix/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 55749,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17711,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 23759,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 14279,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 218039,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 61628,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 105811,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 50600,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 815729,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 179564,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 482673,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 153492,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

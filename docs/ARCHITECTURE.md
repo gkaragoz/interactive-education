@@ -9,9 +9,12 @@ Vite + TypeScript (strict) + plain three.js, static site, no backend (ADR 0002).
 | `data` | typed content (`types.ts` is the fixed contract; sources, kazanımlar, organelles, cells, micrographs) | — |
 | `core` | pure, DOM-light helpers: seeded RNG, URL parsing, safe DOM builder `h()` and `escapeHtml`, quality presets, the `Store`, and the `Catalog` (indexed view of the data with cross-reference checks) | `data` |
 | `scene` | everything three.js: asset loading with placeholder fallback, materials, layout solver, cell assembly, cutaway, camera, post-processing, labels, the `Stage` | `data`, `core` |
+| `modules` | animated learning modules (lazy chunks) and the registry; `modules/<id>/**` is one module | `data`, `core`, `scene` |
 | `ui` | DOM panels (cell list, legend, stage overlay, info card, microscope, compare), the Kaynakça and Hakkında pages, styles | `data`, `core`, `scene` (types only in practice) |
 | `app` | composition root: wires `Store` <-> `Stage` <-> `ui`, URL state, routing | all |
 | `main.ts` | entry: fonts, data, `startApp` | `app`, `data` |
+
+`core` also holds the pure timeline engine (`timeline.ts`, `moduleSession.ts`). See `docs/MODULES.md` for the module framework (ModuleScene contract, `ModuleStage`, `ModuleAssets`, registry, routes).
 
 Rules (ESLint enforces both, see `eslint.config.js`): imports only go in the direction `data/core -> scene -> ui -> app`; other modules are imported only through their `index.ts` (except `data/types`, the shared contract). The UI never touches the stage or the store directly: it calls the `UiActions` interface (`src/ui/types.ts`), which `app` implements.
 
@@ -52,3 +55,10 @@ Hash routes: `#/` (explore), `#/kaynakca`, `#/kaynakca/<sourceId>` (deep link, f
 ## Tests
 
 `tests/*.test.ts` (Vitest; jsdom where DOM is needed): layout solver, catalog / data integrity, URL parameters, escaping, scene assembly with placeholders and the cutaway, fonts, plus the lead's `data.test.ts` and the asset agent's `assets.test.ts`. `tests/e2e/smoke.spec.ts` (Playwright, Chromium, SwiftShader, runs against `vite preview`) covers the user-facing flows. Fixtures for tests live in `tests/fixtures`.
+
+## Stage-first layout (step 2)
+- Routes: `#/` home (hero, module cards with `public/thumbs/<id>.webp` stills and a gradient fallback, "Yakında" cards without routes), `#/modul/cell` the explorer, `#/modul/<id>[/<track>]` animated modules, `#/kaynakca`, `#/hakkinda`. Unreleased (preview) modules show only with `?demo` (or in dev). The level (Temel/İleri) lives in the slim header and is remembered (`bilim.level`).
+- Explorer: the 3D stage fills the page; floating glass panels fade after ~4 s idle (`ui/idle.ts`). Left rail (cell types and legend, collapsible), right slide-over drawer (the info card; Esc or × closes, `inert` while closed), bottom sheet with tabs Mikroskop and Karşılaştır. `Stage.setOverlayInsets` keeps the 3D picture centred between rail and drawer. At up to 1500 px the rail and drawer narrow and the toolbars become icon-only.
+- Module screen (`ui/moduleView.ts`): title with track tabs and options top left (an option may set `trackIds`), tools top right, phase card and chart strip (only series the track names in `chartPoints`) above the timeline dock; the dock has play, step, a scrub bar with phase segments, speed, loop. Shortcuts: Space, left/right, plus/minus, `?` for the help sheet. Phase changes are announced in a live region.
+- Lazy loading: home and header need no three.js; `scene` (three) and `ModuleHost` are dynamic imports. `vite build`: main chunk ~125 KB (41 KB gz), three ~812 KB (238 KB gz) loaded on first stage use, module chunks separate.
+- Thumbnails: `node tools/thumbs.mjs [moduleId ...]` (needs `npm run preview` and a GPU browser).

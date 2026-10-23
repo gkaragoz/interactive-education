@@ -1,60 +1,47 @@
-import { h, parseRouteAnchor, routeHash, type AppState, type Route } from '../core';
+import { h, parseRouteAnchor, type AppState, type Route } from '../core';
 import type { LoadProgress } from '../scene';
 import { renderAbout } from './about';
 import { renderBibliography } from './bibliography';
 import { createComparePanel, createMicroscopePanel } from './bottomRow';
-import { icon, type IconName } from './icons';
+import { createHeader } from './header';
+import { renderHome } from './home';
+import { attachIdleFade } from './idle';
 import { createInfoCard } from './infoCard';
-import { createSettingsMenu } from './settings';
 import { createCellList, createLegend } from './leftColumn';
+import { createModuleView, type ModuleView } from './moduleView';
+import { createSettingsMenu } from './settings';
 import { createStagePanel } from './stagePanel';
 import type { UiContext } from './types';
 import './styles.css';
 
 export interface Shell {
-  /** Mount point for the 3D stage. */
+  /** Mount point for the cell explorer's 3D stage. */
   viewport: HTMLElement;
   setLoading(progress: LoadProgress | null): void;
+  /** The animated-module screen (timeline, phases, charts); its stage mounts into `moduleView.viewport`. */
+  moduleView: ModuleView;
   setPerfText(text: string | null): void;
   /** Small non-blocking message at the bottom of the page; it fades by itself. */
   toast(text: string): void;
   /** Full-stage overlay with a message (graphics connection lost), or null to clear it. */
   setStageStatus(text: string | null): void;
+  /** Called with the pixels the rail (left) and the info drawer (right) cover, so the 3D picture can stay centred in the free area. */
+  onInsets(listener: (left: number, right: number) => void): void;
   update(state: AppState): void;
 }
 
-const NAV: { route: Route; label: string; icon: IconName }[] = [
-  { route: 'explore', label: 'Keşfet', icon: 'grid' },
-  { route: 'kaynakca', label: 'Kaynakça', icon: 'books' },
-  { route: 'hakkinda', label: 'Hakkında', icon: 'info' },
-];
-
 const TITLES: Record<Route, string> = {
-  explore: 'Bilim Atölyesi · Hücre',
+  home: 'Bilim Atölyesi',
+  explore: 'Hücre · Bilim Atölyesi',
+  modul: 'Modül · Bilim Atölyesi',
   kaynakca: 'Kaynakça · Bilim Atölyesi',
   hakkinda: 'Hakkında · Bilim Atölyesi',
 };
 
-function brandMark(): SVGSVGElement {
-  const ns = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(ns, 'svg');
-  svg.setAttribute('viewBox', '0 0 44 44');
-  svg.setAttribute('class', 'brand-mark');
-  svg.setAttribute('aria-hidden', 'true');
-  const shapes: [string, Record<string, string>][] = [
-    ['rect', { x: '3', y: '6', width: '38', height: '32', rx: '11', fill: '#b9d28a', stroke: '#5b7f33', 'stroke-width': '2' }],
-    ['circle', { cx: '19', cy: '21', r: '8', fill: '#8a63b8' }],
-    ['circle', { cx: '19', cy: '21', r: '3', fill: '#5f3a85' }],
-    ['ellipse', { cx: '32', cy: '28', rx: '5', ry: '3', fill: '#e08a3c' }],
-    ['circle', { cx: '30', cy: '14', r: '3', fill: '#7fb4d6' }],
-  ];
-  for (const [tag, attrs] of shapes) {
-    const el = document.createElementNS(ns, tag);
-    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-    svg.append(el);
-  }
-  return svg;
-}
+/** Widths (px) the floating rail and drawer take, kept in step with styles.css. */
+const RAIL_OPEN = 318;
+const RAIL_CLOSED = 74;
+const DRAWER = 420;
 
 export function createShell(root: HTMLElement, ctx: UiContext): Shell {
   const cellList = createCellList(ctx);
@@ -64,42 +51,90 @@ export function createShell(root: HTMLElement, ctx: UiContext): Shell {
   const micro = createMicroscopePanel(ctx);
   const compare = createComparePanel(ctx);
   const settings = createSettingsMenu(ctx);
+  const header = createHeader(ctx, settings);
 
-  const navLinks = new Map<Route, HTMLAnchorElement>();
-  const nav = h('nav', { 'aria-label': 'Ana gezinme' });
-  for (const item of NAV) {
-    const a = h('a', { class: 'nav-link', href: routeHash(item.route), onclick: (ev: Event) => { ev.preventDefault(); ctx.actions.navigate(item.route); } }, icon(item.icon), item.label);
-    navLinks.set(item.route, a);
-    nav.append(a);
+  // --- left rail: cell types + organelle legend, collapsible -------------------------------------------------
+  const railToggle = h('button', { class: 'icon-btn rail-toggle', type: 'button', 'aria-expanded': 'true', 'aria-controls': 'rail-body', 'aria-label': 'Sol paneli daralt', title: 'Paneli daralt / genişlet' }, '‹');
+  const railBody = h('div', { class: 'rail-body', id: 'rail-body' }, cellList.el, legend.el);
+  const rail = h('aside', { class: 'rail floating', 'aria-label': 'Hücre türleri ve organeller' }, railToggle, railBody);
+  let railOpen = true;
+  let insetListener: ((left: number, right: number) => void) | null = null;
+  let infoOpen = false;
+  const compact = typeof matchMedia === 'function' ? matchMedia('(max-width: 1500px)') : null;
+  const reportInsets = (): void => {
+    const narrow = compact?.matches === true;
+    insetListener?.(railOpen ? (narrow ? RAIL_OPEN - 48 : RAIL_OPEN) : RAIL_CLOSED, infoOpen ? (narrow ? DRAWER - 48 : DRAWER) : 0);
+  };
+  compact?.addEventListener?.('change', reportInsets);
+  railToggle.addEventListener('click', () => {
+    railOpen = !railOpen;
+    rail.classList.toggle('collapsed', !railOpen);
+    railToggle.setAttribute('aria-expanded', String(railOpen));
+    railToggle.setAttribute('aria-label', railOpen ? 'Sol paneli daralt' : 'Sol paneli aç');
+    railToggle.textContent = railOpen ? '‹' : '›';
+    railBody.inert = !railOpen;
+    wrap.classList.toggle('rail-closed', !railOpen);
+    reportInsets();
+  });
+
+  // --- right drawer: the info card ---------------------------------------------------------------------------
+  const drawer = h('aside', { class: 'drawer', 'aria-label': 'Bilgi paneli' }, info.el);
+  drawer.inert = true;
+  drawer.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') {
+      ev.stopPropagation();
+      ctx.actions.closeInfo();
+    }
+  });
+
+  // Esc closes the drawer from anywhere (popovers and the sheet handle and stop their own Esc first).
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && infoOpen && !ev.defaultPrevented) ctx.actions.closeInfo();
+  });
+
+  // --- bottom drawer with tabs: Mikroskop / Karşılaştır --------------------------------------------------------
+  const panels = [
+    { id: 'micro', label: 'Mikroskop', el: micro.el },
+    { id: 'compare', label: 'Karşılaştır', el: compare.el },
+  ];
+  let sheetTab: string | null = null;
+  const tabButtons = new Map<string, HTMLButtonElement>();
+  const sheet = h('section', { class: 'sheet floating', 'aria-label': 'Alt paneller' }, ...panels.map((p) => p.el));
+  sheet.hidden = true;
+  const showTab = (id: string | null): void => {
+    sheetTab = id;
+    sheet.hidden = id === null;
+    for (const p of panels) p.el.hidden = p.id !== id;
+    for (const [pid, btn] of tabButtons) btn.setAttribute('aria-selected', String(pid === id));
+  };
+  for (const p of panels) {
+    p.el.hidden = true;
+    const btn = h('button', { class: 'tool-btn', type: 'button', role: 'tab', 'aria-selected': 'false', 'aria-controls': p.el.id || undefined, 'data-tab': p.id, onclick: () => showTab(sheetTab === p.id ? null : p.id) }, p.label);
+    tabButtons.set(p.id, btn);
+    stage.tabSlot.append(btn);
   }
-  const header = h(
-    'header',
-    { class: 'topbar' },
-    h('a', { class: 'brand', href: routeHash('explore'), 'aria-label': 'Bilim Atölyesi Hücre, ana sayfa', onclick: (ev: Event) => { ev.preventDefault(); ctx.actions.navigate('explore'); } }, brandMark(), h('h1', {}, 'Bilim Atölyesi · Hücre'), h('span', { class: 'tagline' }, 'Canlılığı mikroskobik düzeyde keşfet ✦')),
-    nav,
-    settings.el,
-  );
 
-  const workspace = h(
-    'main',
-    { class: 'workspace', id: 'main' },
-    h('div', { class: 'col' }, cellList.el, legend.el),
-    h('div', { class: 'center' }, stage.el, h('div', { style: 'display:grid;grid-template-columns:1.1fr 1fr;gap:16px;min-height:0' }, micro.el, compare.el)),
-    h('div', { class: 'col' }, info.el),
-  );
+  // --- screens ----------------------------------------------------------------------------------------------
+  const wrap = h('div', { class: 'stage-wrap' }, stage.el, rail, drawer, sheet);
+  const explore = h('main', { class: 'explore', id: 'main' }, wrap);
+  const moduleView = createModuleView(ctx.reducedMotion);
+  const moduleMain = h('main', { class: 'module-main-page', id: 'modul' }, moduleView.el);
+  const homeMain = h('main', { class: 'page home-page', id: 'home', tabindex: -1 });
   const page = h('main', { class: 'page', id: 'page', tabindex: -1 });
-  page.hidden = true;
+  for (const m of [explore, moduleMain, homeMain, page]) m.hidden = true;
   const perf = h('div', { class: 'perf-overlay', 'aria-hidden': 'true' });
   perf.hidden = true;
-  const skip = h('a', { class: 'skip-link', href: '#main', onclick: (ev: Event) => { ev.preventDefault(); (workspace.querySelector('canvas') ?? workspace).focus?.(); } }, 'Ana içeriğe geç');
-
+  const skip = h('a', { class: 'skip-link', href: '#main', onclick: (ev: Event) => { ev.preventDefault(); (explore.querySelector('canvas') ?? explore).focus?.(); } }, 'Ana içeriğe geç');
   const toastEl = h('div', { class: 'toast', role: 'status', 'aria-live': 'polite' });
   let toastTimer: ReturnType<typeof setTimeout> | undefined;
-  const smallScreen = h('div', { class: 'small-screen-note', role: 'note' }, h('h2', {}, 'Bilim Atölyesi · Hücre'), h('p', {}, 'Bu sürüm masaüstü ekranlar için tasarlandı. Lütfen daha geniş bir ekranda veya tarayıcı penceresini büyüterek aç.'));
-  root.replaceChildren(skip, h('div', { class: 'app' }, header, workspace, page), perf, toastEl, smallScreen);
+  const smallScreen = h('div', { class: 'small-screen-note', role: 'note' }, h('h2', {}, 'Bilim Atölyesi'), h('p', {}, 'Bu sürüm masaüstü ekranlar için tasarlandı. Lütfen daha geniş bir ekranda veya tarayıcı penceresini büyüterek aç.'));
+  root.replaceChildren(skip, h('div', { class: 'app' }, header.el, explore, moduleMain, homeMain, page), perf, toastEl, smallScreen);
+  attachIdleFade(wrap);
+  attachIdleFade(moduleMain);
 
   let pageRoute: Route | null = null;
   let pageAnchor: string | null = null;
+  let homeBuilt = false;
 
   const showPage = (route: Route): void => {
     const anchor = route === 'kaynakca' ? parseRouteAnchor(location.hash) : null;
@@ -120,7 +155,12 @@ export function createShell(root: HTMLElement, ctx: UiContext): Shell {
   return {
     viewport: stage.viewport,
     setLoading: stage.setLoading,
+    moduleView,
     setStageStatus: stage.setStatus,
+    onInsets(listener): void {
+      insetListener = listener;
+      reportInsets();
+    },
     toast(text: string): void {
       toastEl.textContent = text;
       toastEl.classList.add('show');
@@ -132,17 +172,27 @@ export function createShell(root: HTMLElement, ctx: UiContext): Shell {
       if (text !== null) perf.textContent = text;
     },
     update(state: AppState): void {
-      const explore = state.route === 'explore';
-      workspace.hidden = !explore;
-      page.hidden = explore;
-      for (const [route, a] of navLinks) {
-        if (route === state.route) a.setAttribute('aria-current', 'page');
-        else a.removeAttribute('aria-current');
+      const route = state.route;
+      explore.hidden = route !== 'explore';
+      moduleMain.hidden = route !== 'modul';
+      homeMain.hidden = route !== 'home';
+      page.hidden = route !== 'kaynakca' && route !== 'hakkinda';
+      document.title = TITLES[route];
+      if (route === 'home' && !homeBuilt) {
+        homeMain.replaceChildren(renderHome(ctx));
+        homeBuilt = true;
       }
-      document.title = TITLES[state.route];
-      if (!explore) showPage(state.route);
+      if (route === 'kaynakca' || route === 'hakkinda') showPage(route);
       else pageRoute = null;
-      for (const c of [cellList, legend, stage, info, micro, compare, settings]) c.update(state);
+      const open = state.infoOpen && route === 'explore';
+      if (open !== infoOpen) {
+        infoOpen = open;
+        drawer.classList.toggle('open', open);
+        drawer.inert = !open;
+        wrap.classList.toggle('drawer-open', open);
+        reportInsets();
+      }
+      for (const c of [header, cellList, legend, stage, info, micro, compare]) c.update(state);
     },
   };
 }

@@ -1,0 +1,85 @@
+import type { ModuleInfo } from '../moduleTypes';
+import { nervousChecks, nervousPredicts } from './nervous.checks';
+import { refleksTrack } from './nervous.tracks';
+import { aksiyonTrack, sinapsTrack } from './nervous.tracks2';
+
+// Module 'nervous'. Own wording (ADR 0004). Programme limits: BİY.11.1.7 (nöron türleri, parçalar; beyin kabuğu
+// lobları ve sempatik-parasempatik ayrımına girilmez), BİY.11.1.8 (refleks; kazanılmış/doğuştan ayrımına girilmez),
+// FB.6.3.6 (grade 6: refleksler ayrıntıya girilmeden). Action potential and synapse are not in the programme text:
+// they are İleri-only enrichment, labelled as such in the track notes.
+export const nervous: ModuleInfo = {
+  id: 'nervous',
+  nameTr: 'Sinir Sistemi',
+  tagline: 'Sinyaller vücutta nasıl iletilir?',
+  introTr:
+    'Sinir hücreleri, vücudun her yerinden aldığı bilgiyi elektriksel ve kimyasal sinyallerle iletir. Önce bir refleksin yolunu izle; sonra sinyalin bir nöronda nasıl doğduğunu ve nöronlar arasında nasıl geçtiğini incele.',
+  levels: ['temel', 'ileri'],
+  tracks: [refleksTrack, aksiyonTrack, sinapsTrack],
+  charts: [
+    { id: 'sinyal-ilerlemesi', labelTr: 'Sinyalin yolda ilerlemesi', unitTr: '% (şematik)', color: '#7c4dbd', min: 0, max: 100, trackIds: ['refleks-yayi'] },
+    { id: 'membran-potansiyeli', labelTr: 'Zar potansiyeli', unitTr: 'mV (örnek değerler)', color: '#d9822b', min: -90, max: 50, trackIds: ['aksiyon-potansiyeli'] },
+    { id: 'nt-miktari', labelTr: 'Aralıktaki nörotransmitter', unitTr: 'bağıl % (şematik)', color: '#3f8fa8', min: 0, max: 100, trackIds: ['sinaps'] },
+    { id: 'postsinaptik-potansiyel', labelTr: 'Karşı nöronun zar potansiyeli', unitTr: 'mV (şematik)', color: '#c25a8a', min: -90, max: 0, trackIds: ['sinaps'] },
+  ],
+  checks: nervousChecks,
+  predicts: nervousPredicts,
+  options: [],
+  kazanimIds: ['FB.6.3.6', 'BİY.11.1.7', 'BİY.11.1.8'],
+  sourceIds: [
+    'meb-fen-2026',
+    'meb-biyoloji-2026',
+    'wp-tr-sinir-sistemi',
+    'wp-tr-noron',
+    'wp-tr-aksiyon-potansiyeli',
+    'wp-tr-sinaps',
+    'wp-tr-refleks',
+    'wp-tr-norotransmitter',
+    'wp-tr-omurilik',
+    'wp-en-neuron',
+    'wp-en-action-potential',
+    'wp-en-resting-potential',
+    'wp-en-synapse',
+    'wp-en-neurotransmitter',
+    'wp-en-reflex-arc',
+    'wp-en-patellar-reflex',
+    'wp-en-cns',
+    'os-35-1',
+    'os-35-2',
+  ],
+  simplifications: [
+    'Refleks örneği olarak ele sıcak bir cismin değmesi kullanılır; programdaki diz kapağı refleksi iki nöronludur ve ara nöron içermez, bu fark metinde belirtilir.',
+    'Sinir sisteminin yapısı ayrıntılandırılmaz; beyin kabuğu lobları ile sempatik-parasempatik ayrımı programa uygun olarak ele alınmaz.',
+    'Aksiyon potansiyeli ve sinaps, MEB programında ayrıntılı yer almayan ek bilgidir; yalnızca İleri düzeyde sunulur.',
+    'Voltaj değerleri tipik örnek değerlerdir ve hücreye göre değişir; grafik evre başlangıçları arasında doğrusal çizilir.',
+    'Yalnızca kimyasal sinaps gösterilir; sinaptik aralık ve vezikül boyutları orantısız büyütülmüştür. Süreler gerçek ölçekte değildir.',
+  ],
+  glossary: [
+    { termTr: 'Sinir sistemi', definitionTr: 'Vücudun iç ve dış çevreden aldığı bilgiyi toplayıp değerlendiren ve yanıt oluşturan sistem.' },
+    { termTr: 'Merkezî sinir sistemi', definitionTr: 'Beyin ve omurilikten oluşan, bilgiyi değerlendiren bölüm.' },
+    { termTr: 'Çevresel sinir sistemi', definitionTr: 'Merkezî sinir sistemini vücudun geri kalanına bağlayan sinirler bütünü.' },
+    { termTr: 'Nöron (sinir hücresi)', definitionTr: 'Sinir sisteminin temel birimi; sinyalleri alıp ileten hücre.' },
+    { termTr: 'Duyu nöronu', definitionTr: 'Bilgiyi reseptörlerden merkezî sinir sistemine taşıyan nöron.' },
+    { termTr: 'Ara nöron', definitionTr: 'Merkezî sinir sisteminde bilgiyi değerlendirip yanıtı oluşturan, nöronlar arası bağlantıyı sağlayan nöron.' },
+    { termTr: 'Motor nöron', definitionTr: 'Yanıtı merkezî sinir sisteminden kas ya da beze taşıyan nöron.' },
+    { termTr: 'Reseptör', definitionTr: 'Bir uyaranı algılayıp sinirsel sinyale çeviren yapı.' },
+    { termTr: 'Efektör', definitionTr: 'Sinir sisteminden gelen yanıtı gerçekleştiren kas ya da bez.' },
+    { termTr: 'Refleks', definitionTr: 'Bir uyarana verilen hızlı, istemsiz ve basit tepki.' },
+    { termTr: 'Refleks yayı', definitionTr: 'Bir refleksin geçtiği yol: reseptör, duyu nöronu, (ara nöron), motor nöron ve efektör.' },
+    { termTr: 'İmpuls', definitionTr: 'Sinir hücresi boyunca ilerleyen elektriksel sinyal.' },
+    { termTr: 'Dinlenim potansiyeli', definitionTr: 'Uyarılmamış nöronda zarın iç yüzünün dışa göre negatif olması (yaklaşık −70 mV).' },
+    { termTr: 'Eşik değer', definitionTr: 'Aksiyon potansiyelini başlatmak için zarın ulaşması gereken potansiyel (yaklaşık −55 mV).' },
+    { termTr: 'Depolarizasyon', definitionTr: 'Na⁺ girişiyle zarın iç yüzünün pozitifleşmesi.' },
+    { termTr: 'Repolarizasyon', definitionTr: 'K⁺ çıkışıyla zarın iç yüzünün yeniden negatifleşmesi.' },
+    { termTr: 'Hiperpolarizasyon', definitionTr: 'Zar potansiyelinin kısa süre dinlenim değerinden daha negatif olması.' },
+    { termTr: 'Sodyum-potasyum pompası', definitionTr: 'Na⁺\'ı dışarı, K⁺\'ı içeri taşıyarak iyon farkını sürdüren zar proteini.' },
+    { termTr: 'Sinaps', definitionTr: 'Bir nöronun başka bir hücreyle bilgi aktardığı bağlantı yeri.' },
+    { termTr: 'Nörotransmitter', definitionTr: 'Sinapsta bir nöronun salgıladığı ve karşı hücreyi etkileyen kimyasal haberci.' },
+  ],
+  funFacts: [
+    { level: 'temel', text: 'Refleksler beyne danışmadan omurilik tarafından başlatıldığı için çok hızlıdır.', sourceId: 'wp-en-reflex-arc' },
+    { level: 'temel', text: 'Nöron, sinir sisteminin temel birimidir; vücudumuzdaki sinyalleri hücreden hücreye o taşır.', sourceId: 'wp-tr-noron' },
+    { level: 'ileri', text: 'Diz kapağı refleksinde duyu nöronu doğrudan motor nöronla sinaps yapar; ara nöron bulunmaz.', sourceId: 'wp-en-patellar-reflex' },
+    { level: 'ileri', text: 'Dinlenen bir nöronun zarının içi dışına göre yaklaşık −70 mV\'tur.', sourceId: 'wp-en-action-potential' },
+    { level: 'ileri', text: 'Nörotransmitter salımını başlatan işaret, akson ucuna giren kalsiyum iyonlarıdır.', sourceId: 'os-35-2' },
+  ],
+};

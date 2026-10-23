@@ -1,18 +1,17 @@
 // Encode the baked PNG tiers (tools/blender/out/tex/<id>/<tier>/<mat>_<map>.png) to KTX2 / Basis Universal with the
 // native `basisu` binary from the npm package `basis_universal`, write public/textures/<id>/<tier>/<mat>_<map>.ktx2 and
 // add a `textures` block to public/models/organelles/<id>.meta.json.
-//   node encode.mjs [--ids=a,b] [--tiers=low,medium,high] [--jobs=3] [--models=<dir holding <id>.meta.json>]
+//   node encode.mjs [--ids=a,b] [--tiers=low,medium,high] [--jobs=3] [--models=<dir holding <id>.meta.json>] [--src=<png tier root>] [--dst=<ktx2 root>]
+//   modules: --src=tools/blender/out/tex_modules --dst=public/textures/modules --models=public/models/modules
 // Codecs: albedo = ETC1S (sRGB), ORM = ETC1S (linear), normals = UASTC + RDO up to 1024 px and ETC1S normal-map mode above (UASTC at 2048+ is 2.5-10 MB per map and breaks the 120 MB budget).
 import { execFile } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { cpus } from 'node:os';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..', '..');
-const SRC = join(ROOT, 'tools', 'blender', 'out', 'tex');
-const DST = join(ROOT, 'public', 'textures');
 const TIERS = ['low', 'medium', 'high'];
 const BASISU = join(HERE, 'node_modules', 'basis_universal', 'bin', process.platform === 'win32' ? 'basisu.exe' : 'basisu');
 
@@ -46,6 +45,8 @@ const ids = arg('ids', '').split(',').filter(Boolean);
 const tiers = arg('tiers', TIERS.join(',')).split(',');
 const jobs = Number(arg('jobs', Math.max(1, Math.min(3, cpus().length >> 2))));
 const MODELS = resolve(ROOT, arg('models', join('public', 'models', 'organelles')));
+const SRC = resolve(ROOT, arg('src', join('tools', 'blender', 'out', 'tex')));
+const DST = resolve(ROOT, arg('dst', join('public', 'textures')));
 const all = ids.length ? ids : readdirSync(SRC).filter((d) => statSync(join(SRC, d)).isDirectory()).sort();
 
 const tasks = [];
@@ -77,7 +78,7 @@ for (const id of all) {                                  // meta.json: textures 
   if (!existsSync(mp)) continue;
   const meta = JSON.parse(readFileSync(mp, 'utf8'));
   const old = meta.textures?.tiers ?? {};
-  const tex = { format: 'KTX2', path: `textures/${id}/<tier>/<material>_<map>.ktx2`, tiers: {} };
+  const tex = { format: 'KTX2', path: `${relative(join(ROOT, 'public'), DST).replaceAll('\\', '/')}/${id}/<tier>/<material>_<map>.ktx2`, tiers: {} };
   for (const tier of TIERS) {
     const dir = join(DST, id, tier);
     if (!existsSync(dir)) continue;

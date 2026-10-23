@@ -1,0 +1,177 @@
+{
+  "id": "rna-polymerase",
+  "tris": {
+    "LOD0": 11166,
+    "LOD1": 2768,
+    "LOD2": 1182
+  },
+  "bboxMin": [
+    -0.9949,
+    -0.9268,
+    -1.4891
+  ],
+  "bboxMax": [
+    0.9842,
+    0.9999,
+    0.6616
+  ],
+  "boundsRadius": 1.7061,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 350792,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9579,
+        0.9981
+      ],
+      "coverage": 0.7329,
+      "overlap": 0,
+      "stretchP95": 1.102,
+      "stretchP05": 0.879,
+      "uvPerUnit": 0.20312
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 152359
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 68410
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 78937
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 560422
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 301018
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 280863
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1955272
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1223989
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 918004
+          }
+        }
+      }
+    },
+    "bakeSeconds": 16.1,
+    "paintSeconds": 12.5,
+    "totalSeconds": 31.3
+  },
+  "pivot": "centre of the transcription bubble",
+  "axes": "DNA groove along Y between the jaws, core at -Z, open towards +Z, RNA exit tube towards -Z/-Y; ~2 tall",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/rna-polymerase/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 59377,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20138,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 23315,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15924,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 208755,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 64380,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 96856,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 47519,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 730855,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 177720,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 425068,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 128067,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "na-channel",
+  "tris": {
+    "LOD0": 11764,
+    "LOD1": 2418,
+    "LOD2": 1314
+  },
+  "bboxMin": [
+    -0.4727,
+    -0.9514,
+    -0.4645
+  ],
+  "bboxMax": [
+    0.6506,
+    0.6092,
+    0.4656
+  ],
+  "boundsRadius": 1.1342,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 361880,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.9939
+      ],
+      "coverage": 0.7827,
+      "overlap": 0,
+      "stretchP95": 1.667,
+      "stretchP05": 0.87,
+      "uvPerUnit": 0.27759
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 170366
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 92914
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 119316
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 621924
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 402367
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 424348
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2152700
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1684810
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1394089
+          }
+        }
+      }
+    },
+    "bakeSeconds": 19.5,
+    "paintSeconds": 8.9,
+    "totalSeconds": 30.1
+  },
+  "pivot": "membrane centre on the pore axis",
+  "axes": "pore axis Y (outside +Y), CLOSED: voltage-sensor paddles low, narrow gate ring at the cytoplasmic mouth, inactivation ball hanging away; ~1.3 tall, ~1.3 wide",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/na-channel/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 67027,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 21043,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 26832,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19152,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 252702,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 70438,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 121898,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 60366,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 907731,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 204089,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 536387,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 167255,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

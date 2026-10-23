@@ -47,5 +47,17 @@ export function serviceWorkerPlugin(): Plugin {
 export default defineConfig({
   base: './',
   plugins: [serviceWorkerPlugin()],
-  build: { chunkSizeWarningLimit: 1500 },
+  build: {
+    chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        // three.js (renderer, loaders, post-processing) is only needed by the 3D screens; the home page loads without it.
+        manualChunks(id) {
+          if (id.includes('node_modules/three/')) return 'three';
+          if (id.includes('node_modules/@fontsource')) return 'fonts';
+          return undefined;
+        },
+      },
+    },
+  },
 });

@@ -1,0 +1,181 @@
+{
+  "id": "nucleotide",
+  "tris": {
+    "LOD0": 5944,
+    "LOD1": 1420,
+    "LOD2": 840
+  },
+  "bboxMin": [
+    -0.571,
+    -0.3705,
+    -0.1484
+  ],
+  "bboxMax": [
+    0.8998,
+    0.4863,
+    0.15
+  ],
+  "boundsRadius": 0.9025,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 196416,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9265
+      ],
+      "coverage": 0.7186,
+      "overlap": 0,
+      "stretchP95": 1.131,
+      "stretchP05": 0.831,
+      "uvPerUnit": 0.80597
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 28759
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 21477
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 20476
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 108148
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 94545
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 73609
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 396945
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 399445
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 261392
+          }
+        }
+      }
+    },
+    "bakeSeconds": 9.6,
+    "paintSeconds": 4.3,
+    "totalSeconds": 15.1
+  },
+  "pivot": "sugar centre",
+  "axes": "flat in XY: phosphate at (-0.42, 0.28), sugar at the origin, base at (+0.5..0.8, -0.2); ~1.1 across; tint the base part",
+  "units": "um",
+  "tintable": true,
+  "tintParts": [
+    "base"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/nucleotide/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 17604,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5162,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7612,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4830,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 64359,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17794,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 32665,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 13900,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 244530,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 61580,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 140746,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 42204,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

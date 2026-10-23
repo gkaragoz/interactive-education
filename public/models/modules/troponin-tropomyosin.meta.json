@@ -1,0 +1,181 @@
+{
+  "id": "troponin-tropomyosin",
+  "tris": {
+    "LOD0": 5664,
+    "LOD1": 1158,
+    "LOD2": 576
+  },
+  "bboxMin": [
+    -0.0197,
+    -0.07,
+    -0.1464
+  ],
+  "bboxMax": [
+    1.0195,
+    0.1199,
+    0.0699
+  ],
+  "boundsRadius": 1.0205,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 170348,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9538
+      ],
+      "coverage": 0.6162,
+      "overlap": 0,
+      "stretchP95": 1.102,
+      "stretchP05": 0.912,
+      "uvPerUnit": 1.32915
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 35472
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 23683
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 23923
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 124142
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 101915
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 84546
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 415604
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 423961
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 279476
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.6,
+    "paintSeconds": 2.1,
+    "totalSeconds": 9.1
+  },
+  "pivot": "start of the strand (x = 0)",
+  "axes": "unit length along +X, tropomyosin wavy tube radius 0.05 around the axis; troponin complexes (TnC teal, TnI orange, TnT purple) at x = 0.14, 0.5, 0.86",
+  "units": "1 along X",
+  "tintable": true,
+  "tintParts": [
+    "tropomyosin"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/troponin-tropomyosin/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 19913,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 6072,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 8494,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 5347,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 73169,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 19936,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 37841,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15392,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 271822,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 64311,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 162761,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 44750,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

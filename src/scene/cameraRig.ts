@@ -22,7 +22,7 @@ export class CameraRig {
   private tween: Tween | null = null;
   private shift = { x: 0, y: 0 };
   private shiftTarget = { x: 0, y: 0 };
-  private homeDistance = 60;
+  private home = 60;
   private radius = 30;
 
   constructor(dom: HTMLElement, private readonly reducedMotion: boolean) {
@@ -45,14 +45,14 @@ export class CameraRig {
     const fov = (FOV * Math.PI) / 180;
     const vertical = radiusV / Math.sin(fov / 2);
     const horizontal = radiusH / Math.sin(Math.atan(Math.tan(fov / 2) * aspect));
-    this.homeDistance = Math.max(vertical, horizontal) * 1.16;
+    this.home = Math.max(vertical, horizontal) * 1.16;
     this.controls.minDistance = radius * 0.12;
     this.controls.maxDistance = radius * 6;
     this.camera.near = Math.max(radius * 0.01, 0.05);
     this.camera.far = radius * 40;
     this.camera.updateProjectionMatrix();
     if (snap) {
-      this.camera.position.copy(HOME_DIRECTION).multiplyScalar(this.homeDistance);
+      this.camera.position.copy(HOME_DIRECTION).multiplyScalar(this.home);
       this.controls.target.set(0, 0, 0);
       this.controls.update();
     }
@@ -67,7 +67,7 @@ export class CameraRig {
   }
 
   resetView(): void {
-    this.flyTo(new Vector3(), HOME_DIRECTION.clone().multiplyScalar(this.homeDistance));
+    this.flyTo(new Vector3(), HOME_DIRECTION.clone().multiplyScalar(this.home));
   }
 
   /** Looks at `center` from the current direction at the distance where `radius` fills about 40 % of the view. */
@@ -147,6 +147,18 @@ export class CameraRig {
     other.far = this.camera.far;
     other.updateProjectionMatrix();
     other.updateMatrixWorld();
+  }
+
+  /** Flies to an explicit pose (module camera presets). */
+  flyToPose(position: Vector3, target: Vector3): void {
+    this.flyTo(target, position);
+  }
+
+  /** Direction of the default view, so presets look related to it. */
+  static readonly HOME = HOME_DIRECTION;
+
+  get homeDistance(): number {
+    return this.home;
   }
 
   private flyTo(target: Vector3, position: Vector3): void {

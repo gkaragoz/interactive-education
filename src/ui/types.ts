@@ -18,7 +18,28 @@ export interface UiActions {
   setCompare(on: boolean): void;
   setCompareCell(id: CellTypeId): void;
   navigate(route: Route): void;
+  /** Opens an animated module (or the cell explorer for `cell`). */
+  openModule(id: string): void;
+  openInfo(): void;
+  closeInfo(): void;
   setQualityMode(mode: QualityMode): void;
+}
+
+/** A module card on the home page. */
+export interface ModuleCard {
+  id: string;
+  nameTr: string;
+  tagline: string;
+  levels: LevelId[];
+  /** Registered but not released: only offered with `?demo`. */
+  preview: boolean;
+}
+
+export interface UpcomingCard {
+  id: string;
+  nameTr: string;
+  tagline: string;
+  version: string;
 }
 
 export interface UiContext {
@@ -28,6 +49,10 @@ export interface UiContext {
   baseUrl: string;
   /** The URL pins `?quality=`: the menu shows it but cannot change it. */
   qualityLocked: boolean;
+  /** Modules the learner can open now (released ones, plus previews with `?demo`). */
+  modules: ModuleCard[];
+  /** Announced modules: shown as disabled "Yakında" cards without routes. */
+  upcoming: UpcomingCard[];
   /** prefers-reduced-motion: no tip fades. */
   reducedMotion: boolean;
 }

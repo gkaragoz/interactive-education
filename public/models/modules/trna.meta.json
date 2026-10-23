@@ -1,0 +1,181 @@
+{
+  "id": "trna",
+  "tris": {
+    "LOD0": 7542,
+    "LOD1": 1748,
+    "LOD2": 954
+  },
+  "bboxMin": [
+    -0.2598,
+    -0.2459,
+    -0.2061
+  ],
+  "bboxMax": [
+    0.9849,
+    1.4376,
+    0.2061
+  ],
+  "boundsRadius": 1.4376,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 238108,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9961
+      ],
+      "coverage": 0.7775,
+      "overlap": 0,
+      "stretchP95": 1.177,
+      "stretchP05": 0.925,
+      "uvPerUnit": 0.55639
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 142219
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 96619
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 89397
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 513751
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 406630
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 310453
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1800669
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1692545
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1026092
+          }
+        }
+      }
+    },
+    "bakeSeconds": 16.9,
+    "paintSeconds": 11.2,
+    "totalSeconds": 29.9
+  },
+  "pivot": "outer corner of the L",
+  "axes": "acceptor arm up +Y (CCA tail then amino-acid ball at y~1.27), anticodon arm along +X with three anticodon beads at x~0.9 hanging towards -Y",
+  "units": "um",
+  "tintable": true,
+  "tintParts": [
+    "amino-acid"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/trna/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 67636,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20346,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 31553,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15737,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 261347,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 65546,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 148576,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 47225,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 954262,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 182824,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 638289,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 133149,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

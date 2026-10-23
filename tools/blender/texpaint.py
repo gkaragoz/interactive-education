@@ -52,7 +52,7 @@ def paint_texels(S, hint, gel):
     pig = np.stack([fbm(P * np.float32(1.0 / (w * 7)), seed + c, 2) for c in range(3)], 1)
     f1, f2, cid = worley_fast(P, 1.0 / (w * 2.6), seed)
     dab = sstep(0.75, 0.15, f1) * (cid - 0.5)
-    col = B * (1 + hint["jit"] * pig + hint["dab"] * dab[:, None] * np.array([1.0, 0.8, 0.6], np.float32))
+    col = B * (1 + hint["jit"] * pig + hint["dab"] * dab[:, None] * np.array(hint.get("dabc", (1.0, 0.8, 0.6)), np.float32))
     # 2) brush streaks along the flow
     sa = aniso(P, F, 1.0 / (w * 1.4), 7, seed + 11, 2)
     br = aniso(P, F, 1.0 / max(w * 0.22, 3 * tw), 14, seed + 13, 1)
@@ -60,7 +60,7 @@ def paint_texels(S, hint, gel):
     col = col * (1 + hint["strokeval"] * sa + 0.035 * br)[:, None]
     # 3) dry-brush breaks: thin areas where the lighter underpainting peeks through
     m = sstep(-0.95, -0.55, stroke + hint["dry"] * (br * 0.5 - 0.35))
-    under = (B * 0.75 + np.array([1.0, 0.9, 0.78], np.float32) * 0.25)
+    under = (B * 0.75 + np.array(hint.get("under", (1.0, 0.9, 0.78)), np.float32) * 0.25)
     col = under * (1 - m)[:, None] + col * m[:, None]
     # 4) cavity contour: darker, hue-shifted, saturated
     cav = sstep(0.68, 0.30, ao)
@@ -147,6 +147,12 @@ def paint_group(G, parts, asset, gel, L):
             S = {k: flat[k][sel] for k in ("P", "N", "base", "ao", "aux", "aux2", "alpha")}
             hint = hints_for(asset, name, L, gel)
             hint["tw"] = tw
+            if hint.get("fold"):                      # tileable assets: paint from a triangle-wave folded position (period = tile size)
+                Pf = S["P"].copy()
+                for ax, pr in zip((0, 2), hint["fold"]):
+                    if pr:
+                        Pf[:, ax] = np.abs((Pf[:, ax] / pr) % 1.0 - 0.5) * pr
+                S["P"] = Pf
             r = paint_texels(S, hint, gel)
             texmotifs.apply(asset, name, S, r, hint, gel)
             col[sel], alpha[sel], hgt[sel], rough[sel], aoo[sel] = r["col"], r["alpha"], r["h"], r["rough"], r["ao"]

@@ -1,0 +1,184 @@
+{
+  "id": "myosin-head",
+  "tris": {
+    "LOD0": 5742,
+    "LOD1": 1396,
+    "LOD2": 660
+  },
+  "bboxMin": [
+    -1.2999,
+    -0.272,
+    -0.2651
+  ],
+  "bboxMax": [
+    1.3199,
+    0.31,
+    0.27
+  ],
+  "boundsRadius": 1.3201,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 196448,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.9209
+      ],
+      "coverage": 0.6893,
+      "overlap": 0,
+      "stretchP95": 1.177,
+      "stretchP05": 0.893,
+      "uvPerUnit": 0.56813
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 96138
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 83072
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 64312
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 361144
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 352253
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 221947
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1340162
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1424214
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 720366
+          }
+        }
+      }
+    },
+    "bakeSeconds": 22.3,
+    "paintSeconds": 7.7,
+    "totalSeconds": 31.5
+  },
+  "pivot": "hinge (origin)",
+  "axes": "tail towards -X, lever arm and head towards +X (rotate meshes lever + head about the origin for the power stroke); atp-pocket and actin-cleft markers; ~2.2 long",
+  "units": "um (exaggerated)",
+  "tintable": true,
+  "tintParts": [
+    "tail",
+    "hinge",
+    "lever",
+    "head"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/myosin-head/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 56300,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17065,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 26856,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 12379,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 216817,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 56472,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 125435,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 34910,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 788434,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 153275,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 539790,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 95369,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

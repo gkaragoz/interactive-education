@@ -1,0 +1,182 @@
+{
+  "id": "actin-filament",
+  "tris": {
+    "LOD0": 23600,
+    "LOD1": 2292,
+    "LOD2": 1212
+  },
+  "bboxMin": [
+    -0.0302,
+    -0.0698,
+    -0.0699
+  ],
+  "bboxMax": [
+    1.0301,
+    0.0695,
+    0.0695
+  ],
+  "boundsRadius": 1.0307,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 553844,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9658
+      ],
+      "coverage": 0.408,
+      "overlap": 0,
+      "stretchP95": 1.073,
+      "stretchP05": 0.917,
+      "uvPerUnit": 0.63695
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 34144
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 23248
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 30622
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 128115
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 107118
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 119081
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 482979
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 471039
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 451178
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.6,
+    "paintSeconds": 2,
+    "totalSeconds": 9
+  },
+  "pivot": "start of the filament (x = 0)",
+  "axes": "unit length along +X, double helix of beads radius 0.04, pitch 0.36 (scale X to fit); parts strand-a / strand-b",
+  "units": "1 along X",
+  "tintable": true,
+  "tintParts": [
+    "strand-a",
+    "strand-b"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/actin-filament/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 19039,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5745,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6970,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 6324,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 73408,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 20150,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 32760,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 20498,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 296261,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 70672,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 156296,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 69293,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

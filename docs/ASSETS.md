@@ -73,3 +73,125 @@ Assets without textures (decor) have no `textures` key.
 
 **Budgets** (enforced by `tests/assets.test.ts`): no file >= 25 MB; sum of all tiers <= 120 MB; sum of the medium tier
 <= 50 MB.
+
+## Module assets (`public/models/modules/`, `public/textures/modules/`)
+Animated learning modules (`docs/MODULES.md`) use the same contract v2 as the organelles (names, LOD0/1/2 groups, closed meshes where
+it matters, `<id>_clay` / `<id>_gel` materials, atlas UV0, COLOR_0 fallback, KTX2 tiers `low|medium|high`, `meta.json` with `uv` and
+`textures`), with these differences:
+- Files: `public/models/modules/<id>.glb` + `<id>.meta.json`, textures `public/textures/modules/<id>/<tier>/<material>_<map>.ktx2`.
+- **The author origin is the pivot, the asset is not re-centred.** `meta.pivot` (text), `meta.axes` (text), `meta.units` say what the origin
+  and axes mean; `bboxMin/Max` and `boundsRadius` are measured from the pivot.
+- **Tinting.** `meta.tintable` / `meta.tintParts`: meshes named `<id>-<part>` listed there carry a NEUTRAL light painted albedo so the app can
+  multiply a per-instance colour (maternal / paternal / copy) onto the material of those meshes only; the other parts (e.g. kinetochore discs)
+  keep their own colour. Use a cloned material per tint (the albedo is a shared texture).
+- Texture sizes (high/medium/low): `chromosome`, `chromosome-single` 2048/1024/512; all other modules assets 1024/512/256 (secondary
+  materials half size). Budgets as for organelles, checked separately by `tests/assetsModules.test.ts`.
+- Same normal-map note: the GLBs have no TANGENT attribute, so three needs `normalScale.y = -1` on app-built materials.
+
+### Release v0.2 (mitosis-meiosis) assets
+| id | pivot / axes | materials | tint |
+|---|---|---|---|
+| `chromosome` | origin = centromere; arms along +-Y (short arm +Y, long arm -Y); sister chromatids split along X; kinetochores face +-X; ~1.06 tall | clay (`arms`, `kinetochore`) | `arms` neutral light albedo, tint it; kinetochore ochre fixed |
+| `chromosome-single` | origin = centromere; V-shaped chromatid, centromere leads towards -X (pole), arms trail to +X; one kinetochore on -X | clay (`arms`, `kinetochore`) | `arms` neutral, tint it |
+| `chromatin` | origin = ball centre, unit ball (scale uniformly); parts `fine` (gel threads) and `coarse` (clay loops) = the two scales | clay + gel | none (purple) |
+| `kinetochore-fibre` | origin = kinetochore end, unit length along +X (x=1 pole end); scale X to span pole to kinetochore | clay | none (ochre) |
+| `spindle-pole` | origin = centriole pair centre; centrioles along X and Z, aster rays radiate in all directions (~1.3) | clay (`mother`, `daughter`, `aster`) | none |
+| `cleavage-furrow-ring` | origin = ring centre; radius 1 in the XZ plane, 120-degree segment centred on +X (instance 3 for a full ring) | clay (`actin`, `myosin`) | none |
+| `cell-plate` | origin = disc centre; radius ~1 in the XZ plane, normal +Y; `plate` + `vesicles` | clay | none (pale green) |
+| `nuclear-envelope-fragment` | origin = outer membrane apex; outward normal +Y, curvature radius 1.6 (centre at (0,-1.6,0)), patch ~1.9 wide; `outer`, `inner`, `pores` | clay | none (purple) |
+
+### Batch 2 (v0.3 membrane-transport, v0.4 dna-protein)
+Preview sheet: `docs/images/modules_v0_3_v0_4_batch2.png`. Axes, units and part names of every asset are in its `meta.json` (`pivot`, `axes`,
+`units`, `tintParts`); highlights: `carrier-protein` (open towards +Y) and `carrier-protein-b` (open towards -Y) share the footprint so they
+cross-fade; `bilayer-tile` is 2 x 2 and tiles seamlessly in X/Z (flush edges, periodic dome lattice, painting folded with period 2);
+`dna-helix` is 20 bp = 2 turns, 3.2 long along Y with flat-cut ends so copies stack every 3.2 (tint parts `backbone-a`, `backbone-b`,
+`bp-at`, `bp-gc`); `dna-single-strand` has parts `backbone`, `base-a/t/g/c`; `ribosome-subunits` has separate meshes `large`, `small` and
+a coloured `sites` marker part (A green / P blue / E red at x = +0.34 / 0 / -0.34); `mrna-strand` is unit length along +X with 12 coloured codons;
+`trna` tints only the `amino-acid` ball. Neutral-albedo (tintable) parts are painted light grey-cream with no hue, so a multiplied tint stays clean.
+
+| id | LOD0 tris | GLB | tex px | MB high/medium | pivot | tinted parts |
+|---|---|---|---|---|---|---|
+| `bilayer-patch` | 51024 | 1333 KB | 2048 | 1.3/0.7 | patch centre | heads |
+| `bilayer-tile` | 16656 | 495 KB | 1024 | 0.7/0.2 | tile centre | heads |
+| `channel-protein` | 9344 | 223 KB | 1024 | 0.8/0.2 | membrane centre on the pore axis | - |
+| `carrier-protein` | 5880 | 160 KB | 1024 | 0.8/0.2 | membrane centre on the transport axis | - |
+| `carrier-protein-b` | 5880 | 160 KB | 1024 | 0.8/0.2 | membrane centre on the transport axis | - |
+| `pump-protein` | 15556 | 429 KB | 1024 | 0.8/0.2 | membrane centre | - |
+| `receptor-protein` | 4556 | 128 KB | 1024 | 0.8/0.2 | membrane centre under the Y fork | - |
+| `dna-helix` | 21428 | 523 KB | 1024 | 0.8/0.2 | centre of the segment | backbone-a, backbone-b, bp-at, bp-gc |
+| `dna-single-strand` | 10762 | 316 KB | 1024 | 0.8/0.2 | centre of the strand | backbone, base-a, base-t, base-g, base-c |
+| `helicase` | 15696 | 455 KB | 1024 | 0.9/0.2 | ring centre | - |
+| `dna-polymerase` | 11592 | 363 KB | 1024 | 0.7/0.2 | centre of the DNA groove | - |
+| `rna-polymerase` | 11166 | 342 KB | 1024 | 0.7/0.2 | centre of the transcription bubble | - |
+| `nucleotide` | 5944 | 191 KB | 512 | 0.2/0.1 | sugar centre | base |
+| `mrna-strand` | 13992 | 396 KB | 512 | 0.3/0.1 | 5' end (x = 0) | strand |
+| `trna` | 7542 | 232 KB | 1024 | 0.9/0.2 | outer corner of the L | amino-acid |
+| `amino-acid` | 2316 | 78 KB | 512 | 0.2/0.1 | bead centre | residue, stubs |
+| `polypeptide-chain` | 26240 | 755 KB | 1024 | 1.0/0.3 | chain centre | backbone |
+| `ribosome-subunits` | 10992 | 326 KB | 1024 | 0.7/0.2 | centre of the mRNA channel | - |
+
+Texture totals for batch 2 (all tiers): high 13.2 MB, medium 4.0 MB, low 1.1 MB.
+
+### Batch 3 (v0.5 energy)
+Preview sheet: `docs/images/modules_v0_5_batch3.png`. Axes/units/parts per asset are in `meta.json`. Membrane machines (`atp-synthase`, `etc-complex-1..4`,
+`photosystem-1/2`) lie in the XZ membrane plane with the origin at the membrane centre; `atp-synthase` has separate meshes `rotor` (c-ring + stalk,
+spin it about Y), `stator`, `head`. Molecules (`atp`, `glucose`, `co2`, `o2`, `h2o`, `pyruvate`) are ball-and-stick with parts per element (`carbon`,
+`oxygen`, `hydrogen`, `bonds`; painted, not tinted) except `atp`, whose parts `adenosine`, `phosphate-1..3` use the neutral albedo for tinting.
+The molecules are not truly low-poly: the LOD contract (LOD2 >= 300 triangles and LOD1 <= 30 % of LOD0) needs about 3-15k triangles at LOD0.
+`thylakoid-stack` and `mitochondrion-crista-detail` are really cut open (`clip.py`: plane z = 0, geometry with z > 0 removed, closed with flat caps,
+open towards +Z); the caps are painted as a section (pale flesh with hatching, outlined by the membrane layers).
+
+| id | LOD0 tris | GLB | tex px | MB high/medium | pivot |
+|---|---|---|---|---|---|
+| `atp-synthase` | 19026 | 580 KB | 1024 | 0.9/0.2 | membrane centre on the rotation axis |
+| `etc-complex-1` | 10040 | 299 KB | 1024 | 0.8/0.2 | membrane centre |
+| `etc-complex-2` | 6040 | 185 KB | 512 | 0.2/0.1 | membrane centre |
+| `etc-complex-3` | 10296 | 300 KB | 1024 | 0.8/0.2 | membrane centre |
+| `etc-complex-4` | 7428 | 232 KB | 1024 | 0.7/0.2 | membrane centre |
+| `cytochrome-c` | 3804 | 114 KB | 512 | 0.2/0.1 | protein centre |
+| `ubiquinone` | 3092 | 116 KB | 512 | 0.3/0.1 | ring centre |
+| `photosystem-1` | 18046 | 524 KB | 1024 | 0.8/0.2 | membrane centre |
+| `photosystem-2` | 22948 | 663 KB | 1024 | 0.8/0.2 | membrane centre |
+| `rubisco` | 22368 | 625 KB | 1024 | 0.8/0.2 | centre of the enzyme |
+| `atp` | 8742 | 254 KB | 512 | 0.2/0.1 | ribose centre |
+| `glucose` | 14722 | 401 KB | 512 | 0.2/0.1 | ring centre |
+| `co2` | 5576 | 158 KB | 256 | 0.1/0.0 | carbon atom |
+| `o2` | 4900 | 137 KB | 256 | 0.1/0.0 | bond centre |
+| `h2o` | 5380 | 146 KB | 256 | 0.1/0.0 | oxygen atom |
+| `pyruvate` | 9728 | 281 KB | 512 | 0.2/0.1 | central carbonyl region (origin near C2) |
+| `thylakoid-stack` | 26900 | 691 KB | 2048 | 1.3/0.7 | stack centre |
+| `mitochondrion-crista-detail` | 25608 | 748 KB | 2048 | 2.5/1.5 | mitochondrion centre |
+
+Texture totals for batch 3 (all tiers): high 11.0 MB, medium 4.3 MB, low 1.2 MB.
+
+### Batch 4 (v0.6 muscle, nervous system, genetics)
+Preview sheet: `docs/images/modules_v0_6_batch4.png`. Axes/units/parts per asset are in `meta.json`.
+- Muscle (X is the filament axis): `sarcomere` (Z-disc to Z-disc, pivot at the M-line, resting length ~2.5 um exaggerated; meshes `zdisc`, `actin`, `myosin`, `heads`,
+  `titin`, `mline`; tint `actin`, `myosin`, `heads`), `myosin-head` (pivot = hinge; `tail`, `hinge`, `lever`, `head`, all tintable), `actin-filament` (double helix of beads,
+  starts at x = 0, tint `strand-a`, `strand-b`), `troponin-tropomyosin` (strand from x = 0, tint `tropomyosin`), `muscle-fibre-bundle` (cut-away fibre, sarcolemma half shell
+  as gel, myofibrils with banding, mitochondria, nucleus; axis X, centre on the fibre axis).
+- Nervous system: `neuron` (hero, pivot = soma centre; soma, nucleus, nissl, dendrites, axon, 6 myelin segments with nodes of Ranvier, terminals; tint `axon`),
+  `synapse-terminal` (pivot = centre of the cleft; bouton with vesicles, cleft, postsynaptic patch with receptors; tint `vesicles`), `neurotransmitter` (tint `ligand`),
+  `na-channel`, `na-channel-open`, `k-channel`, `k-channel-open` (membrane in the XZ plane, pivot on the pore axis; open and closed variants differ in the gate / inactivation
+  ball and the paddles), `reflex-arc-parts` (three painted pieces side by side along X at -3.4 / 0 / +3.4: skin receptor, spinal cord cross-section with butterfly grey matter,
+  muscle effector; `partPivots` in meta.json).
+- Genetics: `punnett-tile` (1 x 1 tile, 0.14 thick, top +Y with a circular slot radius 0.33 and raised rim for the letter; neutral, tint `tile`), `allele-token` (sphere r 0.3
+  cut flat at z = +0.17; separate mesh `face` in the gel material with planar UVs 0..1 for the app's letter texture; neutral body, tint `body`).
+
+| id | LOD0 tris | LOD1 | LOD2 | GLB | tex px | MB high/medium | pivot |
+|---|---|---|---|---|---|---|---|
+| `sarcomere` | 46488 | 9648 | 5766 | 1309 KB | 1024 | 0.8/0.2 | M-line centre |
+| `myosin-head` | 5742 | 1396 | 660 | 191 KB | 1024 | 0.8/0.2 | hinge |
+| `actin-filament` | 23600 | 2292 | 1212 | 540 KB | 512 | 0.3/0.1 | filament start |
+| `troponin-tropomyosin` | 5664 | 1158 | 576 | 166 KB | 512 | 0.3/0.1 | strand start |
+| `muscle-fibre-bundle` | 21288 | 5316 | 2884 | 579 KB | 1024 | 1.4/0.4 | fibre axis centre |
+| `neuron` | 51186 | 12566 | 5952 | 1408 KB | 2048 | 2.6/1.1 | soma centre |
+| `synapse-terminal` | 30188 | 7448 | 3700 | 938 KB | 1024 | 1.6/0.4 | cleft centre |
+| `neurotransmitter` | 4296 | 972 | 516 | 125 KB | 512 | 0.2/0.1 | centre |
+| `na-channel` / `na-channel-open` | 11764 | 2418 | 1314 | 353 KB | 1024 | 0.9/0.3 | membrane centre on the pore axis |
+| `k-channel` / `k-channel-open` | 10816 | 2256 | 1152 | 323 KB | 1024 | 0.9/0.3 | membrane centre on the pore axis |
+| `reflex-arc-parts` | 30432 | 7464 | 3996 | 885 KB | 1024 | 0.8/0.2 | centre of the spinal cord piece |
+| `punnett-tile` | 15552 | 3888 | 2028 | 366 KB | 512 | 0.2/0.0 | tile centre |
+| `allele-token` | 4130 | 872 | 416 | 120 KB | 512 | 0.2/0.1 | sphere centre |
+
+Texture totals for batch 4 (all tiers): high 12.3 MB, medium 3.9 MB.

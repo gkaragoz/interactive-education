@@ -25,6 +25,7 @@ class Part:
     aux: np.ndarray = None          # (N,) optional per-vertex scalar for texture motifs (edge, ring parameter...)
     aux2: np.ndarray = None         # (N,) second optional scalar (cell id ...)
     tex: dict = field(default_factory=dict)   # texture painter hints: flow axis, scales, relief
+    proj: object = None             # axis index: use projection charts (flat slab parts) instead of the lattice charts
     fuv: np.ndarray = None          # (M,3,2) chart coordinates per face corner (from the geo registry)
     cid: np.ndarray = None          # (M,) chart id per face
 

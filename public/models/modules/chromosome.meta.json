@@ -1,0 +1,181 @@
+{
+  "id": "chromosome",
+  "tris": {
+    "LOD0": 37960,
+    "LOD1": 9300,
+    "LOD2": 5080
+  },
+  "bboxMin": [
+    -0.3094,
+    -0.6648,
+    -0.0942
+  ],
+  "bboxMax": [
+    0.3094,
+    0.3974,
+    0.0942
+  ],
+  "boundsRadius": 0.7073,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1071552,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9896
+      ],
+      "coverage": 0.9271,
+      "overlap": 0,
+      "stretchP95": 1.99,
+      "stretchP05": 0.807,
+      "uvPerUnit": 0.82108
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 551419
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 564425
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 477225
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2043226
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 2256637
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1674694
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 7671541
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 9197217
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 5410837
+          }
+        }
+      }
+    },
+    "bakeSeconds": 10.8,
+    "paintSeconds": 22.8,
+    "totalSeconds": 37.9
+  },
+  "pivot": "centromere centre",
+  "axes": "arms along +-Y (short arm +Y, long arm -Y); sister chromatids split along X; kinetochores face +-X (towards the spindle poles)",
+  "units": "um (X spans ~1.0 tall)",
+  "tintable": true,
+  "tintParts": [
+    "arms"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/chromosome/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 331133,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 67685,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 204425,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 59023,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 1161515,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 199512,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 792289,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 169714,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1941211,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 690727,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 774665,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 475819,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -8,10 +8,10 @@ import { bundle } from './fixtures/data';
 const calls: string[] = [];
 const actions = new Proxy({}, { get: (_t, name: string) => (...args: unknown[]) => calls.push(`${name}:${args.join(',')}`) }) as UiActions;
 const state = (patch: Partial<AppState> = {}): AppState => ({
-  route: 'explore', cellId: 'plant', level: 'temel', selectedId: 'nucleus', hidden: new Set(), viewMode: 'cutaway', hideOthers: false,
+  route: 'explore', moduleId: 'cell', infoOpen: false, cellId: 'plant', level: 'temel', selectedId: 'nucleus', hidden: new Set(), viewMode: 'cutaway', hideOthers: false,
   cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto', ...patch,
 });
-const ctx = (catalog = new Catalog(bundle), qualityLocked = false) => ({ catalog, actions, baseUrl: './', qualityLocked, reducedMotion: true });
+const ctx = (catalog = new Catalog(bundle), qualityLocked = false) => ({ catalog, actions, baseUrl: './', qualityLocked, reducedMotion: true, modules: [], upcoming: [] });
 
 describe('license labels', () => {
   it('spells out public-domain licenses and leaves the data alone', () => {

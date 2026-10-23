@@ -1,0 +1,181 @@
+{
+  "id": "bilayer-patch",
+  "tris": {
+    "LOD0": 51024,
+    "LOD1": 10560,
+    "LOD2": 3984
+  },
+  "bboxMin": [
+    -3,
+    -0.6772,
+    -3
+  ],
+  "bboxMax": [
+    3,
+    0.6819,
+    3
+  ],
+  "boundsRadius": 3.9694,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 1365760,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9943,
+        0.9981
+      ],
+      "coverage": 0.7147,
+      "overlap": 0,
+      "stretchP95": 1.175,
+      "stretchP05": 0.548,
+      "uvPerUnit": 0.04495
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 432231
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 247970
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 406564
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1672951
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1151345
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1406943
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 6017381
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 4804219
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 4514170
+          }
+        }
+      }
+    },
+    "bakeSeconds": 20.5,
+    "paintSeconds": 47,
+    "totalSeconds": 79.2
+  },
+  "pivot": "patch centre",
+  "axes": "flat 6 x 6 patch in XZ, normal +Y; parts heads (head groups of both leaflets) and tails (hydrophobic core, visible at the cut edge)",
+  "units": "~6 across",
+  "tintable": true,
+  "tintParts": [
+    "heads"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/bilayer-patch/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 223890,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 64120,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 102850,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 56920,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 733311,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 187995,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 378827,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 166489,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1395372,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 657979,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 244878,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 492515,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

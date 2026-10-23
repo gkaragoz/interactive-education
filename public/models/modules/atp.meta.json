@@ -1,0 +1,184 @@
+{
+  "id": "atp",
+  "tris": {
+    "LOD0": 8742,
+    "LOD1": 1718,
+    "LOD2": 960
+  },
+  "bboxMin": [
+    -1.4789,
+    -0.2643,
+    -0.2644
+  ],
+  "bboxMax": [
+    1.6894,
+    0.2637,
+    0.2642
+  ],
+  "boundsRadius": 1.6895,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 260592,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.941
+      ],
+      "coverage": 0.6158,
+      "overlap": 0,
+      "stretchP95": 1.178,
+      "stretchP05": 0.883,
+      "uvPerUnit": 0.46592
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 30266
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 20078
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 25932
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 113644
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 94428
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 97407
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 419964
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 410623
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 358337
+          }
+        }
+      }
+    },
+    "bakeSeconds": 9.4,
+    "paintSeconds": 1.5,
+    "totalSeconds": 11.2
+  },
+  "pivot": "ribose centre",
+  "axes": "chain along +X: adenine (x ~ -1), ribose ring at the origin, phosphates 1..3 at x = 0.62, 1.08, 1.54 (3 = terminal, cleaved off); parts adenosine, phosphate-1..3, neutral albedo",
+  "units": "um (exaggerated)",
+  "tintable": true,
+  "tintParts": [
+    "adenosine",
+    "phosphate-1",
+    "phosphate-2",
+    "phosphate-3"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/atp/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 18137,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5395,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7251,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 5491,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 64022,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 19047,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27715,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 17260,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 245602,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 66393,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 121381,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 57828,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

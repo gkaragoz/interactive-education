@@ -1,0 +1,177 @@
+{
+  "id": "glucose",
+  "tris": {
+    "LOD0": 14722,
+    "LOD1": 2550,
+    "LOD2": 1530
+  },
+  "bboxMin": [
+    -1.4995,
+    -0.8504,
+    -1.6763
+  ],
+  "bboxMax": [
+    1.5001,
+    1.1194,
+    1.313
+  ],
+  "boundsRadius": 2.1864,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 411556,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.987,
+        0.9923
+      ],
+      "coverage": 0.6385,
+      "overlap": 0,
+      "stretchP95": 1.074,
+      "stretchP05": 0.929,
+      "uvPerUnit": 0.36153
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 44394
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 18367
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 23872
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 162348
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 88612
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 91472
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 582299
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 390937
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 341857
+          }
+        }
+      }
+    },
+    "bakeSeconds": 13.3,
+    "paintSeconds": 4.1,
+    "totalSeconds": 18.6
+  },
+  "pivot": "ring centre",
+  "axes": "pyranose ring in the XZ plane (y up), OH groups alternate up/down, CH2OH on the ring carbon at 240 degrees; ~2.4 across; parts carbon, oxygen, hydrogen, bonds",
+  "units": "um (exaggerated)",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/glucose/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 19291,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 6420,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7256,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 5615,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 66925,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 22134,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 25267,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19524,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 249193,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 75383,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 108834,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 64976,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

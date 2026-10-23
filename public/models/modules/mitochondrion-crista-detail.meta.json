@@ -1,0 +1,289 @@
+{
+  "id": "mitochondrion-crista-detail",
+  "tris": {
+    "LOD0": 25608,
+    "LOD1": 6128,
+    "LOD2": 3232
+  },
+  "bboxMin": [
+    -2.7128,
+    -1.0973,
+    -1.0729
+  ],
+  "bboxMax": [
+    2.727,
+    1.0568,
+    0.051
+  ],
+  "boundsRadius": 2.7767,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 766492,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9964,
+        0.9981
+      ],
+      "coverage": 0.7205,
+      "overlap": 0.00002,
+      "stretchP95": 1.344,
+      "stretchP05": 0.765,
+      "uvPerUnit": 0.12139
+    },
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9931
+      ],
+      "coverage": 0.6079,
+      "overlap": 0.00003,
+      "stretchP95": 1.369,
+      "stretchP05": 0.775,
+      "uvPerUnit": 0.15701
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 703640
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 161171
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 66307
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 509186
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 267274
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 377451
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2684374
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 752816
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 179692
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1858841
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1175749
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1284006
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 9838743
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 3166767
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 483029
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 6674782
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 4853946
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 4052908
+          }
+        }
+      }
+    },
+    "bakeSeconds": 28.5,
+    "paintSeconds": 48.5,
+    "totalSeconds": 85.9
+  },
+  "pivot": "mitochondrion centre",
+  "axes": "the mitochondrion at 1.7x (long axis X, ~5.4 long) cut open at z = 0 (open towards +Z): cristae, junctions, matrix granules, mtDNA in section; part synthases = ATP-synthase lollipops on the cristae",
+  "units": "um",
+  "tintable": false,
+  "cutOpen": "z=0, open towards +Z",
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/mitochondrion-crista-detail/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 466161,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 66253,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 94810,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 59730,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 99130,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 129087,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 17151,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 1623713,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 187063,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 416805,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 161567,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 308339,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 504650,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 45289,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 2614913,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 633674,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 295710,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 456080,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 2048,
+            "bytes": 1086737,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 2048,
+            "bytes": 27807,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 2048,
+            "bytes": 114905,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

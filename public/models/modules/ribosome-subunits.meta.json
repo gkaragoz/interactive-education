@@ -1,0 +1,177 @@
+{
+  "id": "ribosome-subunits",
+  "tris": {
+    "LOD0": 10992,
+    "LOD1": 2748,
+    "LOD2": 1344
+  },
+  "bboxMin": [
+    -0.8591,
+    -0.6165,
+    -0.7441
+  ],
+  "bboxMax": [
+    0.8613,
+    1.0267,
+    0.7461
+  ],
+  "boundsRadius": 1.0494,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 334724,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9143
+      ],
+      "coverage": 0.7736,
+      "overlap": 0,
+      "stretchP95": 1.255,
+      "stretchP05": 0.857,
+      "uvPerUnit": 0.28259
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 144314
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 72845
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 60553
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 523402
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 311826
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 204360
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1797463
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1261255
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 644518
+          }
+        }
+      }
+    },
+    "bakeSeconds": 13.4,
+    "paintSeconds": 14.2,
+    "totalSeconds": 29.3
+  },
+  "pivot": "centre of the mRNA channel",
+  "axes": "mRNA channel along X between the subunits; large subunit above (+Y) with A / P / E notches at x = +0.34 / 0 / -0.34 (coloured marker part `sites`), small subunit below (-Y); separate meshes `large` and `small`; ~1.7 wide, ~1.3 tall",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/ribosome-subunits/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 57423,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 19696,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 24064,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 13663,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 206549,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 63185,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 104320,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 39044,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 750275,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 178335,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 464994,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 106946,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

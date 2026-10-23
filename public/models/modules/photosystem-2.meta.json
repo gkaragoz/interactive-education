@@ -1,0 +1,177 @@
+{
+  "id": "photosystem-2",
+  "tris": {
+    "LOD0": 22948,
+    "LOD1": 5116,
+    "LOD2": 2616
+  },
+  "bboxMin": [
+    -1.2051,
+    -0.379,
+    -1.1189
+  ],
+  "bboxMax": [
+    1.2133,
+    0.7246,
+    1.1158
+  ],
+  "boundsRadius": 1.2515,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 679624,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9864,
+        0.9962
+      ],
+      "coverage": 0.6962,
+      "overlap": 0,
+      "stretchP95": 1.304,
+      "stretchP05": 0.847,
+      "uvPerUnit": 0.2113
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 168947
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 80427
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 105358
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 622664
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 360712
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 390538
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 2182134
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1524645
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 1359593
+          }
+        }
+      }
+    },
+    "bakeSeconds": 11.9,
+    "paintSeconds": 6.2,
+    "totalSeconds": 19.3
+  },
+  "pivot": "membrane centre",
+  "axes": "thylakoid membrane plane XZ; chlorophylls, reaction centre and the oxygen-evolving bump on the lumen face (+Y); ~2.2 across",
+  "units": "um",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/modules/photosystem-2/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 66290,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 22268,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 24444,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 19578,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 242378,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 73062,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 106855,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 62461,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 844972,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 211330,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 468187,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 165455,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}
