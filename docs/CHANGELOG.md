@@ -12,3 +12,6 @@
 
 ## v0.3.0
 - Module Zardan madde geçişi: difüzyon, kolaylaştırılmış difüzyon, osmoz, aktif taşıma, endositoz ve ekzositoz.
+
+## v0.4.0
+- Module DNA ve protein sentezi: DNA yapısı, replikasyon, transkripsiyon, translasyon ve mutasyon.
