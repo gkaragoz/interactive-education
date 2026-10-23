@@ -2,7 +2,7 @@
  * pH from composition: charge balance solved by bisection on log10[H+] (strong acids and bases count as their ions,
  * weak acids/bases and ampholytes come from the protic families). Activity coefficients and the temperature
  * dependence of Kw are ignored (simplification). Background: https://en.wikipedia.org/wiki/PH ,
- * https://en.wikipedia.org/wiki/Henderson%E2%80%93Hasselbalch_equation , https://en.wikipedia.org/wiki/Charge_balance_(chemistry)
+ * https://en.wikipedia.org/wiki/Henderson%E2%80%93Hasselbalch_equation , https://en.wikipedia.org/wiki/Acid_dissociation_constant
  */
 import { alphas, FAMILIES, familyOf, KW } from './families';
 import { liquidVolumeMl } from './mixture';

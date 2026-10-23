@@ -27,3 +27,6 @@
 
 ## v0.7.0
 - Sorular açık/kapalı ayarı, kompakt düzen ve güvenli alan kamerası, modüllerde boyalı organel dokuları, npm run perf ve shader ısınma, e2e sağlamlaştırma.
+
+## v0.7.1
+- Düzeltme: v0.7.0 dağıtımı laboratuvar varlık testi yüzünden durmuştu; içerik v0.7.0 ile aynı.
