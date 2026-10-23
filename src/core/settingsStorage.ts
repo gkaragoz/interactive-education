@@ -46,3 +46,23 @@ export function saveLevel(level: 'temel' | 'ileri', storage?: Pick<Storage, 'set
     // not persisted
   }
 }
+
+const QUESTIONS_KEY = 'bilim.questions';
+
+/** Whether check/predict prompts may pause the timeline (default on); remembered per device, guarded like all storage. */
+export function loadQuestions(storage?: Pick<Storage, 'getItem'>): boolean | null {
+  try {
+    const value = (storage ?? localStorage).getItem(QUESTIONS_KEY);
+    return value === '1' ? true : value === '0' ? false : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveQuestions(on: boolean, storage?: Pick<Storage, 'setItem'>): void {
+  try {
+    (storage ?? localStorage).setItem(QUESTIONS_KEY, on ? '1' : '0');
+  } catch {
+    // not persisted
+  }
+}

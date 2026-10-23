@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 const TRACKS = ['difuzyon', 'kolaylastirilmis-difuzyon', 'ozmoz', 'aktif-tasima', 'endositoz-ekzositoz'];
 
 async function open(page: Page, track: string, problems: string[]): Promise<void> {
-  await page.goto(`./?demo#/modul/membrane-transport/${track}`);
+  await page.goto(`./?demo&quality=low#/modul/membrane-transport/${track}`);
   await page.waitForFunction((id) => document.body.dataset.moduleReady === 'membrane-transport' && window.__bilimModules?.session.track.id === id, track, { timeout: 80_000 });
   await page.waitForTimeout(500);
   expect(problems).toEqual([]);

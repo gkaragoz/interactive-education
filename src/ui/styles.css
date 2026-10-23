@@ -505,3 +505,47 @@ body { font-size: 19px; }
 .idle .phase-card:not(:hover):not(:focus-within) p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .chart-tray { transition: none; } }
 .module-wrap.idle .floating:not(:hover):not(:focus-within) { opacity: 0.62; }
+
+/* Sorular off: pause markers dimmed, list note shown */
+.off-note { display: none; margin: 0 0 8px; padding: 6px 10px; border-radius: 10px; background: #f1e6c8; font-size: 1rem; }
+.questions-off .off-note { display: block; }
+.questions-off .marker { opacity: 0.3; background: #8d8470; }
+
+/* ---- module screen: compact mode (stage under ~1450 px wide or 740 px high) ---- */
+.options-btn { display: none; }
+.compact .module-head { max-width: min(52%, 520px); padding: 8px 14px 10px; }
+.compact .module-head h2 { font-size: 1.7rem; }
+.compact .module-head .sub-tag { display: none; }
+.compact .options-btn { display: inline-block; align-self: flex-start; padding: 4px 12px; }
+.compact .module-options { display: none; position: absolute; left: 0; top: 100%; margin-top: 6px; z-index: 9; flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 14px; border-radius: 16px; background: rgba(251, 246, 233, 0.98); border: 1px solid var(--card-edge); box-shadow: 0 10px 30px rgba(60, 40, 15, 0.25); }
+.compact .module-options.open { display: flex; }
+.compact .module-tools { max-width: 62%; }
+.compact .module-tools .lbl { display: none; }
+.compact .module-tools .tool-btn { padding: 7px 10px; }
+.compact .module-tools .preset-bar .tool-btn { padding: 7px 8px; }
+/* Phase card becomes a one-line bar; hover, focus or a paused animation opens it. */
+.compact .phase-card { width: min(46%, 560px); max-height: none; padding: 8px 16px; bottom: 100px; }
+.compact .phase-card .card-title, .compact .phase-card ul { display: none; }
+.compact .phase-card .phase-title { display: inline; font-size: 1.15rem; margin: 0 8px 0 0; }
+.compact .phase-card p { display: inline; margin: 0; }
+.compact .phase-card:not(:hover):not(:focus-within) p { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; -webkit-line-clamp: unset; }
+.compact .phase-card:not(:hover):not(:focus-within) .phase-title { display: block; }
+.compact .phase-card:hover, .compact .phase-card:focus-within { width: min(60%, 640px); max-height: 52%; }
+.compact .phase-card:hover .card-title, .compact .phase-card:hover ul, .compact .phase-card:focus-within ul { display: block; }
+.compact .phase-card:hover p, .compact .phase-card:focus-within p { display: block; margin: 0 0 6px; }
+.compact .chart-tray { bottom: 100px; }
+.compact .dock { padding: 7px 14px; }
+.compact .dock-btn { width: 40px; height: 40px; }
+.compact .segment { min-height: 2.3em; font-size: 0.82rem; }
+/* While the animation plays and the learner is idle, everything but the dock steps back; hover, focus or pause bring it back. */
+.idle .module-view.compact.is-playing .floating:not(.dock):not(:hover):not(:focus-within) { opacity: 0.1; }
+@media (prefers-reduced-motion: reduce) { .compact .phase-card { transition: none; } }
+.compact .module-head .track-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; max-width: 100%; padding-bottom: 2px; }
+.compact .module-head .track-tabs .tab { white-space: nowrap; flex: none; padding: 5px 12px; font-size: 1rem; }
+.compact .module-head { max-width: min(62%, 700px); }
+/* Compact head: title, tabs and options button in one row. */
+.compact .module-head { flex-direction: row; align-items: center; flex-wrap: nowrap; gap: 14px; max-width: calc(100% - 590px); padding: 6px 14px; }
+.compact .module-head h2 { font-size: 1.5rem; white-space: nowrap; flex: none; }
+.compact .module-head .track-tabs { flex: 1; min-width: 0; margin: 0; }
+.compact .module-head .options-btn { flex: none; align-self: center; white-space: nowrap; }
+.compact .module-options { left: auto; right: 0; min-width: 260px; }

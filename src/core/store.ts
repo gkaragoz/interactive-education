@@ -26,6 +26,8 @@ export interface AppState {
   /** The info drawer: opens when something is selected, the learner can close it without deselecting. */
   infoOpen: boolean;
   qualityMode: QualityMode;
+  /** Sorular: when off no check or predict prompt pauses the timeline. */
+  questionsOn: boolean;
 }
 
 type Listener = (state: AppState, prev: AppState) => void;

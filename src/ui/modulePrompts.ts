@@ -19,9 +19,10 @@ export function createPromptPanel(session: ModuleSession): PromptPanel {
   for (const q of session.questions) {
     list.append(h('li', {}, h('button', { type: 'button', class: 'link-btn', 'data-check': q.id, onclick: () => session.openCheck(q.id) }, `${Math.round(q.atTime)}. sn: ${q.promptTr}`)));
   }
+  const offNote = h('p', { class: 'off-note' }, 'Sorular kapalı: animasyon sorular için durmaz. Buradan istediğini kendin açabilirsin.');
   const empty = h('p', { class: 'empty-note' }, 'Bu animasyon için soru yok.');
   empty.hidden = session.questions.length > 0;
-  const el = h('section', { class: 'card prompts', 'aria-labelledby': 'h-try' }, h('h2', { class: 'card-title', id: 'h-try' }, 'Kendini dene'), listTally, list, empty);
+  const el = h('section', { class: 'card prompts', 'aria-labelledby': 'h-try' }, h('h2', { class: 'card-title', id: 'h-try' }, 'Kendini dene'), offNote, listTally, list, empty);
 
   const renderPrompt = (): void => {
     const p = session.prompt;

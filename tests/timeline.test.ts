@@ -115,6 +115,33 @@ describe('ModuleSession', () => {
     expect(phasesFor(demoInfo.tracks[0]!, 'temel')).toHaveLength(2);
   });
 
+  it('Sorular off: the playhead runs through every question without pausing; the list still opens one by hand', () => {
+    const s = make();
+    s.setQuestionsEnabled(false);
+    s.player.play();
+    for (let i = 0; i < 125; i++) s.tick(0.1);
+    expect(s.prompt).toBeNull();
+    expect(s.player.time).toBeGreaterThan(8);
+    s.openCheck(s.questions[0]!.id);
+    expect(s.prompt?.kind).toBe('check');
+    s.answer(s.questions[0]!.correctIndex);
+    expect(s.tally.answered).toBe(1);
+  });
+
+  it('switching Sorular off closes an open prompt and resumes; on again starts a fresh tally and skips passed prompts', () => {
+    const s = make();
+    s.player.play();
+    for (let i = 0; i < 40 && !s.prompt; i++) s.tick(0.1);
+    s.answer(0);
+    s.setQuestionsEnabled(false);
+    expect(s.prompt).toBeNull();
+    expect(s.player.playing).toBe(true);
+    s.setQuestionsEnabled(true);
+    expect(s.tally).toEqual({ answered: 0, correct: 0 });
+    s.tick(0.1);
+    expect(s.prompt).toBeNull(); // the question at 3 s is behind the playhead
+  });
+
   it('pauses and prompts when the playhead crosses a question, then continues after the answer', () => {
     const s = make();
     s.player.play();

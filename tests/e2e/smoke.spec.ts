@@ -1,7 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 
 /** Opens the app, collects console errors and waits until the first cell is drawn. */
-async function openApp(page: Page, query = '?perf'): Promise<string[]> {
+async function openApp(page: Page, query = '?perf', raw = false): Promise<string[]> {
+  // The software renderer is slow: tests use the low preset unless they are about quality itself (`raw`).
+  if (!raw && !/quality=/.test(query)) query += '&quality=low';
   const problems: string[] = [];
   page.on('console', (m) => {
     if (m.type() === 'error') problems.push(`console.error: ${m.text()}`);
@@ -141,7 +143,7 @@ test('quality: low preset loads cleanly, the default adapts and the overlay name
   expect((await frameStats(page)).distinct).toBeGreaterThan(40);
   expect(problems).toEqual([]);
   const page2 = await page.context().newPage();
-  await openApp(page2, '?perf');
+  await openApp(page2, '?perf', true);
   expect(await page2.evaluate(() => window.__bilim.stage.qualityLevel)).toMatch(/low|medium/);
 });
 
@@ -331,7 +333,7 @@ test('micrograph panel opens an enlarged image with author and licence', async (
 
 test('the quality menu changes the preset, is remembered, and the URL overrides it', async ({ page, context }) => {
   test.setTimeout(240_000);
-  const problems = await openApp(page, '?perf');
+  const problems = await openApp(page, '?perf', true);
   await page.getByRole('button', { name: 'Ayarlar' }).click();
   await expect(page.getByRole('radio', { name: /Otomatik/ })).toBeChecked();
   await page.getByRole('radio', { name: /Düşük/ }).check();
@@ -341,7 +343,7 @@ test('the quality menu changes the preset, is remembered, and the URL overrides 
   await expect(page.locator('#settings-popover')).toBeHidden();
   // A new page in the same browser context starts with the saved choice.
   const again = await context.newPage();
-  await openApp(again, '?perf');
+  await openApp(again, '?perf', true);
   expect(await again.evaluate(() => window.__bilim.stage.qualityLevel)).toBe('low');
   await again.getByRole('button', { name: 'Ayarlar' }).click();
   await expect(again.getByRole('radio', { name: /Düşük/ })).toBeChecked();
@@ -673,4 +675,64 @@ test('module screen: switching level keeps the playhead and hides İleri-only tr
   const ileriCount = await tabs.count();
   await page.locator('.level-switch').getByRole('button', { name: 'Temel', exact: true }).click();
   await expect.poll(() => tabs.count()).toBeLessThan(Math.max(ileriCount, 2));
+});
+
+test('Sorular kapalı: the timeline runs through every question; the setting is saved and can be switched back', async ({ page }) => {
+  const problems: string[] = [];
+  page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
+  await page.goto('./?demo&quality=low&sorular=0#/modul/__demo');
+  await page.waitForFunction(() => document.body.dataset.moduleReady === '__demo', null, { timeout: 80_000 });
+  await page.locator('[data-speed]').selectOption('2');
+  await page.locator('[data-play]').click();
+  await page.waitForFunction(() => (window.__bilimModules?.session.player.time ?? 0) > 7, null, { timeout: 60_000 });
+  await expect(page.locator('.prompt-overlay')).toBeHidden();
+  await expect(page.locator('.module-view')).toHaveClass(/questions-off/);
+  // The setting menu shows Kapalı; the list still opens a question by hand.
+  await page.getByRole('button', { name: 'Ayarlar' }).click();
+  await expect(page.getByRole('radio', { name: /Kapalı/ })).toBeChecked();
+  await page.getByRole('radio', { name: /Açık/ }).check();
+  expect(await page.evaluate(() => localStorage.getItem('bilim.questions'))).toBe('1');
+  await expect(page.locator('.module-view')).not.toHaveClass(/questions-off/);
+  await page.keyboard.press('Escape');
+  await page.locator('[data-drawer]').click();
+  await page.locator('[data-check]').first().click();
+  await expect(page.locator('.prompt')).toBeVisible();
+  expect(problems).toEqual([]);
+});
+
+test('compact layout at 1366x768: options behind a button, one-line phase bar, panels clear of each other', async ({ browser }) => {
+  const page = await browser.newPage({ viewport: { width: 1366, height: 768 } });
+  await page.goto('./?demo&quality=low#/modul/__demo');
+  await page.waitForFunction(() => document.body.dataset.moduleReady === '__demo', null, { timeout: 80_000 });
+  await expect(page.locator('.module-view')).toHaveClass(/compact/);
+  await expect(page.locator('.module-options')).toBeHidden();
+  await page.locator('[data-options-btn]').click();
+  await expect(page.locator('[data-option="sayi"]')).toBeVisible();
+  await page.locator('[data-options-btn]').click();
+  await expect(page.locator('.module-options')).toBeHidden();
+  await expect(page.locator('.chart-tray')).toHaveClass(/collapsed/);
+  const clear = await page.evaluate(() => {
+    const box = (s: string): DOMRect | null => document.querySelector(s)?.getBoundingClientRect() ?? null;
+    const hit = (a: DOMRect | null | undefined, b: DOMRect | null | undefined): boolean => !!a && !!b && a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+    const [head, tools, phase, dock] = ['.module-head', '.module-tools', '.phase-card', '.dock'].map(box);
+    return { headTools: hit(head, tools), phaseDock: hit(phase, dock), toolsDock: hit(tools, dock) };
+  });
+  expect(clear).toEqual({ headTools: false, phaseDock: false, toolsDock: false });
+  await page.close();
+});
+
+test('painted organelle textures stream in for ctx.assets.organelle (demo module, KTX2 tiers)', async ({ page }) => {
+  await page.goto('./?demo&quality=low#/modul/__demo');
+  await page.waitForFunction(() => document.body.dataset.moduleReady === '__demo', null, { timeout: 80_000 });
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const scene = (window.__bilimModules!.stage as unknown as { scene: { traverse(f: (o: { isInstancedMesh?: boolean; material?: { map?: unknown } }) => void): void } }).scene;
+        let textured = 0;
+        scene.traverse((o) => { if (o.isInstancedMesh && o.material?.map) textured++; });
+        return textured;
+      }),
+      { timeout: 60_000 },
+    )
+    .toBeGreaterThan(0);
 });

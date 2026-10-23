@@ -8,7 +8,7 @@ async function open(page: Page, track = 'fotosentez', level = 'ileri'): Promise<
   });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
   // modules are unreleased: the preview route needs ?demo
-  await page.goto(`./?demo&level=${level}#/modul/energy/${track}`);
+  await page.goto(`./?demo&level=${level}&quality=low#/modul/energy/${track}`);
   await page.waitForFunction(() => document.body.dataset.moduleReady === 'energy', null, { timeout: 90_000 });
   await page.waitForTimeout(500);
   return problems;

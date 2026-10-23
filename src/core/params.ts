@@ -37,6 +37,14 @@ export function parseParams(search: string, hash = ''): AppParams {
   };
 }
 
+/** `?sorular=0|1` (also off/on, false/true): overrides the saved Sorular setting for this visit; null when absent or unknown. */
+export function parseQuestionsParam(search: string): boolean | null {
+  const v = new URLSearchParams(search).get('sorular')?.toLowerCase();
+  if (v === '1' || v === 'on' || v === 'true' || v === 'acik') return true;
+  if (v === '0' || v === 'off' || v === 'false' || v === 'kapali') return false;
+  return null;
+}
+
 export function parseRoute(hash: string): Route {
   const clean = (hash.replace(/^#\/?/, '').toLowerCase().split('/')[0] ?? '');
   if (clean === 'kaynakca') return 'kaynakca';

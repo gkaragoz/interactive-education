@@ -157,7 +157,11 @@ export class ModuleStage {
 
   /** Pixels of the stage that overlay panels cover on each side; the picture is centred in the free rectangle (eased). */
   setSafeInsets(left: number, right: number, top: number, bottom: number): void {
-    this.rig.setShift((right - left) / 2 / Math.max(this.width, 1), (bottom - top) / 2 / Math.max(this.height, 1));
+    const freeW = Math.max(this.width - left - right, 1) / Math.max(this.width, 1);
+    const freeH = Math.max(this.height - top - bottom, 1) / Math.max(this.height, 1);
+    // Shrink a little when the free area is much smaller than the stage, so the picture is not clipped by the panels.
+    const scale = Math.min(1, Math.max(0.6, Math.min(freeW, freeH) / 0.7));
+    this.rig.setShift((right - left) / 2 / Math.max(this.width, 1), (bottom - top) / 2 / Math.max(this.height, 1), scale);
     this.requestRender();
   }
 
@@ -238,6 +242,31 @@ export class ModuleStage {
     this.labels.setSpecsIfChanged(labels.map((l, i) => ({ id: ids[i] as string, text: l.text, color: '#7b5aa6' })));
     const anchors: LabelAnchor[] = labels.map((l, i) => ({ id: ids[i] as string, world: new Vector3(...l.world) }));
     this.labels.update(anchors, this.rig.camera, this.width, this.height);
+  }
+
+  /** How long the last `prewarm` took (ms); the perf script reports it separately from steady-state frame times. */
+  prewarmMs = 0;
+
+  /**
+   * Compiles every shader the scene needs before the learner sees it: `compileAsync` for the scene graph, then one real
+   * render at a few times of the timeline (materials that only appear later, the post-processing passes), so playing
+   * does not hitch on first use. Meant to run behind the loading screen; the timeline is back at 0 afterwards.
+   */
+  async prewarm(duration: number): Promise<number> {
+    const start = performance.now();
+    try {
+      await this.renderer.compileAsync(this.scene, this.rig.camera);
+    } catch {
+      // compile is an optimisation only
+    }
+    for (const f of [0, 0.3, 0.6, 1, 0.5]) {
+      this.setTime(duration * f);
+      this.pipeline.render();
+    }
+    this.renderer.getContext().finish();
+    this.setTime(0);
+    this.prewarmMs = performance.now() - start;
+    return this.prewarmMs;
   }
 
   /** Renders now and returns a PNG (module stills, screenshots). */

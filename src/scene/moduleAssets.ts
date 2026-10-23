@@ -6,7 +6,8 @@ import { extractAsset } from './assets';
 import type { AssetMeta, OrganelleAsset } from './assetTypes';
 import { MaterialLibrary } from './materials';
 import { makePlaceholderAsset } from './placeholders';
-import type { Texture } from 'three';
+import type { Texture, WebGLRenderer } from 'three';
+import { createKtx2Backend, pickTier, TextureStore, tiersOf } from './textureStore';
 
 /** Instanced copies of one asset: per-instance matrices and tints (through `instanceColor`). */
 export interface InstanceSet {
@@ -33,6 +34,14 @@ export class ModuleAssets {
   private readonly cache = new Map<string, Promise<OrganelleAsset>>();
   private readonly sets: InstanceSet[] = [];
   private readonly fallbacks = new Set<string>();
+  private readonly organelleCache = new Map<string, Promise<OrganelleAsset>>();
+  private readonly metas = new Map<string, AssetMeta | null>();
+  private readonly streaming = new Set<string>();
+  private store: TextureStore | null = null;
+  private invalidate: () => void = () => undefined;
+  private disposed = false;
+  /** Also paint the module's own GLBs (public/textures/modules/<id>); off by default, see `enableTextures`. */
+  moduleTextures = false;
 
   constructor(
     private readonly baseUrl: string,
@@ -48,16 +57,20 @@ export class ModuleAssets {
   asset(id: string, color = '#c9b48a'): Promise<OrganelleAsset> {
     let promise = this.cache.get(id);
     if (!promise) {
-      promise = this.fetch(id, color);
+      promise = this.fetch(id, color).then((asset) => {
+        if (this.moduleTextures) void this.streamTextures(id, 'modules');
+        return asset;
+      });
       this.cache.set(id, promise);
     }
     return promise;
   }
 
-  private async fetch(id: string, color: string): Promise<OrganelleAsset> {
-    const base = `${this.baseUrl}models/modules/${id}`;
+  private async fetch(id: string, color: string, dir = 'modules'): Promise<OrganelleAsset> {
+    const base = `${this.baseUrl}models/${dir}/${id}`;
     try {
       const meta = await fetch(`${base}.meta.json`).then((r) => (r.ok ? (r.json() as Promise<AssetMeta>) : null)).catch(() => null);
+      this.metas.set(`${dir}/${id}`, meta);
       const gltf = await this.loader.loadAsync(`${base}.glb`);
       const asset = extractAsset(id, gltf.scene, meta);
       if ((asset.lods[0]?.length ?? 0) === 0) throw new Error('GLB has no meshes');
@@ -92,7 +105,81 @@ export class ModuleAssets {
 
   /** `count` instanced copies of an asset (one InstancedMesh per part); all start hidden. */
   async instances(id: string, count: number, color?: string): Promise<InstanceSet> {
-    const asset = await this.asset(id, color);
+    return this.makeInstances(id, await this.asset(id, color), count);
+  }
+
+  /**
+   * The explorer's painted organelle (`public/models/organelles/<id>.glb`, e.g. mitochondrion, chloroplast, nucleus,
+   * golgi, rough-er, lysosome) as a clone sharing the library materials. Its KTX2 textures stream in by quality, like
+   * in the explorer: the lowest tier first, then the preset's tier, swapped in on the materials already in the scene.
+   * Needs `enableTextures` (the host calls it); without KTX2 support the vertex-colour look stays.
+   */
+  async organelle(id: string, color = '#c9b48a'): Promise<Object3D> {
+    const asset = await this.organelleAsset(id, color);
+    const group = new Group();
+    group.name = id;
+    for (const part of asset.lods[this.lodIndex()] ?? asset.lods[0] ?? []) {
+      const mesh = new Mesh(part.geometry, this.materials.get(id, part.kind));
+      mesh.name = part.name;
+      mesh.castShadow = part.kind === 'clay';
+      mesh.receiveShadow = true;
+      group.add(mesh);
+    }
+    return group;
+  }
+
+  /** `count` instanced copies of a painted organelle (see `organelle`). */
+  async organelleInstances(id: string, count: number, color?: string): Promise<InstanceSet> {
+    return this.makeInstances(id, await this.organelleAsset(id, color ?? '#c9b48a'), count);
+  }
+
+  /** Turns on painted-texture streaming for `organelle()` assets; `invalidate` redraws when a texture swaps in. */
+  enableTextures(renderer: WebGLRenderer, invalidate: () => void): void {
+    this.invalidate = invalidate;
+    try {
+      this.store = new TextureStore(this.baseUrl, createKtx2Backend(renderer, this.baseUrl));
+    } catch {
+      this.store = null;
+    }
+  }
+
+  private organelleAsset(id: string, color: string): Promise<OrganelleAsset> {
+    let promise = this.organelleCache.get(id);
+    if (!promise) {
+      promise = this.fetch(id, color, 'organelles').then((asset) => {
+        void this.streamTextures(id, 'organelles');
+        return asset;
+      });
+      this.organelleCache.set(id, promise);
+    }
+    return promise;
+  }
+
+  /** `dir` 'organelles' reads textures/<id>/..., 'modules' reads textures/modules/<id>/... (the store's id carries the folder). */
+  private async streamTextures(id: string, dir: 'organelles' | 'modules'): Promise<void> {
+    const store = this.store;
+    const meta = this.metas.get(`${dir}/${id}`) ?? null;
+    const sid = dir === 'modules' ? `modules/${id}` : id;
+    if (!store?.enabled || !meta || this.streaming.has(sid)) return;
+    this.streaming.add(sid);
+    const tiers = tiersOf(meta);
+    const first = tiers[0];
+    const target = pickTier(meta, this.quality);
+    if (!first) return;
+    const apply = (t: Awaited<ReturnType<TextureStore['load']>>, fade: boolean): void => {
+      if (!t || this.disposed) return;
+      this.materials.applyMaps(id, 'clay', t.clay, fade);
+      this.materials.applyMaps(id, 'gel', t.gel, fade);
+      this.invalidate();
+    };
+    apply(await store.load(sid, meta, first), false);
+    if (target && target !== first && !this.disposed) {
+      apply(await store.load(sid, meta, target), false);
+      store.release(sid, first);
+    }
+  }
+
+  private makeInstances(id: string, asset: OrganelleAsset, count: number): InstanceSet {
     const parts = asset.lods[this.lodIndex()] ?? asset.lods[0] ?? [];
     const group = new Group();
     group.name = `${id}-instances`;
@@ -135,8 +222,11 @@ export class ModuleAssets {
   dispose(): void {
     for (const set of this.sets) set.dispose();
     this.sets.length = 0;
-    for (const promise of this.cache.values()) void promise.then((asset) => asset.dispose());
+    this.disposed = true;
+    for (const promise of [...this.cache.values(), ...this.organelleCache.values()]) void promise.then((asset) => asset.dispose());
     this.cache.clear();
+    this.organelleCache.clear();
+    this.store?.dispose();
     this.materials.dispose();
   }
 }

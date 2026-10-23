@@ -8,7 +8,7 @@ async function open(page: Page, track = 'dna-yapisi'): Promise<string[]> {
   });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
   // modules are unreleased: the preview route needs ?demo
-  await page.goto(`./?demo&level=ileri#/modul/dna-protein/${track}`);
+  await page.goto(`./?demo&level=ileri&quality=low#/modul/dna-protein/${track}`);
   await page.waitForFunction(() => document.body.dataset.moduleReady === 'dna-protein', null, { timeout: 80_000 });
   await page.waitForTimeout(500);
   return problems;

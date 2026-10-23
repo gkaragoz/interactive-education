@@ -8,7 +8,7 @@ async function open(page: Page, track: string, level: 'temel' | 'ileri'): Promis
   });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
   // modules are unreleased: the preview route needs ?demo
-  await page.goto(`./?demo&level=${level}#/modul/muscle/${track}`);
+  await page.goto(`./?demo&level=${level}&quality=low#/modul/muscle/${track}`);
   await page.waitForFunction((id) => document.body.dataset.moduleReady === 'muscle' && window.__bilimModules?.session.track.id === id, track, { timeout: 80_000 });
   await page.waitForTimeout(500);
   return problems;

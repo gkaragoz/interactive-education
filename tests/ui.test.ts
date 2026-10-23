@@ -9,7 +9,7 @@ const calls: string[] = [];
 const actions = new Proxy({}, { get: (_t, name: string) => (...args: unknown[]) => calls.push(`${name}:${args.join(',')}`) }) as UiActions;
 const state = (patch: Partial<AppState> = {}): AppState => ({
   route: 'explore', moduleId: 'cell', infoOpen: false, cellId: 'plant', level: 'temel', selectedId: 'nucleus', hidden: new Set(), viewMode: 'cutaway', hideOthers: false,
-  cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto', ...patch,
+  cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto', questionsOn: true, ...patch,
 });
 const ctx = (catalog = new Catalog(bundle), qualityLocked = false) => ({ catalog, actions, baseUrl: './', qualityLocked, reducedMotion: true, modules: [], upcoming: [] });
 
@@ -86,7 +86,7 @@ describe('quality menu', () => {
   it('lists four choices, reports the pick and locks when the URL pins a preset', () => {
     const menu = createSettingsMenu(ctx());
     menu.update(state({ qualityMode: 'medium' }));
-    const radios = [...menu.el.querySelectorAll<HTMLInputElement>('input[type="radio"]')];
+    const radios = [...menu.el.querySelectorAll<HTMLInputElement>('input[name="quality-mode"]')];
     expect(radios.map((r) => r.value)).toEqual(['auto', 'low', 'medium', 'high']);
     expect(radios.find((r) => r.checked)?.value).toBe('medium');
     calls.length = 0;
@@ -95,6 +95,17 @@ describe('quality menu', () => {
     const locked = createSettingsMenu(ctx(new Catalog(bundle), true));
     locked.update(state());
     expect(locked.el.querySelector<HTMLInputElement>('input')?.disabled).toBe(true);
+  });
+
+  it('has a Sorular group (Açık / Kapalı) that reports the pick', () => {
+    const menu = createSettingsMenu(ctx());
+    menu.update(state({ questionsOn: false }));
+    const radios = [...menu.el.querySelectorAll<HTMLInputElement>('[data-setting=questions] input')];
+    expect(radios.map((r) => r.value)).toEqual(['1', '0']);
+    expect(radios.find((r) => r.checked)?.value).toBe('0');
+    calls.length = 0;
+    radios[0]!.dispatchEvent(new Event('change'));
+    expect(calls).toContain('setQuestions:true');
   });
 
   it('persists the choice and survives blocked storage', () => {

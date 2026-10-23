@@ -8,7 +8,7 @@ async function open(page: Page, track = 'mitoz'): Promise<string[]> {
   });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
   // modules are unreleased: the preview route needs ?demo
-  await page.goto(`./?demo&level=ileri#/modul/mitosis-meiosis/${track}`);
+  await page.goto(`./?demo&level=ileri&quality=low#/modul/mitosis-meiosis/${track}`);
   await page.waitForFunction(() => document.body.dataset.moduleReady === 'mitosis-meiosis', null, { timeout: 80_000 });
   await page.waitForTimeout(500);
   return problems;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseParams, parseRoute, parseRouteAnchor, routeHash } from '../src/core';
+import { parseQuestionsParam, parseParams, parseRoute, parseRouteAnchor, routeHash } from '../src/core';
 
 describe('parseParams', () => {
   it('returns defaults for an empty query', () => {
@@ -36,5 +36,15 @@ describe('parseParams', () => {
     expect(parseRoute('#/kaynakca/wp-tr-hucre')).toBe('kaynakca');
     expect(parseRouteAnchor('#/kaynakca/wp-tr-hucre')).toBe('wp-tr-hucre');
     expect(parseRouteAnchor('#/kaynakca')).toBeNull();
+  });
+});
+
+describe('parseQuestionsParam', () => {
+  it('reads ?sorular=0|1 and ignores anything else', () => {
+    expect(parseQuestionsParam('?sorular=0')).toBe(false);
+    expect(parseQuestionsParam('?sorular=1')).toBe(true);
+    expect(parseQuestionsParam('?sorular=kapali')).toBe(false);
+    expect(parseQuestionsParam('?sorular=maybe')).toBeNull();
+    expect(parseQuestionsParam('')).toBeNull();
   });
 });

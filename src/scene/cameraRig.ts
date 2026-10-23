@@ -20,8 +20,8 @@ export class CameraRig {
   readonly camera = new PerspectiveCamera(FOV, 1, 0.1, 2000);
   readonly controls: OrbitControls;
   private tween: Tween | null = null;
-  private shift = { x: 0, y: 0 };
-  private shiftTarget = { x: 0, y: 0 };
+  private shift = { x: 0, y: 0, s: 1 };
+  private shiftTarget = { x: 0, y: 0, s: 1 };
   private home = 60;
   private radius = 30;
 
@@ -82,27 +82,30 @@ export class CameraRig {
    * Slides the picture sideways (fractions of the view) so the subject sits in the clear part of the stage, away from
    * the floating panels. It eases in and out; (0, 0) restores the centred view.
    */
-  setShift(x: number, y: number): void {
-    this.shiftTarget = { x, y };
-    if (this.reducedMotion) this.shift = { x, y };
+  setShift(x: number, y: number, scale = 1): void {
+    this.shiftTarget = { x, y, s: scale };
+    if (this.reducedMotion) this.shift = { x, y, s: scale };
   }
 
   private applyShift(dt: number): boolean {
     const k = this.reducedMotion ? 1 : 1 - Math.exp(-dt * 7);
     const dx = this.shiftTarget.x - this.shift.x;
     const dy = this.shiftTarget.y - this.shift.y;
-    const settled = Math.abs(dx) < 1e-4 && Math.abs(dy) < 1e-4;
+    const ds = this.shiftTarget.s - this.shift.s;
+    const settled = Math.abs(dx) < 1e-4 && Math.abs(dy) < 1e-4 && Math.abs(ds) < 1e-3;
     if (settled) {
       this.shift = { ...this.shiftTarget };
-      if (this.shift.x === 0 && this.shift.y === 0) {
+      if (this.shift.x === 0 && this.shift.y === 0 && this.shift.s === 1) {
         if (this.camera.view?.enabled) this.camera.clearViewOffset();
         return false;
       }
     } else {
-      this.shift = { x: this.shift.x + dx * k, y: this.shift.y + dy * k };
+      this.shift = { x: this.shift.x + dx * k, y: this.shift.y + dy * k, s: this.shift.s + ds * k };
     }
     const w = 1000 * this.camera.aspect;
-    this.camera.setViewOffset(w, 1000, this.shift.x * w, this.shift.y * 1000, w, 1000);
+    const s = this.shift.s;
+    // s < 1 shows a larger part of the scene (the picture shrinks about the centre) so it fits the free area.
+    this.camera.setViewOffset(w * s, 1000 * s, this.shift.x * w - (w * (1 - s)) / 2, this.shift.y * 1000 - (1000 * (1 - s)) / 2, w, 1000);
     return !settled;
   }
 

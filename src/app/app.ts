@@ -11,6 +11,9 @@ import {
   routeHash,
   saveLevel,
   saveQualityMode,
+  saveQuestions,
+  loadQuestions,
+  parseQuestionsParam,
   toggleInSet,
   type AppState,
   type DataBundle,
@@ -68,6 +71,7 @@ export async function startApp(opts: AppOptions): Promise<void> {
     compareOn: false,
     compareCellId: defaultCompareCell(initialCell),
     qualityMode,
+    questionsOn: parseQuestionsParam(opts.search) ?? loadQuestions() ?? true,
   });
 
   let stage: Stage | null = null;
@@ -182,6 +186,7 @@ export async function startApp(opts: AppOptions): Promise<void> {
       store.patch({ qualityMode: mode });
       stage?.setQualityMode(mode);
     },
+    setQuestions: (on) => { saveQuestions(on); store.patch({ questionsOn: on }); },
     navigate(route: Route) {
       if (location.hash !== routeHash(route)) location.hash = routeHash(route);
       store.patch({ route });
@@ -274,7 +279,7 @@ export async function startApp(opts: AppOptions): Promise<void> {
       location.hash = routeHash('home');
       return;
     }
-    void ensureHost().then((host) => host.open(entry, route.track, state.level)).catch((error: unknown) => console.error(error));
+    void ensureHost().then((host) => { host.setQuestions(state.questionsOn); return host.open(entry, route.track, state.level); }).catch((error: unknown) => console.error(error));
   };
 
   // Keeps what the explorer stage shows in step with the store; cell and compare changes load asynchronously.

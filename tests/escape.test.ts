@@ -48,7 +48,7 @@ describe('escaping', () => {
     const card = createInfoCard({ catalog, actions: noActions, baseUrl: './', qualityLocked: false, reducedMotion: true, modules: [], upcoming: [] });
     const state: AppState = {
       route: 'explore', moduleId: 'cell', infoOpen: false, cellId: 'plant', level: 'temel', selectedId: 'nucleus', hidden: new Set(), viewMode: 'full', hideOthers: false,
-      cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto',
+      cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto', questionsOn: true,
     };
     card.update(state);
     expect(card.el.querySelector('img')).toBeNull();
@@ -61,7 +61,7 @@ describe('escaping', () => {
 describe('Store', () => {
   const base: AppState = {
     route: 'explore', moduleId: 'cell', infoOpen: false, cellId: 'plant', level: 'temel', selectedId: null, hidden: new Set(), viewMode: 'full', hideOthers: false,
-    cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto',
+    cutPosition: 0.4, labels: false, autoRotate: false, compareOn: false, compareCellId: 'animal', qualityMode: 'auto', questionsOn: true,
   };
 
   it('notifies on change only', () => {

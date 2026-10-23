@@ -8,7 +8,7 @@ async function open(page: Page, track = 'monohibrit', level = 'ileri'): Promise<
   });
   page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
   // modules are unreleased: the preview route needs ?demo
-  await page.goto(`./?demo&level=${level}#/modul/genetics/${track}`);
+  await page.goto(`./?demo&level=${level}&quality=low#/modul/genetics/${track}`);
   await page.waitForFunction(() => document.body.dataset.moduleReady === 'genetics', null, { timeout: 80_000 });
   await page.waitForTimeout(500);
   return problems;

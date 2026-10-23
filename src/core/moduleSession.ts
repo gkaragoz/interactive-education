@@ -54,6 +54,7 @@ export class ModuleSession {
   private readonly checks: CheckQuestion[];
   private readonly predicts: PredictPrompt[];
   private readonly done = new Set<string>();
+  private questionsOn = true;
   private readonly listeners = new Set<Listener>();
 
   constructor(
@@ -89,6 +90,30 @@ export class ModuleSession {
     return chartValuesAt(this.info.charts, this.phases, t);
   }
 
+  get questionsEnabled(): boolean {
+    return this.questionsOn;
+  }
+
+  /**
+   * Sorular setting: when off, the playhead never stops for a prompt (the list still opens them by hand). Turning it off
+   * closes a prompt that popped up by itself and resumes playback; turning it on starts a fresh tally and forgets which
+   * prompts were passed, so they fire on the next pass.
+   */
+  setQuestionsEnabled(on: boolean): void {
+    if (on === this.questionsOn) return;
+    this.questionsOn = on;
+    if (!on) {
+      if (this.prompt) this.dismiss(true);
+    } else {
+      this.tally = { answered: 0, correct: 0 };
+      this.done.clear();
+      this.rewound(this.player.time);
+      for (const c of this.checks) if (c.atTime <= this.player.time) this.done.add(c.id);
+      for (const p of this.predicts) if (p.atTime <= this.player.time) this.done.add(`p@${p.atTime}`);
+    }
+    this.emit();
+  }
+
   /** All questions of the track at this level (the "Kendini dene" list). */
   get questions(): readonly CheckQuestion[] {
     return this.checks;
@@ -104,6 +129,7 @@ export class ModuleSession {
 
   private fire(from: number, to: number, wrapped: boolean): void {
     if (wrapped) this.done.clear();
+    if (!this.questionsOn) return;
     const crossed = (at: number): boolean => (wrapped ? at > from || at <= to : at > from && at <= to);
     const check = this.checks.find((c) => !this.done.has(c.id) && crossed(c.atTime));
     const predict = check ? undefined : this.predicts.find((p) => !this.done.has(`p@${p.atTime}`) && crossed(p.atTime));

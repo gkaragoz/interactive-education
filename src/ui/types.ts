@@ -23,6 +23,8 @@ export interface UiActions {
   openInfo(): void;
   closeInfo(): void;
   setQualityMode(mode: QualityMode): void;
+  /** Sorular açık/kapalı: kapalıyken sorular zaman çizelgesini durdurmaz. */
+  setQuestions(on: boolean): void;
 }
 
 /** A module card on the home page. */

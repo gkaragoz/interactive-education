@@ -2,6 +2,7 @@ import { h, phaseText, SPEEDS, tracksFor, type ModuleSession } from '../core';
 import type { ModuleInfo } from '../data/moduleTypes';
 import type { LevelId } from '../data/types';
 import type { CameraPresetId } from '../scene';
+import { icon } from './icons';
 import { createChartStrip, type ChartStrip } from './moduleCharts';
 import { createPromptPanel } from './modulePrompts';
 
@@ -25,6 +26,8 @@ export interface ModuleView {
   viewport: HTMLElement;
   bind(info: ModuleInfo, session: ModuleSession, options: Record<string, string>, handlers: ModuleViewHandlers): void;
   setLoading(text: string | null): void;
+  /** Sorular setting: when off the pause markers are dimmed and the list says prompts will not stop the animation. */
+  setQuestions(on: boolean): void;
   dispose(): void;
 }
 
@@ -59,9 +62,13 @@ export function createModuleView(reducedMotion: boolean): ModuleView {
       const title = loading.querySelector('h3');
       if (title && text) title.textContent = text;
     },
+    setQuestions(on): void {
+      root.classList.toggle('questions-off', !on);
+    },
     dispose(): void {
       for (const fn of cleanup) fn();
       cleanup = [];
+      root.classList.remove('compact', 'is-playing');
       root.replaceChildren();
     },
     bind(info, session, options, handlers): void {
@@ -81,7 +88,16 @@ export function createModuleView(reducedMotion: boolean): ModuleView {
         select.addEventListener('change', () => handlers.setOption(o.id, select.value));
         optionBar.append(h('label', {}, `${o.labelTr}: `, select));
       }
-      const head = h('header', { class: 'module-head floating' }, h('h2', {}, info.nameTr), h('p', { class: 'sub-tag' }, track.tagline), tabs, optionBar);
+      // Compact stages show the options as a small popover behind one button.
+      const optionsBtn = h('button', { type: 'button', class: 'tool-btn options-btn', 'aria-expanded': 'false', 'aria-controls': 'module-options', 'data-options-btn': '' }, 'Seçenekler ▾');
+      optionBar.id = 'module-options';
+      optionsBtn.hidden = optionBar.childElementCount === 0;
+      optionsBtn.addEventListener('click', () => {
+        const open = optionsBtn.getAttribute('aria-expanded') !== 'true';
+        optionsBtn.setAttribute('aria-expanded', String(open));
+        optionBar.classList.toggle('open', open);
+      });
+      const head = h('header', { class: 'module-head floating' }, h('h2', {}, info.nameTr), h('p', { class: 'sub-tag' }, track.tagline), tabs, optionsBtn, optionBar);
 
       // --- dock: play, steps, scrub bar with phase segments, speed, loop -----------------------------------------
       const playBtn = h('button', { type: 'button', class: 'dock-btn play', 'aria-label': 'Oynat', 'data-play': '', disabled: reducedMotion, title: reducedMotion ? 'Hareket azaltma açık: evreleri adım adım izle' : 'Oynat (Boşluk)' }, '▶');
@@ -106,10 +122,10 @@ export function createModuleView(reducedMotion: boolean): ModuleView {
         presets.append(h('button', { type: 'button', class: 'tool-btn', 'data-preset': id, onclick: () => handlers.preset(id) }, label));
       }
       let labelsOn = true;
-      const labelsBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-pressed': 'true', onclick: () => { labelsOn = !labelsOn; labelsBtn.setAttribute('aria-pressed', String(labelsOn)); handlers.labels(labelsOn); } }, 'Etiketler');
-      const shotBtn = h('button', { type: 'button', class: 'tool-btn', onclick: handlers.screenshot }, 'Ekran görüntüsü');
-      const helpBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-expanded': 'false', 'aria-controls': 'shortcut-help', 'data-help': '' }, 'Kısayollar (?)');
-      const drawerBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-expanded': 'false', 'aria-controls': 'module-drawer', 'data-drawer': '' }, 'Sorular ve notlar');
+      const labelsBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-pressed': 'true', 'aria-label': 'Etiketler', title: 'Etiketler', onclick: () => { labelsOn = !labelsOn; labelsBtn.setAttribute('aria-pressed', String(labelsOn)); handlers.labels(labelsOn); } }, icon('tag'), h('span', { class: 'lbl' }, 'Etiketler'));
+      const shotBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-label': 'Ekran görüntüsü', title: 'Ekran görüntüsü', onclick: handlers.screenshot }, icon('camera'), h('span', { class: 'lbl' }, 'Ekran görüntüsü'));
+      const helpBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-expanded': 'false', 'aria-controls': 'shortcut-help', 'data-help': '', 'aria-label': 'Kısayollar (?)', title: 'Klavye kısayolları (?)' }, icon('info'), h('span', { class: 'lbl' }, 'Kısayollar (?)'));
+      const drawerBtn = h('button', { type: 'button', class: 'tool-btn', 'aria-expanded': 'false', 'aria-controls': 'module-drawer', 'data-drawer': '', 'aria-label': 'Sorular ve notlar', title: 'Sorular ve notlar' }, icon('books'), h('span', { class: 'lbl' }, 'Sorular ve notlar'));
       const tools = h('div', { class: 'module-tools floating' }, presets, labelsBtn, shotBtn, helpBtn, drawerBtn);
       const help = h('div', { class: 'help-sheet', id: 'shortcut-help', role: 'dialog', 'aria-label': 'Klavye kısayolları' }, h('h3', {}, 'Klavye kısayolları'), h('dl', { class: 'keys' }, ...SHORTCUTS.flatMap(([k, d]) => [h('dt', {}, h('kbd', {}, k)), h('dd', {}, d)])));
       help.hidden = true;
@@ -130,15 +146,16 @@ export function createModuleView(reducedMotion: boolean): ModuleView {
       const chartToggle = h('button', { type: 'button', class: 'tool-btn chart-toggle', 'aria-expanded': 'true', 'data-charts': '' }, 'Grafikler');
       const chartTray = h('div', { class: 'chart-tray' }, chartToggle, charts.el);
       chartTray.hidden = charts.el.childElementCount === 0;
-      if (window.innerWidth <= 1500) {
-        chartToggle.setAttribute('aria-expanded', 'false');
-        chartTray.classList.add('collapsed');
-      }
-      chartToggle.addEventListener('click', () => {
-        const open = chartToggle.getAttribute('aria-expanded') !== 'true';
+
+      let chartTouched = false;
+      const setCharts = (open: boolean): void => {
         chartToggle.setAttribute('aria-expanded', String(open));
         chartTray.classList.toggle('collapsed', !open);
         measure();
+      };
+      chartToggle.addEventListener('click', () => {
+        chartTouched = true;
+        setCharts(chartToggle.getAttribute('aria-expanded') !== 'true');
       });
       const prompts = createPromptPanel(session);
 
@@ -172,16 +189,34 @@ export function createModuleView(reducedMotion: boolean): ModuleView {
         measureQueued = false;
         const w = wrap.getBoundingClientRect();
         if (w.width < 10) return;
-        const cover = (el: HTMLElement): DOMRect | null => (el.hidden || el.closest('[hidden]') ? null : el.getBoundingClientRect());
-        const pc = cover(phaseCard);
-        const ct = cover(chartTray);
-        const dk = cover(dock);
-        const tl = cover(tools);
-        const left = pc ? Math.max(0, pc.right - w.left - 10) : 0;
-        const right = ct ? Math.max(0, w.right - ct.left - 10) : 0;
-        const bottom = dk ? Math.max(0, w.bottom - dk.top - 8) : 0;
-        const top = tl ? Math.max(0, tl.bottom - w.top - 8) : 0;
-        handlers.safeArea?.({ left: Math.min(left, w.width * 0.4), right: Math.min(right, w.width * 0.4), top, bottom });
+        // Compact mode for narrow or short stages (1366x768 and below).
+        const compact = w.width < 1450 || w.height < 740;
+        if (root.classList.contains('compact') !== compact) {
+          root.classList.toggle('compact', compact);
+          if (compact && !chartTouched) setCharts(false);
+          if (!compact && !chartTouched) setCharts(true);
+          if (!compact) {
+            optionBar.classList.remove('open');
+            optionsBtn.setAttribute('aria-expanded', 'false');
+          }
+        }
+        // Every visible panel is an obstacle: wide ones block the top or bottom, tall ones the left or right side.
+        const ins = { left: 0, right: 0, top: 0, bottom: 0 };
+        for (const el of [head, tools, phaseCard, chartTray, dock, optionBar.classList.contains('open') ? optionBar : null]) {
+          if (!el || el.hidden || el.closest('[hidden]')) continue;
+          const r = el.getBoundingClientRect();
+          if (r.width < 4 || r.height < 4) continue;
+          const cx = (r.left + r.right) / 2 - w.left;
+          const cy = (r.top + r.bottom) / 2 - w.top;
+          const vertical = r.width > w.width * 0.5 || r.height < w.height * 0.16 || r.top - w.top < 90 || w.bottom - r.bottom < 60;
+          if (vertical) {
+            // Only panels that sit across the middle of the picture matter for the vertical split.
+            if (cy < w.height / 2) ins.top = Math.max(ins.top, r.bottom - w.top + 6);
+            else ins.bottom = Math.max(ins.bottom, w.bottom - r.top + 6);
+          } else if (cx < w.width / 2) ins.left = Math.max(ins.left, r.right - w.left + 8);
+          else ins.right = Math.max(ins.right, w.right - r.left + 8);
+        }
+        handlers.safeArea?.({ left: Math.min(ins.left, w.width * 0.4), right: Math.min(ins.right, w.width * 0.4), top: Math.min(ins.top, w.height * 0.4), bottom: Math.min(ins.bottom, w.height * 0.4) });
       };
       const measure = (): void => {
         if (measureQueued) return;
@@ -201,6 +236,7 @@ export function createModuleView(reducedMotion: boolean): ModuleView {
         const phase = session.currentPhase;
         slider.setAttribute('aria-valuetext', `${phase?.nameTr ?? ''}, ${fmt(t)} / ${fmt(track.duration)}`);
         time.textContent = `${fmt(t)} / ${fmt(track.duration)}`;
+        root.classList.toggle('is-playing', player.playing);
         playBtn.textContent = player.playing ? '⏸' : '▶';
         playBtn.setAttribute('aria-label', player.playing ? 'Duraklat' : 'Oynat');
         loopBtn.setAttribute('aria-pressed', String(player.loop));

@@ -19,9 +19,17 @@ export function createSettingsMenu(ctx: UiContext): Component {
     radios.set(option.mode, input);
     group.append(h('label', { class: 'settings-option', for: `q-${option.mode}` }, input, h('span', {}, h('b', {}, option.label), h('small', {}, option.hint))));
   }
+  const qGroup = h('fieldset', { class: 'settings-group', 'data-setting': 'questions' }, h('legend', {}, 'Sorular'));
+  const qRadios = new Map<boolean, HTMLInputElement>();
+  for (const [on, label, hint] of [[true, 'Açık', 'Animasyon sorularda durur'], [false, 'Kapalı', 'Animasyon hiç durmaz; sorulara listeden ulaşırsın']] as const) {
+    const input = h('input', { type: 'radio', name: 'questions-mode', value: on ? '1' : '0', id: `s-${on ? 'on' : 'off'}` });
+    input.addEventListener('change', () => ctx.actions.setQuestions(on));
+    qRadios.set(on, input);
+    qGroup.append(h('label', { class: 'settings-option', for: input.id }, input, h('span', {}, h('b', {}, label), h('small', {}, hint))));
+  }
   const note = h('p', { class: 'settings-note' }, 'Adres satırındaki quality= değeri bu seçimi geçersiz kılar.');
   note.hidden = !ctx.qualityLocked;
-  const popover = h('div', { class: 'settings-popover', id: 'settings-popover', role: 'group', 'aria-label': 'Ayarlar' }, group, note);
+  const popover = h('div', { class: 'settings-popover', id: 'settings-popover', role: 'group', 'aria-label': 'Ayarlar' }, group, qGroup, note);
   popover.hidden = true;
   const button = h('button', { class: 'nav-link settings-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'settings-popover' }, icon('gear'), 'Ayarlar');
   const el = h('div', { class: 'settings' }, button, popover);
@@ -46,6 +54,7 @@ export function createSettingsMenu(ctx: UiContext): Component {
   return {
     el,
     update(state: AppState): void {
+      for (const [on, input] of qRadios) input.checked = state.questionsOn === on;
       for (const [mode, input] of radios) {
         input.checked = state.qualityMode === mode;
         input.disabled = ctx.qualityLocked;

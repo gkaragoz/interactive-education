@@ -1,0 +1,66 @@
+{
+  "generated": "2026-10-23T22:31:30.418Z",
+  "gpu": "ANGLE (NVIDIA, NVIDIA GeForce GTX 1080 Ti (0x00001B06) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "viewport": "1600x900",
+  "level": "ileri",
+  "secondsPerTrack": 3,
+  "errors": [],
+  "results": [
+    {
+      "module": "energy",
+      "track": "fotosentez",
+      "quality": "medium",
+      "frames": 180,
+      "medianMs": 1.3,
+      "p95Ms": 1.8,
+      "p99Ms": 2.6,
+      "maxMs": 2.6,
+      "intervalMedianMs": 16.7,
+      "fps": 59.9,
+      "prewarmMs": 1698,
+      "coldFirstFrameMs": 2.4
+    },
+    {
+      "module": "energy",
+      "track": "hucresel-solunum",
+      "quality": "medium",
+      "frames": 182,
+      "medianMs": 1.2,
+      "p95Ms": 1.5,
+      "p99Ms": 1.8,
+      "maxMs": 2.5,
+      "intervalMedianMs": 16.6,
+      "fps": 60.2,
+      "prewarmMs": 798.6,
+      "coldFirstFrameMs": null
+    },
+    {
+      "module": "energy",
+      "track": "fermantasyon",
+      "quality": "medium",
+      "frames": 176,
+      "medianMs": 1.1,
+      "p95Ms": 1.5,
+      "p99Ms": 2,
+      "maxMs": 2.6,
+      "intervalMedianMs": 16.8,
+      "fps": 59.5,
+      "prewarmMs": 467.5,
+      "coldFirstFrameMs": null
+    },
+    {
+      "module": "energy",
+      "track": "kemosentez",
+      "quality": "medium",
+      "frames": 180,
+      "medianMs": 1.2,
+      "p95Ms": 1.5,
+      "p99Ms": 1.8,
+      "maxMs": 1.9,
+      "intervalMedianMs": 16.7,
+      "fps": 59.9,
+      "prewarmMs": 127,
+      "coldFirstFrameMs": null
+    }
+  ]
+}

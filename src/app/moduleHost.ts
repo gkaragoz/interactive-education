@@ -23,6 +23,7 @@ export class ModuleHost {
   private token = 0;
   private unsubscribe: (() => void) | null = null;
   private key = '';
+  private questionsOn = true;
 
   constructor(private readonly deps: ModuleHostDeps) {}
 
@@ -43,6 +44,8 @@ export class ModuleHost {
     const session = new ModuleSession(info, trackId ?? carry?.track ?? '', level, this.deps.reducedMotion);
     const stage = new ModuleStage({ container: view.viewport, quality: this.deps.quality(), reducedMotion: this.deps.reducedMotion });
     const assets = new ModuleAssets(this.deps.baseUrl, this.deps.quality(), stage.normalMap, new Plane(new Vector3(0, -1, 0), 1e5), () => this.deps.toast('Bazı modeller yüklenemedi; basit şekiller gösteriliyor.'));
+    assets.enableTextures(stage.renderer, () => stage.requestRender());
+    assets.moduleTextures = new URLSearchParams(location.search).has('moduletex');
     const options = Object.fromEntries(info.options.map((o) => [o.id, o.defaultChoice]));
     const ctx: ModuleContext = { assets, quality: this.deps.quality(), level, reducedMotion: this.deps.reducedMotion, trackId: session.track.id, options, rng: seededRng };
     let scene: ModuleScene;
@@ -60,6 +63,7 @@ export class ModuleHost {
       assets.dispose();
       return;
     }
+    session.setQuestionsEnabled(this.questionsOn);
     this.session = session;
     this.stage = stage;
     this.assets = assets;
@@ -99,11 +103,23 @@ export class ModuleHost {
         });
       },
     });
+    view.setQuestions(this.questionsOn);
+    if (!new URLSearchParams(location.search).has('noprewarm')) {
+      await stage.prewarm(session.track.duration);
+      if (token !== this.token) return;
+    }
     if (carry && carry.track === session.track.id) session.player.seek(Math.min(carry.time, session.track.duration));
     view.setLoading(null);
     stage.setTime(session.player.time);
     if (carry?.playing && carry.track === session.track.id) session.player.play();
     document.body.dataset.moduleReady = info.id;
+  }
+
+  /** Sorular setting: applies to the open module at once and to every module opened later. */
+  setQuestions(on: boolean): void {
+    this.questionsOn = on;
+    this.session?.setQuestionsEnabled(on);
+    this.deps.view.setQuestions(on);
   }
 
   close(): void {

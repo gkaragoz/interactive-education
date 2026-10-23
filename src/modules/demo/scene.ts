@@ -17,7 +17,7 @@ export async function createDemoScene(ctx: ModuleContext): Promise<ModuleScene> 
   let shown = Number(ctx.options.sayi ?? 2) || 2;
   const root = new Group();
   // `mitochondrion` has no module file: the framework substitutes its capsule placeholder, which is what this needs.
-  const set: InstanceSet = await ctx.assets.instances('mitochondrion', 4, '#c05a8a');
+  const set: InstanceSet = await ctx.assets.organelleInstances('mitochondrion', 4, '#c05a8a');
   root.add(set.group);
   const q = new Quaternion();
   const m = new Matrix4();
