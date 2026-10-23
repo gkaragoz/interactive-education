@@ -9,3 +9,6 @@
 
 ## v0.2.1
 - Rendered card stills for every module (fixes 404s for missing thumbnails on the home page); `tools/thumbs.mjs` waits for the module session.
+
+## v0.3.0
+- Module Zardan madde geçişi: difüzyon, kolaylaştırılmış difüzyon, osmoz, aktif taşıma, endositoz ve ekzositoz.
