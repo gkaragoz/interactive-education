@@ -1,0 +1,177 @@
+{
+  "id": "h2-molecule",
+  "tris": {
+    "LOD0": 4866,
+    "LOD1": 912,
+    "LOD2": 420
+  },
+  "bboxMin": [
+    -0.97,
+    -0.42,
+    -0.42
+  ],
+  "bboxMax": [
+    0.97,
+    0.42,
+    0.42
+  ],
+  "boundsRadius": 0.97,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 130064,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9826,
+        0.9923
+      ],
+      "coverage": 0.7076,
+      "overlap": 0,
+      "stretchP95": 1.034,
+      "stretchP05": 0.95,
+      "uvPerUnit": 0.38932
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 30769
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 20128
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 16079
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 111749
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 89393
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 58848
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 391955
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 372244
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 202521
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.7,
+    "paintSeconds": 1.2,
+    "totalSeconds": 4.2
+  },
+  "pivot": "molecule centre (centre of mass side: oxygen / carbon / mid-bond)",
+  "axes": "H-H along X (distance 1.1), centre at the origin; parts hydrogen, bonds; ball-and-stick, element colours painted (not tinted), 1 unit = 1 particle-lens unit",
+  "units": "1 = particle-lens unit",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/h2-molecule/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 16205,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5193,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6931,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4081,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 57607,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17614,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 28278,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 11715,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 211120,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 58446,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 120167,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 32507,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "id": "waste-container",
+  "tris": {
+    "LOD0": 4562,
+    "LOD1": 1110,
+    "LOD2": 606
+  },
+  "bboxMin": [
+    -9.2,
+    0,
+    -9.1818
+  ],
+  "bboxMax": [
+    9.2,
+    29.0362,
+    9.1818
+  ],
+  "boundsRadius": 29.0365,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 116456,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9809,
+        0.9962
+      ],
+      "coverage": 0.6378,
+      "overlap": 0,
+      "stretchP95": 1.362,
+      "stretchP05": 0.863,
+      "uvPerUnit": 0.01301
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 82992
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 39039
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 47965
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 319377
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 196001
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 169293
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1219542
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 831124
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 570914
+          }
+        }
+      }
+    },
+    "bakeSeconds": 5.9,
+    "paintSeconds": 4.9,
+    "totalSeconds": 11.8
+  },
+  "pivot": "centre of the base on y = 0",
+  "axes": "Y up, diameter 18 cm, height 28 cm incl. funnel neck and carrying handle; neutral light body, lid and label ring: tint them per waste class (acid/base, heavy metal, solid)",
+  "units": "1 = 1 cm",
+  "tintable": true,
+  "tintParts": [
+    "body",
+    "lid",
+    "label"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/waste-container/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 61328,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16093,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 34368,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 10867,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 209629,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 55042,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 122721,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 31866,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 704403,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 151824,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 457496,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 95083,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

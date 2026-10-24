@@ -1,5 +1,5 @@
 import type { LevelId } from '../data/types';
-import type { ModuleDefinition } from '../scene';
+import type { ModuleDefinition, SimDefinition } from '../scene';
 import { demoDefinition, DEMO_ID } from './demo';
 import { ALL_ENTRIES } from './entries';
 import { RELEASED_IDS } from './releases';
@@ -13,6 +13,8 @@ export interface RegistryEntry {
   levels: LevelId[];
   /** `null` for the cell explorer, which has its own screen; animated modules are lazy definitions. */
   definition: ModuleDefinition | null;
+  /** Interactive sim modules (docs/SIMS.md) have a `sim` definition instead of a timeline `definition`. */
+  sim?: SimDefinition;
 }
 
 export interface UpcomingModule {

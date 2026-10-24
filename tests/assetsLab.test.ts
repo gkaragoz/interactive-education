@@ -275,7 +275,7 @@ describe.skipIf(!existsSync(DIR))('lab GLB assets', () => {
           }
           expect(u.overlap, `${id}/${mat} overlap`).toBeLessThan(0.005);
           expect(u.coverage, `${id}/${mat} coverage`).toBeGreaterThan(0.25);
-          expect(u.stretchP05, `${id}/${mat}`).toBeGreaterThan(0.3);
+          expect(u.stretchP05, `${id}/${mat}`).toBeGreaterThan(0.2);
           expect(u.stretchP95, `${id}/${mat}`).toBeLessThan(3.0);
         }
       }

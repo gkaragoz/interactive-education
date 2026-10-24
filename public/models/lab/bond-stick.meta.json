@@ -1,0 +1,181 @@
+{
+  "id": "bond-stick",
+  "tris": {
+    "LOD0": 4896,
+    "LOD1": 1156,
+    "LOD2": 624
+  },
+  "bboxMin": [
+    -0.12,
+    -0.5,
+    -0.12
+  ],
+  "bboxMax": [
+    0.12,
+    0.5,
+    0.12
+  ],
+  "boundsRadius": 0.5049,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 102956,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0157,
+        0.0157
+      ],
+      "uvMax": [
+        0.9844,
+        0.6269
+      ],
+      "coverage": 0.5574,
+      "overlap": 0,
+      "stretchP95": 1.067,
+      "stretchP05": 0.998,
+      "uvPerUnit": 0.81218
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 64,
+            "pngBytes": 6101
+          },
+          "normal": {
+            "size": 64,
+            "pngBytes": 3485
+          },
+          "orm": {
+            "size": 64,
+            "pngBytes": 1919
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 23045
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 14696
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 6006
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 80532
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 58824
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 18656
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 0.3,
+    "totalSeconds": 1.8
+  },
+  "pivot": "centre of the stick",
+  "axes": "Y along the stick: length 1, radius 0.12 (scale Y to the bond length, X/Z to the thickness); neutral light albedo, tint per bond",
+  "units": "1 = stick length",
+  "tintable": true,
+  "tintParts": [
+    "stick"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/bond-stick/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 4999,
+        "size": 64,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 64,
+            "bytes": 1695,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 64,
+            "bytes": 2147,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 64,
+            "bytes": 1157,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 13862,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4283,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7484,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2095,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 46094,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 13030,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 28765,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 4299,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

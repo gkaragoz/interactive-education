@@ -1,0 +1,177 @@
+{
+  "id": "magnetic-stir-bar",
+  "tris": {
+    "LOD0": 5074,
+    "LOD1": 1134,
+    "LOD2": 600
+  },
+  "bboxMin": [
+    -1.6,
+    -0.5328,
+    -0.5339
+  ],
+  "bboxMax": [
+    1.6,
+    0.5342,
+    0.5339
+  ],
+  "boundsRadius": 1.6,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 109588,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0157,
+        0.0157
+      ],
+      "uvMax": [
+        0.9844,
+        0.9049
+      ],
+      "coverage": 0.7929,
+      "overlap": 0,
+      "stretchP95": 1.885,
+      "stretchP05": 0.943,
+      "uvPerUnit": 0.2609
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 64,
+            "pngBytes": 7716
+          },
+          "normal": {
+            "size": 64,
+            "pngBytes": 4604
+          },
+          "orm": {
+            "size": 64,
+            "pngBytes": 4432
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 28255
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 20460
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 15609
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 98498
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 86140
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 52845
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 0.3,
+    "totalSeconds": 1.8
+  },
+  "pivot": "centre of the bar",
+  "axes": "X along the bar (length 32 mm, diameter 9 mm) with the pivot ring in the middle",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/magnetic-stir-bar/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 6040,
+        "size": 64,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 64,
+            "bytes": 1913,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 64,
+            "bytes": 2504,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 64,
+            "bytes": 1623,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 16183,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5182,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7100,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3901,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 56465,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17723,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27904,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 10838,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

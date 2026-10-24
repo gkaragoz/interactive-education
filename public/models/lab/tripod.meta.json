@@ -1,0 +1,178 @@
+{
+  "id": "tripod",
+  "tris": {
+    "LOD0": 5060,
+    "LOD1": 1250,
+    "LOD2": 516
+  },
+  "bboxMin": [
+    -7.4683,
+    0.103,
+    -8.6827
+  ],
+  "bboxMax": [
+    7.6664,
+    19.85,
+    5.8447
+  ],
+  "boundsRadius": 20.5979,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 139496,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.9797
+      ],
+      "coverage": 0.8072,
+      "overlap": 0,
+      "stretchP95": 2.057,
+      "stretchP05": 0.803,
+      "uvPerUnit": 0.06661
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 72116
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 98073
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 43929
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 286386
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 404434
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 151731
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1059686
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1672470
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 487832
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.1,
+    "paintSeconds": 5.6,
+    "totalSeconds": 8.7
+  },
+  "pivot": "centre of the three feet on y = 0",
+  "axes": "Y up, height 20 cm, support ring radius 5.5 at y = 19.5 (the wire gauze lies on it)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "ringY": 19.85,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/tripod/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 55289,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 10999,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 35973,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 8317,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 215751,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 34727,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 156123,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 24901,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 833996,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 118241,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 638876,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 76879,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

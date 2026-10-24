@@ -8,7 +8,7 @@ from shapes import res, part, blob
 
 META = {}
 TEXTURE_SIZES = {}
-STEEL, DSTEEL, BLACK, WOOD = "#bcc5ce", "#6a737d", "#2f3338", "#b98a52"
+STEEL, DSTEEL, BLACK, WOOD = "#97a3b0", "#6a737d", "#2f3338", "#b98a52"
 NEUTRAL_L = "#ece9df"
 
 

@@ -1,0 +1,186 @@
+{
+  "id": "lighter",
+  "tris": {
+    "LOD0": 6938,
+    "LOD1": 1504,
+    "LOD2": 726
+  },
+  "bboxMin": [
+    -1.3,
+    0,
+    -0.65
+  ],
+  "bboxMax": [
+    1.3,
+    8.975,
+    0.9
+  ],
+  "boundsRadius": 9.0058,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 192612,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9574
+      ],
+      "coverage": 0.5723,
+      "overlap": 0,
+      "stretchP95": 1.357,
+      "stretchP05": 0.868,
+      "uvPerUnit": 0.09125
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 28603
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 14856
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 15311
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 101726
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 65547
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 52159
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 349043
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 267761
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 171810
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.1,
+    "paintSeconds": 1.1,
+    "totalSeconds": 5.4
+  },
+  "pivot": "centre of the base on y = 0",
+  "axes": "Y up, 25 x 64 x 12 mm body (neutral light, tint it) with a steel head; flame nozzle at (-0.6, 8.9, 0)",
+  "units": "1 = 1 cm",
+  "tintable": true,
+  "tintParts": [
+    "body"
+  ],
+  "neutralAlbedo": true,
+  "flameMount": [
+    -0.6,
+    8.9,
+    0
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/lighter/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 17800,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5139,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 8544,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4117,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 59724,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16402,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 32624,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 10698,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 215438,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 52828,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 133882,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 28728,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

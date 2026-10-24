@@ -1,0 +1,180 @@
+{
+  "id": "electron-dot",
+  "tris": {
+    "LOD0": 5808,
+    "LOD1": 1452,
+    "LOD2": 768
+  },
+  "bboxMin": [
+    -1,
+    -1,
+    -1
+  ],
+  "bboxMax": [
+    1,
+    1,
+    1
+  ],
+  "boundsRadius": 1,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 156504,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0157,
+        0.0157
+      ],
+      "uvMax": [
+        0.9844,
+        0.6511
+      ],
+      "coverage": 0.5478,
+      "overlap": 0,
+      "stretchP95": 1.023,
+      "stretchP05": 0.964,
+      "uvPerUnit": 0.21181
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 64,
+            "pngBytes": 4991
+          },
+          "normal": {
+            "size": 64,
+            "pngBytes": 2374
+          },
+          "orm": {
+            "size": 64,
+            "pngBytes": 2749
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 18451
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 11569
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 9808
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 67143
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 47883
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 33376
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.2,
+    "paintSeconds": 0.2,
+    "totalSeconds": 1.5
+  },
+  "pivot": "sphere centre",
+  "axes": "unit sphere (radius 1) painted warm yellow: scale it (radius ~0.12 in the particle lens), may be tinted",
+  "units": "1 = radius",
+  "tintable": true,
+  "tintParts": [
+    "dot"
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/electron-dot/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 5978,
+        "size": 64,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 64,
+            "bytes": 1704,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 64,
+            "bytes": 2818,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 64,
+            "bytes": 1456,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 17202,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4425,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 9288,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3489,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 54085,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 14338,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 31439,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 8308,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

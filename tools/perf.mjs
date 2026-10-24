@@ -4,6 +4,7 @@
 // gl.finish-synchronised timing (the stage's draw call is wrapped: render + gl.finish, so GPU time counts). It reports
 // the median, p95 and p99 frame cost in ms, the achieved frame interval, the first-frame compile time (`prewarmMs`, the
 // shader pre-warm behind the loading screen) and, once per module, the cold first frame without pre-warm (?noprewarm).
+// The chemistry lab is included (experiments first and last, `--lab=none` to skip, `--lab=a,b` for others).
 // Run it on a QUIET machine (no other GPU or CPU heavy programs), see docs/PERF.md.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
@@ -72,7 +73,46 @@ const MEASURE = `(async (secs) => {
 // Without pre-warm the first frames of playback pay for shader compiles: report the worst of the first 20 draws.
 const COLD = `(async () => { const host = window.__bilimModules, s = host.stage, gl = s.renderer.getContext(); const cost = []; const orig = s.draw.bind(s); s.draw = () => { const a = performance.now(); orig(); gl.finish(); cost.push(performance.now() - a); }; host.session.player.seek(0); host.session.player.play(); await new Promise((r) => setTimeout(r, 1500)); host.session.player.pause(); s.draw = orig; return Math.max(...cost.slice(0, 20)); })()`;
 
+// The chemistry lab (a sim, not a timeline): the reference solution of an experiment runs through the engine, then the
+// sim plays at 1x. Default: the first and the last experiment (E1 and E10); `--lab=none` skips it.
+const labArg = arg('lab', 'first,last');
+const LAB_MEASURE = `(async (secs) => {
+  const host = window.__bilimSim, st = host.simStage, stage = st.stage, gl = stage.renderer.getContext();
+  const cost = [], gaps = [];
+  let last = 0;
+  const orig = stage.draw.bind(stage);
+  stage.draw = () => { const a = performance.now(); orig(); gl.finish(); const b = performance.now(); cost.push(b - a); if (last) gaps.push(b - last); last = b; };
+  st.clock.paused = false; st.setSpeed(1);
+  host.runSolution();
+  await new Promise((r) => setTimeout(r, secs * 1000));
+  stage.draw = orig;
+  return { cost, gaps, prewarmMs: stage.prewarmMs };
+})`;
+async function openLab(slug, quality) {
+  await page.goto(`${base}?demo&level=${level}&quality=${quality}#/modul/chem-lab/${slug}`);
+  await page.reload();
+  await page.waitForFunction(() => document.body.dataset.moduleReady === 'chem-lab', null, { timeout: 180000 });
+}
 const results = [];
+if (labArg !== 'none' && (only.length === 0 || only.includes('chem-lab'))) {
+  await openLab('', qualities[0]);
+  const ids = await page.evaluate(() => window.__bilimSim.experimentIds());
+  const wanted = labArg.split(',').map((w) => (w === 'first' ? ids[0] : w === 'last' ? ids[ids.length - 1] : w)).filter(Boolean);
+  for (const quality of qualities) {
+    for (const exp of wanted) {
+      await openLab(exp, quality);
+      const data = await page.evaluate(`${LAB_MEASURE}(${secs})`);
+      const row = {
+        module: 'chem-lab', track: exp, quality, frames: data.cost.length,
+        medianMs: r1(pct(data.cost, 50)), p95Ms: r1(pct(data.cost, 95)), p99Ms: r1(pct(data.cost, 99)), maxMs: r1(Math.max(0, ...data.cost)),
+        intervalMedianMs: r1(pct(data.gaps, 50)), fps: r1(1000 / Math.max(pct(data.gaps, 50), 0.01)),
+        prewarmMs: r1(data.prewarmMs), coldFirstFrameMs: null,
+      };
+      results.push(row);
+      console.log(`chem-lab/${exp} ${quality}: median ${row.medianMs} ms, p95 ${row.p95Ms}, p99 ${row.p99Ms}, ${row.fps} fps, prewarm ${row.prewarmMs} ms`);
+    }
+  }
+}
 for (const id of ALL.filter((i) => only.length === 0 || only.includes(i))) {
   for (const quality of qualities) {
     await openModule(id, '', quality);

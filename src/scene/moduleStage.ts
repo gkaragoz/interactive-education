@@ -1,9 +1,10 @@
 import { ACESFilmicToneMapping, Box3, PerspectiveCamera, Scene, SRGBColorSpace, Sphere, Vector3, WebGLRenderer, type Texture } from 'three';
 import { QUALITY_PRESETS, type QualityName } from '../core';
-import { CameraRig } from './cameraRig';
+import { CameraRig, FOV } from './cameraRig';
 import { createEnvironmentTexture, createStudioLights, type StudioLights } from './environment';
 import { LabelLayer, type LabelAnchor } from './labels';
-import type { ModuleScene } from './moduleScene';
+import type { ModuleScene, Vec3 } from './moduleScene';
+import { applyFramingLimits, type StageFraming } from './stageFraming';
 import { createMicroNormalTexture } from './normalMap';
 import { Pipeline } from './pipeline';
 
@@ -48,6 +49,7 @@ export class ModuleStage {
   private disposed = false;
   private labelsOn = true;
   private lost = false;
+  private framing: StageFraming | null = null;
 
   constructor(private readonly opts: ModuleStageOptions) {
     this.level = opts.quality;
@@ -101,24 +103,82 @@ export class ModuleStage {
       this.scene.remove(this.moduleScene.root);
       this.moduleScene.dispose();
     }
-    this.moduleScene = moduleScene;
-    this.scene.add(moduleScene.root);
-    moduleScene.seek(0);
-    moduleScene.root.updateMatrixWorld(true);
-    const sphere = new Box3().setFromObject(moduleScene.root).getBoundingSphere(new Sphere());
-    this.center.copy(sphere.center);
-    this.presetsRadius = Math.max(sphere.radius, 1);
-    this.lights.fit(this.presetsRadius);
-    this.fit(true);
+    this.install(moduleScene);
+  }
+
+  /**
+   * Replaces the scene without disposing the old one and returns it (a sim stage swaps between the bench and a particle
+   * explainer and keeps both alive). The caller owns disposal of what it gets back.
+   */
+  swapScene(next: ModuleScene): ModuleScene | null {
+    const previous = this.moduleScene;
+    if (previous) this.scene.remove(previous.root);
+    this.install(next);
+    return previous;
+  }
+
+  private install(next: ModuleScene): void {
+    this.moduleScene = next;
+    this.scene.add(next.root);
+    next.seek(0);
+    this.refit(true);
     this.time = 0;
     this.manualCamera = false;
     this.applyCameraPath();
     this.requestRender();
   }
 
+  /** Re-frames the camera and lights around the scene's current bounds (a sim that added vessels calls this). */
+  refit(snap = false): void {
+    const scene = this.moduleScene;
+    if (!scene) return;
+    if (this.framing) {
+      this.setFraming(this.framing, snap);
+      return;
+    }
+    scene.root.updateMatrixWorld(true);
+    const sphere = new Box3().setFromObject(scene.root).getBoundingSphere(new Sphere());
+    this.center.copy(sphere.center);
+    this.presetsRadius = Math.max(sphere.radius, 1);
+    this.lights.fit(this.presetsRadius);
+    this.fit(snap);
+    if (snap) this.requestRender();
+  }
+
   private fit(snap: boolean): void {
-    this.rig.setHome(this.presetsRadius, this.presetsRadius, this.width / this.height, snap);
-    if (snap) this.rig.controls.target.copy(this.center);
+    const f = this.framing;
+    this.rig.setHome(f?.halfWidth ?? this.presetsRadius, f?.halfHeight ?? this.presetsRadius, this.width / this.height, snap);
+    if (f) applyFramingLimits(this.rig.controls, f);
+    if (snap) {
+      this.rig.controls.target.copy(f?.target ? new Vector3(...f.target) : this.center);
+      // a framed scene may sit away from the origin: put the camera on the default view direction around the target
+      if (f) this.rig.camera.position.copy(this.rig.controls.target).addScaledVector(CameraRig.HOME, this.rig.homeDistance);
+      this.rig.controls.update();
+    }
+  }
+
+  /** Sets (or clears, with null) explicit framing and camera limits and re-frames the camera. */
+  setFraming(framing: StageFraming | null, snap = true): void {
+    this.framing = framing;
+    if (framing) {
+      this.center.set(...framing.center);
+      this.presetsRadius = Math.max(framing.radius, 1);
+      this.lights.fit(this.presetsRadius);
+      this.fit(snap);
+    } else {
+      this.refit(snap);
+    }
+    this.requestRender();
+  }
+
+  /** Flies the camera to look at `center` from the current direction, so that `radius` fills about 55 % of the view height. */
+  focusOn(center: Vec3, radius: number): void {
+    const c = new Vector3(...center);
+    const dir = this.rig.camera.position.clone().sub(this.rig.controls.target).normalize();
+    const distance = Math.max((radius * 1.8) / Math.sin((FOV * Math.PI) / 360), this.rig.controls.minDistance * 1.2);
+    this.manualCamera = true;
+    this.rig.flyToPose(c.clone().addScaledVector(dir, distance), c);
+    this.requestRender();
   }
 
   /** Poses the scene at `t` seconds (the only way a scene moves). */

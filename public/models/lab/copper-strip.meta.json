@@ -1,0 +1,177 @@
+{
+  "id": "copper-strip",
+  "tris": {
+    "LOD0": 5808,
+    "LOD1": 1452,
+    "LOD2": 768
+  },
+  "bboxMin": [
+    -0.6,
+    0,
+    -0.05
+  ],
+  "bboxMax": [
+    0.6,
+    7,
+    0.05
+  ],
+  "boundsRadius": 7.006,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 162884,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9807,
+        0.9923
+      ],
+      "coverage": 0.4776,
+      "overlap": 0,
+      "stretchP95": 1.361,
+      "stretchP05": 0.254,
+      "uvPerUnit": 0.16269
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 22388
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 15508
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 7329
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 85834
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 62909
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 21172
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 302857
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 239403
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 60575
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 1.3,
+    "totalSeconds": 3
+  },
+  "pivot": "centre of the bottom edge",
+  "axes": "Y along the strip: 12 x 70 x 1 mm",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/copper-strip/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 13893,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4154,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6952,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2787,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 46220,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 11969,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 28341,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 5910,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 163719,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 33371,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 117326,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 13022,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "tongs",
+  "tris": {
+    "LOD0": 6540,
+    "LOD1": 1586,
+    "LOD2": 822
+  },
+  "bboxMin": [
+    -12.7668,
+    -0.548,
+    -1.9591
+  ],
+  "bboxMax": [
+    13.0695,
+    0.548,
+    1.9669
+  ],
+  "boundsRadius": 13.0817,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 187156,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9615,
+        0.9923
+      ],
+      "coverage": 0.6075,
+      "overlap": 0,
+      "stretchP95": 1.67,
+      "stretchP05": 0.944,
+      "uvPerUnit": 0.07398
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 23656
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 20965
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 12321
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 89012
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 85663
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 40001
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 306597
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 344207
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 120376
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.9,
+    "paintSeconds": 1.2,
+    "totalSeconds": 4.3
+  },
+  "pivot": "the rivet where the two arms cross",
+  "axes": "X along the tongs (handles at -X, jaw tips at +X, length ~ 26 cm), arms in the XZ plane, Y up",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/tongs/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 16119,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4233,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 8610,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3276,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 58797,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 13858,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 36602,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 8337,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 216207,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 47367,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 146610,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 22230,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

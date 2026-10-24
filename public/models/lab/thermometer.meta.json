@@ -1,0 +1,299 @@
+{
+  "id": "thermometer",
+  "tris": {
+    "LOD0": 4298,
+    "LOD1": 940,
+    "LOD2": 512
+  },
+  "bboxMin": [
+    -0.5,
+    0,
+    -0.5
+  ],
+  "bboxMax": [
+    0.5,
+    22.9,
+    0.5
+  ],
+  "boundsRadius": 22.9,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 132524,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9356,
+        0.9923
+      ],
+      "coverage": 0.6022,
+      "overlap": 0,
+      "stretchP95": 1.603,
+      "stretchP05": 0.924,
+      "uvPerUnit": 0.11511
+    },
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9322,
+        0.9923
+      ],
+      "coverage": 0.574,
+      "overlap": 0,
+      "stretchP95": 1.076,
+      "stretchP05": 0.933,
+      "uvPerUnit": 0.23187
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 9366
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 6197
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 981
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 15900
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 19343
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 4968
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 36392
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 29714
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 1755
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 15900
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 19343
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 4968
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 163769
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 123982
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 4404
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 59487
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 73438
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 13366
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.6,
+    "paintSeconds": 2.1,
+    "totalSeconds": 5
+  },
+  "pivot": "centre of the bulb bottom on y = 0",
+  "axes": "Y up, length 232 mm, -10..110 C scale between y = 3.2 and y = 20 (painted ticks every 2 C, longer every 10 C); the mesh `column` is the red liquid thread (scale it in Y)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "parts": [
+    "glass",
+    "column"
+  ],
+  "column": {
+    "mesh": "column",
+    "axis": "Y",
+    "yMin": 0.5,
+    "yMax": 19.9,
+    "note": "red column: scale along Y; 110 C at y = 20, -10 C at y = 3.2"
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/thermometer/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 28007,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 2690,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 10131,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2125,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 128,
+            "bytes": 4036,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 128,
+            "bytes": 7469,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 128,
+            "bytes": 1556,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 58428,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 2690,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 10133,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2125,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 10102,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 31006,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 2372,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 201125,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 6638,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 37640,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 4201,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 25840,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 122975,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 3831,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

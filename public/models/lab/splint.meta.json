@@ -1,0 +1,178 @@
+{
+  "id": "splint",
+  "tris": {
+    "LOD0": 5808,
+    "LOD1": 1452,
+    "LOD2": 768
+  },
+  "bboxMin": [
+    -0.17,
+    0,
+    -0.17
+  ],
+  "bboxMax": [
+    0.17,
+    15,
+    0.17
+  ],
+  "boundsRadius": 15.0001,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 171904,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9477
+      ],
+      "coverage": 0.4792,
+      "overlap": 0,
+      "stretchP95": 1.359,
+      "stretchP05": 0.269,
+      "uvPerUnit": 0.15371
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 22995
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 17256
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 6385
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 84902
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 65375
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 17201
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 283515
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 247457
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 43943
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 1.3,
+    "totalSeconds": 2.9
+  },
+  "pivot": "centre of the bottom (hand) end",
+  "axes": "Y along the splint: 3.4 x 150 x 3.4 mm; charred / glowing tip painted at y 12.2..15 (the app may add a glow)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "tipY": 15,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/splint/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 15137,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5060,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7582,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2495,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 52343,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16111,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 31287,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 4945,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 188550,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 48664,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 129187,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 10699,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

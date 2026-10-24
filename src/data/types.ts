@@ -22,7 +22,7 @@ export interface Source {
 export interface Kazanim {
   id: string; // official code, e.g. 'FB.5.3.1'
   grade: number;
-  subject: 'fen-bilimleri' | 'biyoloji';
+  subject: 'fen-bilimleri' | 'biyoloji' | 'kimya';
   theme: string;
   summaryTr: string; // our paraphrase, not the official text
   sourceId: string;

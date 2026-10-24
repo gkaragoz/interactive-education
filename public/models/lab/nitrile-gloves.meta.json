@@ -1,0 +1,182 @@
+{
+  "id": "nitrile-gloves",
+  "tris": {
+    "LOD0": 6772,
+    "LOD1": 1684,
+    "LOD2": 924
+  },
+  "bboxMin": [
+    -12.7065,
+    -0.0027,
+    -3.9979
+  ],
+  "bboxMax": [
+    12.7065,
+    1.8146,
+    10.0599
+  ],
+  "boundsRadius": 13.2496,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 211848,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9372,
+        0.9923
+      ],
+      "coverage": 0.5993,
+      "overlap": 0,
+      "stretchP95": 1.518,
+      "stretchP05": 0.789,
+      "uvPerUnit": 0.03072
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 28239
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 7849
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 23773
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 106312
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 42154
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 88965
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 384111
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 194399
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 320115
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.6,
+    "paintSeconds": 1.2,
+    "totalSeconds": 4.2
+  },
+  "pivot": "midpoint between the two gloves on the table plane (y = 0)",
+  "axes": "gloves lie palm-down on XZ (fingers towards +Z, cuffs towards -Z), left at x = -5.8, right at x = +5.8; neutral light albedo: tint both parts",
+  "units": "1 = 1 cm",
+  "tintable": true,
+  "tintParts": [
+    "glove-l",
+    "glove-r"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/nitrile-gloves/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 18142,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5036,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 8153,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4953,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 71369,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17814,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 37956,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 15599,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 254242,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 60404,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 142617,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 51221,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

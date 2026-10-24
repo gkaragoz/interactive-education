@@ -52,7 +52,7 @@ describe('sources', () => {
 describe('kazanimlar', () => {
   it.each(kazanimlar.map((k) => [k.id, k] as const))('%s points at an existing source', (_id, k) => {
     expect(sourceIds.has(k.sourceId)).toBe(true);
-    expect(k.id).toMatch(/^(FB|BİY)\.\d+\.\d+\.\d+$/);
+    expect(k.id).toMatch(/^(FB|BİY|KİM)\.\d+\.\d+\.\d+$/);
   });
 });
 

@@ -1,0 +1,177 @@
+{
+  "id": "water-molecule",
+  "tris": {
+    "LOD0": 7380,
+    "LOD1": 1392,
+    "LOD2": 648
+  },
+  "bboxMin": [
+    -1.5861,
+    -1.3183,
+    -0.62
+  ],
+  "bboxMax": [
+    1.5861,
+    0.62,
+    0.62
+  ],
+  "boundsRadius": 1.9,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 195996,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9796
+      ],
+      "coverage": 0.6453,
+      "overlap": 0,
+      "stretchP95": 1.036,
+      "stretchP05": 0.949,
+      "uvPerUnit": 0.26654
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 29199
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 19890
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 15703
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 104640
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 87108
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 56564
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 373752
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 361183
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 197314
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.2,
+    "paintSeconds": 1.2,
+    "totalSeconds": 5.7
+  },
+  "pivot": "molecule centre (centre of mass side: oxygen / carbon / mid-bond)",
+  "axes": "bent molecule in the XY plane, H-O-H 104.5 degrees, O-H 1.5, oxygen at the origin; parts oxygen, hydrogen, bonds; ball-and-stick, element colours painted (not tinted), 1 unit = 1 particle-lens unit",
+  "units": "1 = particle-lens unit",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/water-molecule/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 16100,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5207,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6749,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4144,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 57750,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17071,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 28945,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 11734,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 210952,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 56378,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 121795,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 32779,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

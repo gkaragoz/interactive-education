@@ -268,7 +268,7 @@ def thermometer(q):
         temp = -10 + 2 * k
         ticks.append((3.2 + (temp + 10) / 120.0 * 16.8, temp % 10 == 0))
     spec = dict(streak=-2.7, tickphi=-1.57, tl=0.28, ticks=ticks, tw=0.016, tickcol=(0.55, 0.12, 0.12))
-    col = geo.tube(np.stack([np.zeros(res(12, q, 4)), np.linspace(0.5, 19.9, res(12, q, 4)), np.zeros(res(12, q, 4))], 1), 0.075, res(8, q, 4), cap=2)
+    col = cyl(0.075, 19.4, res(12, q, 5), rings=res(40, q, 3), y0=0.5, bevel=0.03)
     bulb = lc.sph(0.37, res(8, q, 3), (0, 0.5, 0))
     setmeta("thermometer", q, column=dict(mesh="column", axis="Y", yMin=0.5, yMax=19.9, note="red column: scale along Y; 110 C at y = 20, -10 C at y = 3.2"))
     return [glass_part("thermometer", "glass", gs, e, spec), clay("column", geo.merge(col, bulb), "#d3302a", tint=(0.55, 0.3, 0.3), ao=None)]

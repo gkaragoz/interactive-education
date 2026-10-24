@@ -1,0 +1,323 @@
+{
+  "id": "hofmann-voltameter",
+  "tris": {
+    "LOD0": 24268,
+    "LOD1": 5802,
+    "LOD2": 3176
+  },
+  "bboxMin": [
+    -11,
+    0,
+    -5.5
+  ],
+  "bboxMax": [
+    18.15,
+    46.1236,
+    5.5
+  ],
+  "boundsRadius": 46.2492,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 744392,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.9813
+      ],
+      "coverage": 0.701,
+      "overlap": 0,
+      "stretchP95": 1.742,
+      "stretchP05": 0.926,
+      "uvPerUnit": 0.01761
+    },
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9922,
+        0.9981
+      ],
+      "coverage": 0.6463,
+      "overlap": 0,
+      "stretchP95": 1.359,
+      "stretchP05": 0.615,
+      "uvPerUnit": 0.02216
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 199914
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 88929
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 7454
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 243155
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 215617
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 196677
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 860009
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 450263
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 15173
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 928739
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 908788
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 608522
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 3779108
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 1921365
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 39882
+          }
+        },
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 3467267
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 3735978
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 1779693
+          }
+        }
+      }
+    },
+    "bakeSeconds": 47.1,
+    "paintSeconds": 44,
+    "totalSeconds": 98.4
+  },
+  "pivot": "centre of the stand base on y = 0, x = 0 at the middle tube (the base spans x -11..17 to carry the battery)",
+  "axes": "Y up, tubes at x = -5 (cathode), 0 (reservoir), +5 (anode), height ~ 46 cm, front +Z; glass shell `glass` with 0.8 cm ticks on both side tubes; three liquid-volume meshes inner-left / inner-right / inner-centre (scale or clip along Y; electrolysis lowers the side levels); blue stopcocks `taps` at y = 43; platinum-like `electrodes` at y 5.4..10; battery pack at x = 14.4 with wires wire-neg (black, to the left electrode) and wire-pos (red, to the right electrode)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "parts": [
+    "glass",
+    "inner-left",
+    "inner-right",
+    "inner-centre",
+    "stand",
+    "taps",
+    "electrodes",
+    "wire-neg",
+    "wire-pos",
+    "battery"
+  ],
+  "liquids": {
+    "inner-left": {
+      "axis": "Y",
+      "yMin": 4.4,
+      "yMax": 40,
+      "x": -5,
+      "role": "cathode tube (H2, 2 volumes)"
+    },
+    "inner-right": {
+      "axis": "Y",
+      "yMin": 4.4,
+      "yMax": 40,
+      "x": 5,
+      "role": "anode tube (O2, 1 volume)"
+    },
+    "inner-centre": {
+      "axis": "Y",
+      "yMin": 4.4,
+      "yMax": 45,
+      "x": 0,
+      "role": "levelling reservoir"
+    }
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/hofmann-voltameter/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 336587,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 28486,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 138385,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 32336,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 42376,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 88467,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 6537,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 1290600,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 89927,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 538950,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 91269,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 128191,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 429165,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 13098,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 1236085,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 271102,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 180630,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 249120,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 2048,
+            "bytes": 495975,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 2048,
+            "bytes": 14726,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 2048,
+            "bytes": 24532,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

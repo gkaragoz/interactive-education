@@ -1,0 +1,180 @@
+{
+  "id": "watch-glass",
+  "tris": {
+    "LOD0": 5616,
+    "LOD1": 1400,
+    "LOD2": 728
+  },
+  "bboxMin": [
+    -3.6269,
+    0,
+    -3.6269
+  ],
+  "bboxMax": [
+    3.6269,
+    0.8438,
+    3.6269
+  ],
+  "boundsRadius": 3.7175,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 187932,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.7166
+      ],
+      "coverage": 0.6373,
+      "overlap": 0,
+      "stretchP95": 2.993,
+      "stretchP05": 0.73,
+      "uvPerUnit": 0.08706
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 31922
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 23110
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 1716
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 138225
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 106858
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 3246
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 635755
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 447050
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 9441
+          }
+        }
+      }
+    },
+    "bakeSeconds": 3.3,
+    "paintSeconds": 5.3,
+    "totalSeconds": 9.5
+  },
+  "pivot": "centre of the convex underside on y = 0",
+  "axes": "Y up, diameter 72 mm, concave side up, rim height ~8 mm; lies on a beaker rim or the bench",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "parts": [
+    "glass"
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/watch-glass/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 31071,
+        "size": 256,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 3934,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 25066,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 2071,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 142354,
+        "size": 512,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 20754,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 118032,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 3568,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 598061,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 83412,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 508261,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 6388,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "bubble",
+  "tris": {
+    "LOD0": 5808,
+    "LOD1": 1452,
+    "LOD2": 768
+  },
+  "bboxMin": [
+    -1,
+    -1,
+    -1
+  ],
+  "bboxMax": [
+    1,
+    1,
+    1
+  ],
+  "boundsRadius": 1,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 211724,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0157,
+        0.0157
+      ],
+      "uvMax": [
+        0.9844,
+        0.6511
+      ],
+      "coverage": 0.5478,
+      "overlap": 0,
+      "stretchP95": 1.023,
+      "stretchP05": 0.964,
+      "uvPerUnit": 0.21181
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 64,
+            "pngBytes": 5664
+          },
+          "normal": {
+            "size": 64,
+            "pngBytes": 895
+          },
+          "orm": {
+            "size": 64,
+            "pngBytes": 250
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 22076
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 4856
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 448
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 81667
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 19248
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 914
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.2,
+    "paintSeconds": 0.2,
+    "totalSeconds": 1.5
+  },
+  "pivot": "sphere centre",
+  "axes": "unit sphere (radius 1), translucent gel soap-bubble look with two painted highlights; one mesh `shell`",
+  "units": "1 = radius",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/bubble/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 4253,
+        "size": 64,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 64,
+            "bytes": 2275,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 64,
+            "bytes": 1236,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 64,
+            "bytes": 742,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 11418,
+        "size": 128,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 128,
+            "bytes": 5162,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 128,
+            "bytes": 5365,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 128,
+            "bytes": 891,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 37919,
+        "size": 256,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 14193,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 22606,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 1120,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

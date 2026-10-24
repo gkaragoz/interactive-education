@@ -1,0 +1,182 @@
+{
+  "id": "hot-plate-stirrer",
+  "tris": {
+    "LOD0": 7614,
+    "LOD1": 1828,
+    "LOD2": 864
+  },
+  "bboxMin": [
+    -10,
+    0,
+    -13
+  ],
+  "bboxMax": [
+    10,
+    6.9,
+    14.6
+  ],
+  "boundsRadius": 16.2155,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 213484,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.8863
+      ],
+      "coverage": 0.5922,
+      "overlap": 0,
+      "stretchP95": 1.369,
+      "stretchP05": 0.863,
+      "uvPerUnit": 0.01719
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 100973
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 75584
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 63873
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 371851
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 316264
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 210995
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1329326
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1248315
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 640994
+          }
+        }
+      }
+    },
+    "bakeSeconds": 9.6,
+    "paintSeconds": 6.3,
+    "totalSeconds": 17.3
+  },
+  "pivot": "centre of the underside on y = 0",
+  "axes": "Y up, front (knobs, green LED) towards +Z, 20 x 26 x 7 cm, round aluminium plate radius 9 centred at (0, 6.9, -2)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "plateTop": [
+    0,
+    6.9,
+    -2
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/hot-plate-stirrer/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 53433,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16824,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 24162,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 12447,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 195588,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 55406,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 106105,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 34077,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 687577,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 149458,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 449462,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 88657,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ import { renderHome } from './home';
 import { attachIdleFade } from './idle';
 import { createInfoCard } from './infoCard';
 import { createCellList, createLegend } from './leftColumn';
+import { createLabView, type LabView } from './labView';
 import { createModuleView, type ModuleView } from './moduleView';
 import { createSettingsMenu } from './settings';
 import { createStagePanel } from './stagePanel';
@@ -20,6 +21,8 @@ export interface Shell {
   setLoading(progress: LoadProgress | null): void;
   /** The animated-module screen (timeline, phases, charts); its stage mounts into `moduleView.viewport`. */
   moduleView: ModuleView;
+  /** The interactive lab screen (sim modules); its stage mounts into `labView.viewport`. */
+  labView: LabView;
   setPerfText(text: string | null): void;
   /** Small non-blocking message at the bottom of the page; it fades by itself. */
   toast(text: string): void;
@@ -119,18 +122,21 @@ export function createShell(root: HTMLElement, ctx: UiContext): Shell {
   const explore = h('main', { class: 'explore', id: 'main' }, wrap);
   const moduleView = createModuleView(ctx.reducedMotion);
   const moduleMain = h('main', { class: 'module-main-page', id: 'modul' }, moduleView.el);
+  const labView = createLabView(ctx.reducedMotion);
+  const labMain = h('main', { class: 'module-main-page', id: 'lab' }, labView.el);
   const homeMain = h('main', { class: 'page home-page', id: 'home', tabindex: -1 });
   const page = h('main', { class: 'page', id: 'page', tabindex: -1 });
-  for (const m of [explore, moduleMain, homeMain, page]) m.hidden = true;
+  for (const m of [explore, moduleMain, labMain, homeMain, page]) m.hidden = true;
   const perf = h('div', { class: 'perf-overlay', 'aria-hidden': 'true' });
   perf.hidden = true;
   const skip = h('a', { class: 'skip-link', href: '#main', onclick: (ev: Event) => { ev.preventDefault(); (explore.querySelector('canvas') ?? explore).focus?.(); } }, 'Ana içeriğe geç');
   const toastEl = h('div', { class: 'toast', role: 'status', 'aria-live': 'polite' });
   let toastTimer: ReturnType<typeof setTimeout> | undefined;
   const smallScreen = h('div', { class: 'small-screen-note', role: 'note' }, h('h2', {}, 'Bilim Atölyesi'), h('p', {}, 'Bu sürüm masaüstü ekranlar için tasarlandı. Lütfen daha geniş bir ekranda veya tarayıcı penceresini büyüterek aç.'));
-  root.replaceChildren(skip, h('div', { class: 'app' }, header.el, explore, moduleMain, homeMain, page), perf, toastEl, smallScreen);
+  root.replaceChildren(skip, h('div', { class: 'app' }, header.el, explore, moduleMain, labMain, homeMain, page), perf, toastEl, smallScreen);
   attachIdleFade(wrap);
   attachIdleFade(moduleMain);
+  attachIdleFade(labMain);
 
   let pageRoute: Route | null = null;
   let pageAnchor: string | null = null;
@@ -156,6 +162,7 @@ export function createShell(root: HTMLElement, ctx: UiContext): Shell {
     viewport: stage.viewport,
     setLoading: stage.setLoading,
     moduleView,
+    labView,
     setStageStatus: stage.setStatus,
     onInsets(listener): void {
       insetListener = listener;
@@ -174,7 +181,9 @@ export function createShell(root: HTMLElement, ctx: UiContext): Shell {
     update(state: AppState): void {
       const route = state.route;
       explore.hidden = route !== 'explore';
-      moduleMain.hidden = route !== 'modul';
+      const sim = route === 'modul' && ctx.modules.find((m) => m.id === state.moduleId)?.kind === 'sim';
+      moduleMain.hidden = route !== 'modul' || sim;
+      labMain.hidden = !sim;
       homeMain.hidden = route !== 'home';
       page.hidden = route !== 'kaynakca' && route !== 'hakkinda';
       document.title = TITLES[route];

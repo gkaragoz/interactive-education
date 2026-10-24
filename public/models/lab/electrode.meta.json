@@ -1,0 +1,177 @@
+{
+  "id": "electrode",
+  "tris": {
+    "LOD0": 4122,
+    "LOD1": 912,
+    "LOD2": 442
+  },
+  "bboxMin": [
+    -0.5,
+    0,
+    -0.4949
+  ],
+  "bboxMax": [
+    3.1176,
+    13.5548,
+    0.4949
+  ],
+  "boundsRadius": 13.5982,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 103452,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9386
+      ],
+      "coverage": 0.5369,
+      "overlap": 0,
+      "stretchP95": 1.162,
+      "stretchP05": 0.966,
+      "uvPerUnit": 0.13485
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 17569
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 18267
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 9060
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 64823
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 76276
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 28939
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 252794
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 307926
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 92352
+          }
+        }
+      }
+    },
+    "bakeSeconds": 3.9,
+    "paintSeconds": 1.1,
+    "totalSeconds": 5.2
+  },
+  "pivot": "the electrode tip on y = 0",
+  "axes": "Y up: graphite rod 6 mm x 100 mm with a brass terminal cap at y ~ 10 and a lead wire (red; tint-free) ending at (3, 11.6); use two, swap the wire colour in the app",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/electrode/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 14521,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 3790,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7850,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2881,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 51851,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 10121,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 34757,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 6973,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 193560,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 30046,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 144738,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 18776,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

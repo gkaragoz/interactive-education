@@ -66,3 +66,60 @@ export function saveQuestions(on: boolean, storage?: Pick<Storage, 'setItem'>): 
     // not persisted
   }
 }
+
+const SOFT_FLASH_KEY = 'bilim.softFlash';
+
+/** "Yumuşak parlama" in the lab (default on, so a flash never surprises a first-time learner); guarded storage. */
+export function loadSoftFlash(storage?: Pick<Storage, 'getItem'>): boolean {
+  try {
+    return (storage ?? localStorage).getItem(SOFT_FLASH_KEY) !== '0';
+  } catch {
+    return true;
+  }
+}
+
+export function saveSoftFlash(on: boolean, storage?: Pick<Storage, 'setItem'>): void {
+  try {
+    (storage ?? localStorage).setItem(SOFT_FLASH_KEY, on ? '1' : '0');
+  } catch {
+    // not persisted
+  }
+}
+
+const LAB_LAST_KEY = 'bilim.labLast';
+const LAB_SAFETY_KEY = 'bilim.labSafetySeen';
+
+/** The lab's last choice: an experiment id, 'serbest' (free bench) or null when the learner never chose. */
+export function loadLabLast(storage?: Pick<Storage, 'getItem'>): string | null {
+  try {
+    const v = (storage ?? localStorage).getItem(LAB_LAST_KEY);
+    return v && /^[a-z0-9-]{1,60}$/.test(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveLabLast(choice: string, storage?: Pick<Storage, 'setItem'>): void {
+  try {
+    (storage ?? localStorage).setItem(LAB_LAST_KEY, choice);
+  } catch {
+    // not persisted
+  }
+}
+
+/** Whether the safety sheet was shown (and dismissed) on a first visit. */
+export function loadLabSafetySeen(storage?: Pick<Storage, 'getItem'>): boolean {
+  try {
+    return (storage ?? localStorage).getItem(LAB_SAFETY_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+export function saveLabSafetySeen(storage?: Pick<Storage, 'setItem'>): void {
+  try {
+    (storage ?? localStorage).setItem(LAB_SAFETY_KEY, '1');
+  } catch {
+    // not persisted
+  }
+}

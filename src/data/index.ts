@@ -9,6 +9,7 @@ export type * from './types';
 export { sources, kazanimlar, organelles, cells, micrographs };
 export type * from './moduleTypes';
 export { modules, getModule } from './modules';
+export { safetyRules, ppeItems, homeAttemptTable, blockedCombos, type SafetyRule, type PpeItem, type HomeAttempt, type HomeVerdict, type BlockedCombo } from './chemlabSafety';
 export { aminoAcids, codonTable, transcribeTemplate, translateMrna } from './modules/dna-protein.codons';
 export { geneExamples, mutationExamples } from './modules/dna-protein.examples';
 

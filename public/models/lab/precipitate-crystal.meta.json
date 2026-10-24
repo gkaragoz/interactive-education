@@ -1,0 +1,181 @@
+{
+  "id": "precipitate-crystal",
+  "tris": {
+    "LOD0": 6348,
+    "LOD1": 1452,
+    "LOD2": 768
+  },
+  "bboxMin": [
+    -0.6871,
+    -1.2722,
+    -0.7026
+  ],
+  "bboxMax": [
+    0.7497,
+    1.2722,
+    0.7368
+  ],
+  "boundsRadius": 1.2726,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 183500,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0157,
+        0.0157
+      ],
+      "uvMax": [
+        0.8687,
+        0.9845
+      ],
+      "coverage": 0.6858,
+      "overlap": 0,
+      "stretchP95": 1.201,
+      "stretchP05": 0.77,
+      "uvPerUnit": 0.33353
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 64,
+            "pngBytes": 7672
+          },
+          "normal": {
+            "size": 64,
+            "pngBytes": 2907
+          },
+          "orm": {
+            "size": 64,
+            "pngBytes": 2601
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 28122
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 12706
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 8188
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 98828
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 51330
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 25765
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.3,
+    "paintSeconds": 0.3,
+    "totalSeconds": 1.6
+  },
+  "pivot": "crystal centre",
+  "axes": "small faceted bipyramid, ~1.2 x 1.6 x 1.2 (Y long axis); neutral light albedo: tint it per precipitate; scale ~0.1-0.3 for flakes/crystals",
+  "units": "1 = crystal half-size",
+  "tintable": true,
+  "tintParts": [
+    "crystal"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/precipitate-crystal/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 6376,
+        "size": 64,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 64,
+            "bytes": 1905,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 64,
+            "bytes": 3190,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 64,
+            "bytes": 1281,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 17278,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4959,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 9892,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2427,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 57086,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16721,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 35338,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 5027,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

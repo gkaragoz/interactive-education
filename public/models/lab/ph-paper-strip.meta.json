@@ -1,0 +1,181 @@
+{
+  "id": "ph-paper-strip",
+  "tris": {
+    "LOD0": 4800,
+    "LOD1": 1200,
+    "LOD2": 588
+  },
+  "bboxMin": [
+    -0.35,
+    0,
+    -0.03
+  ],
+  "bboxMax": [
+    0.35,
+    6,
+    0.03
+  ],
+  "boundsRadius": 6.0014,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 143844,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0157,
+        0.0157
+      ],
+      "uvMax": [
+        0.9844,
+        0.8773
+      ],
+      "coverage": 0.4712,
+      "overlap": 0,
+      "stretchP95": 1.369,
+      "stretchP05": 0.228,
+      "uvPerUnit": 0.22879
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 64,
+            "pngBytes": 6346
+          },
+          "normal": {
+            "size": 64,
+            "pngBytes": 2099
+          },
+          "orm": {
+            "size": 64,
+            "pngBytes": 2766
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 23990
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 9495
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 8309
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 83656
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 40833
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 23278
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.3,
+    "paintSeconds": 0.2,
+    "totalSeconds": 1.6
+  },
+  "pivot": "centre of the bottom (dipped) end",
+  "axes": "Y along the strip (length 6 cm, width 7 mm, thickness 0.6 mm); neutral pale albedo: tint it with the pH colour",
+  "units": "1 = 1 cm",
+  "tintable": true,
+  "tintParts": [
+    "strip"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/ph-paper-strip/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 6066,
+        "size": 64,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 64,
+            "bytes": 1743,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 64,
+            "bytes": 2830,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 64,
+            "bytes": 1493,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 18042,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4730,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 10178,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3134,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 62804,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16037,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 39864,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 6903,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

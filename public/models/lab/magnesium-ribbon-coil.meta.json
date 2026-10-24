@@ -1,0 +1,177 @@
+{
+  "id": "magnesium-ribbon-coil",
+  "tris": {
+    "LOD0": 3836,
+    "LOD1": 720,
+    "LOD2": 390
+  },
+  "bboxMin": [
+    -1.1347,
+    0.1713,
+    -1.1308
+  ],
+  "bboxMax": [
+    1.137,
+    1.7098,
+    1.1369
+  ],
+  "boundsRadius": 1.9992,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 110608,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.901
+      ],
+      "coverage": 0.7112,
+      "overlap": 0,
+      "stretchP95": 1.738,
+      "stretchP05": 0.801,
+      "uvPerUnit": 0.22358
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 35134
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 17931
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 16971
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 130085
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 83781
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 60565
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 459426
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 356942
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 212448
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 1.2,
+    "totalSeconds": 2.8
+  },
+  "pivot": "bottom of the coil axis",
+  "axes": "Y up: coiled ribbon, coil radius 0.95, 3.2 turns over ~1.5 cm, ribbon width ~2 mm (stylised, thicker than real)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/magnesium-ribbon-coil/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 15712,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5385,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6837,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3490,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 56357,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 18297,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27533,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 10527,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 211518,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 60854,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 115939,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 34725,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

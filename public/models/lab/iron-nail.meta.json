@@ -1,0 +1,177 @@
+{
+  "id": "iron-nail",
+  "tris": {
+    "LOD0": 6696,
+    "LOD1": 1496,
+    "LOD2": 816
+  },
+  "bboxMin": [
+    -0.42,
+    0,
+    -0.42
+  ],
+  "bboxMax": [
+    0.42,
+    6.28,
+    0.42
+  ],
+  "boundsRadius": 6.2872,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 127556,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.7362,
+        0.9923
+      ],
+      "coverage": 0.6767,
+      "overlap": 0,
+      "stretchP95": 1.079,
+      "stretchP05": 0.896,
+      "uvPerUnit": 0.31655
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 24078
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 18107
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 10413
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 90985
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 70781
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 32284
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 327366
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 278801
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 99091
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 1.2,
+    "totalSeconds": 2.8
+  },
+  "pivot": "the nail tip on y = 0 (tip down into the solution)",
+  "axes": "Y up, length 63 mm, shaft 3.2 mm, head 8.4 mm",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/iron-nail/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 15164,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4484,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7568,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3112,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 52841,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 12757,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 32970,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 7114,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 188801,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 39312,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 131852,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 17637,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

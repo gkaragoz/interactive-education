@@ -57,3 +57,14 @@ export const commons = (id: string, title: string, file: string, author: string,
   lang: 'en',
   accessed: ACCESSED,
 });
+
+export const openstaxChem = (id: string, title: string, page: string): Source => ({
+  id: `os-chem-${id}`,
+  kind: 'openstax',
+  title: `Chemistry 2e, ${title}`,
+  url: `https://openstax.org/books/chemistry-2e/pages/${page}`,
+  publisher: 'OpenStax (Flowers, Theopold, Langley, Robinson)',
+  license: 'CC BY-NC-SA 4.0',
+  lang: 'en',
+  accessed: '2026-10-24',
+});

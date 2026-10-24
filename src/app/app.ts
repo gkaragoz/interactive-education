@@ -22,10 +22,10 @@ import {
   type ViewMode,
 } from '../core';
 import type { CellTypeId, LevelId } from '../data/types';
-import { findModule, homeModules, openableModules, UPCOMING } from '../modules';
+import { homeModules, openableModules, UPCOMING } from '../modules';
 import type { Stage, ViewState } from '../scene';
 import { createShell, type UiActions } from '../ui';
-import type { ModuleHost } from './moduleHost';
+import { createModuleRouting } from './moduleRouting';
 
 export interface AppOptions {
   root: HTMLElement;
@@ -203,7 +203,7 @@ export async function startApp(opts: AppOptions): Promise<void> {
     qualityLocked: params.qualityFixed,
     reducedMotion,
     // The test module is only reachable by address; every other registered module is a card (previews only with ?demo).
-    modules: entries.filter((e) => e.id !== '__demo').map((e) => ({ id: e.id, nameTr: e.nameTr, tagline: e.tagline, levels: e.levels, preview: !released.has(e.id) })),
+    modules: entries.filter((e) => e.id !== '__demo').map((e) => ({ id: e.id, nameTr: e.nameTr, tagline: e.tagline, levels: e.levels, preview: !released.has(e.id), ...(e.sim ? { kind: 'sim' as const } : {}) })),
     upcoming: UPCOMING.filter((u) => !entries.some((e) => e.id === u.id)).map((u) => ({ ...u })),
   });
   shell.onInsets((left, right) => {
@@ -248,39 +248,8 @@ export async function startApp(opts: AppOptions): Promise<void> {
     return stagePromise;
   };
 
-  // Animated modules (`#/modul/<id>[/<track>]`); the module code and the 3D engine are fetched when one is opened.
-  let hostPromise: Promise<ModuleHost> | null = null;
-  const ensureHost = (): Promise<ModuleHost> => {
-    hostPromise ??= import('./moduleHost').then(({ ModuleHost: HostClass }) => {
-      const host = new HostClass({
-        view: shell.moduleView,
-        baseUrl: opts.baseUrl,
-        quality: () => (qualityMode === 'auto' ? 'medium' : qualityMode),
-        reducedMotion,
-        toast: (text) => shell.toast(text),
-        navigateTrack: (id, track) => {
-          location.hash = moduleHash(id, track);
-        },
-      });
-      (window as unknown as { __bilimModules?: ModuleHost }).__bilimModules = host;
-      return host;
-    });
-    return hostPromise;
-  };
-  const syncModule = (state: AppState): void => {
-    if (state.route !== 'modul') {
-      if (hostPromise) void hostPromise.then((host) => host.close());
-      return;
-    }
-    const route = parseModuleRoute(location.hash);
-    const entry = route ? findModule(route.id, { demo }) : null;
-    if (!route || !entry?.definition) {
-      shell.toast('Bu modül bulunamadı.');
-      location.hash = routeHash('home');
-      return;
-    }
-    void ensureHost().then((host) => { host.setQuestions(state.questionsOn); return host.open(entry, route.track, state.level); }).catch((error: unknown) => console.error(error));
-  };
+  // Animated and interactive modules (`#/modul/<id>[/<track>]`); their code and the 3D engine are fetched when one is opened.
+  const syncModule = createModuleRouting({ shell, baseUrl: opts.baseUrl, quality: () => (qualityMode === 'auto' ? 'medium' : qualityMode), reducedMotion, demo });
 
   // Keeps what the explorer stage shows in step with the store; cell and compare changes load asynchronously.
   let stageCell: CellTypeId | null = null;

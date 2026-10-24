@@ -1,0 +1,189 @@
+{
+  "id": "test-tube",
+  "tris": {
+    "LOD0": 3816,
+    "LOD1": 850,
+    "LOD2": 440
+  },
+  "bboxMin": [
+    -0.9,
+    0,
+    -0.9
+  ],
+  "bboxMax": [
+    0.9,
+    15.0632,
+    0.9
+  ],
+  "boundsRadius": 15.0882,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 125616,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9942,
+        0.9962
+      ],
+      "coverage": 0.7956,
+      "overlap": 0,
+      "stretchP95": 1.875,
+      "stretchP05": 0.934,
+      "uvPerUnit": 0.06396
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 45472
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 21877
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 1467
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 194891
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 107741
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 3874
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 887324
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 456692
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 9956
+          }
+        }
+      }
+    },
+    "bakeSeconds": 8.3,
+    "paintSeconds": 8.8,
+    "totalSeconds": 18.1
+  },
+  "pivot": "centre of the round bottom tip on y = 0 (it stands in the rack with y = 0 at the rack hole bottom)",
+  "axes": "Y up; outer diameter 16 mm, length 150 mm, 1 unit = 1 cm; liquid mesh `inner` up to y = 11.5",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "capacityMl": 20,
+  "parts": [
+    "glass",
+    "inner"
+  ],
+  "liquid": {
+    "mesh": "inner",
+    "axis": "Y",
+    "yMin": 0.13,
+    "yMax": 11.5,
+    "note": "closed cavity volume up to the top graduation: scale / clip it along Y to set the level"
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/test-tube/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 36247,
+        "size": 256,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 9664,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 24475,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 2108,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 148495,
+        "size": 512,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 29534,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 115439,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 3522,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 603372,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 99746,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 497565,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 6061,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

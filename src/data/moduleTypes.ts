@@ -14,7 +14,8 @@ export type ModuleId =
   | 'energy'
   | 'muscle'
   | 'nervous'
-  | 'genetics';
+  | 'genetics'
+  | 'chem-lab';
 
 export interface PhaseText {
   summary: string; // 1-2 sentences, what the learner sees right now
@@ -102,6 +103,35 @@ export interface ModuleInfo {
   kazanimIds: string[]; // must exist in kazanimlar
   sourceIds: string[]; // at least one; must exist in sources
   /** Each simplification the animation makes, listed on the module page. */
+  simplifications: string[];
+  glossary: { termTr: string; definitionTr: string }[];
+  funFacts: { level: LevelId; text: string; sourceId: string }[];
+}
+
+/** A question the lab asks when a guided step is done ("Kendini dene"); respects the Sorular setting like timeline checks. */
+export interface SimPrompt {
+  id: string;
+  experimentId: string;
+  /** Asked right after this step of the experiment is detected as done. */
+  afterStepId: string;
+  promptTr: string;
+  options: string[];
+  correctIndex: number;
+  explanationTr: string;
+  levels: LevelId[];
+}
+
+/** Content of an interactive sim module (docs/SIMS.md): the same card fields as ModuleInfo, no tracks or timeline data. */
+export interface SimInfo {
+  kind: 'sim';
+  id: ModuleId;
+  nameTr: string;
+  tagline: string;
+  introTr: string;
+  levels: LevelId[];
+  prompts: SimPrompt[];
+  kazanimIds: string[];
+  sourceIds: string[];
   simplifications: string[];
   glossary: { termTr: string; definitionTr: string }[];
   funFacts: { level: LevelId; text: string; sourceId: string }[];

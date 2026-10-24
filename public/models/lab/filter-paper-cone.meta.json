@@ -1,0 +1,182 @@
+{
+  "id": "filter-paper-cone",
+  "tris": {
+    "LOD0": 4000,
+    "LOD1": 874,
+    "LOD2": 480
+  },
+  "bboxMin": [
+    -3.2316,
+    -0.011,
+    -3.4056
+  ],
+  "bboxMax": [
+    3.5718,
+    5.0389,
+    3.4056
+  ],
+  "boundsRadius": 6.1651,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 92856,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9825,
+        0.9923
+      ],
+      "coverage": 0.6978,
+      "overlap": 0,
+      "stretchP95": 2.776,
+      "stretchP05": 0.733,
+      "uvPerUnit": 0.07342
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 24951
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 16711
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 12385
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 94741
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 76693
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 43537
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 351316
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 319398
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 153201
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.5,
+    "paintSeconds": 1.3,
+    "totalSeconds": 3.1
+  },
+  "pivot": "the cone tip",
+  "axes": "Y up, cone rim radius 3.4 at y = 5.0; place it with its tip at y ~ 7.3 inside the funnel asset",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "funnelOrigin": [
+    0,
+    7.3,
+    0
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/filter-paper-cone/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 15534,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4773,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 7145,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3616,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 53048,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16694,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 26432,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 9922,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 193650,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 56221,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 109673,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 27756,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

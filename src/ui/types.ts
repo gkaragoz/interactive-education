@@ -35,6 +35,8 @@ export interface ModuleCard {
   levels: LevelId[];
   /** Registered but not released: only offered with `?demo`. */
   preview: boolean;
+  /** Interactive sim module (own screen, `#/modul/<id>[/<experiment>]`). */
+  kind?: 'sim';
 }
 
 export interface UpcomingCard {

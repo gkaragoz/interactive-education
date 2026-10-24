@@ -9,3 +9,8 @@ export type { ModuleContext, ModuleScene, ModuleDefinition, ModuleLabel, Quality
 export { seededRng } from './moduleScene';
 export { ModuleAssets, type InstanceSet } from './moduleAssets';
 export { ModuleStage, type CameraPresetId, type ModuleStageOptions } from './moduleStage';
+export type { StageFraming } from './stageFraming';
+export { SimStage } from './simStage';
+export { createLabInteractions, FREE_BENCH, shelfOf, benchOf, experimentList } from './labInteractions';
+export type { SimScene, LabSimScene, SimContext, SimDefinition, SimParam, SimMeasurement, SimPointerEvent, SimHit, SimItem, SimCommand, SimInteractions, SimActionResult } from './simScene';
+export { AssetRoot, type LoadedRootAsset, type RootPart } from './assetRoot';

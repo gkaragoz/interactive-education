@@ -68,3 +68,8 @@ export function chk(
 export function pred(trackId: string, atTime: number, temel: boolean, promptTr: string, answerTr: string): PredictPrompt {
   return { trackId, atTime, levels: temel ? BOTH : ILERI, promptTr, answerTr };
 }
+
+/** Restricts a check or predict to Temel (for tracks that exist at Temel only). */
+export function onlyTemel<T extends { levels: LevelId[] }>(item: T): T {
+  return { ...item, levels: ['temel'] };
+}

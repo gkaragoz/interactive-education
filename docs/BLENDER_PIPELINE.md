@@ -127,3 +127,17 @@ a 256 px atlas with a 1 px gutter bled the mean fill colour into the atoms. Timi
 caps and registry charts (used for the cut-away sarcolemma of `muscle-fibre-bundle`). `clip.py` is reused for the allele token. LOD control for many-small-parts assets
 (`sarcomere`: thin filaments, heads, titin) scales the part counts continuously with q (`min(1, 2q)`) so LOD1 and LOD2 differ clearly; the `sarcomere` and `neuron` GLBs
 are near the 1.5 MB cap (1.31 / 1.41 MB). Timing: batch 4 (15 assets) about 14 min geometry + bake + paint, 4 min KTX2 encoding.
+
+
+### Lab batch notes (`SET=lab`)
+```
+$B -b --factory-startup --python tools/blender/make_organelles.py -- SET=lab OUT=tools/blender/out/stage_lab TEX=1 TEXOUT=tools/blender/out/tex_lab      # IDS=a,b optional
+node tools/textures/encode.mjs --src=tools/blender/out/tex_lab --dst=public/textures/lab --models=tools/blender/out/stage_lab
+cp tools/blender/out/stage_lab/* public/models/lab/ && npx vitest run tests/assetsLab.test.ts
+```
+Families `lab_glass`, `lab_equip`, `lab_props`, `lab_solids`, `lab_particles` (`LAB_FAMILIES` in `make_organelles.py`); shared helpers in `lab_common.py`:
+`Prof` + `lathe` (profile revolve with per-section charts, poles, closed ring loops), `wall_loop` (hollow wall from an outer profile: inward offset + rim bead), `liquid_mesh`
+(matching cavity volume), `volume_ticks` (graduation heights from the cavity), `spout`, `glass_part` (+ painted glass motif registered in `texmotifs.CUSTOM`), `rbox`/`cyl`/`sph`.
+New hooks: `texmotifs.CUSTOM[(asset, part)] = fn(S, r, hint, gel)` lets an asset replace the default painting (glass, wood, tiles, label, gauze); lab assets get a calm neutral
+painter default (`LAB_DEFAULT`) so white and steel objects do not pick up colourful dabs. The G-buffer is in Blender coordinates: use `lab_common.bc()` to get builder (Y up) coordinates in motifs.
+`Part.rect_dir` makes `bpyout` report `meta.uvRects[part]`. Hollow closed glass (tubes with closed ends, Hofmann) sets `Part.hollow`. Timing: 55 assets about 28 min geometry + bake + paint, KTX2 about 14 min.

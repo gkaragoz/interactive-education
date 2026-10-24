@@ -1,0 +1,181 @@
+{
+  "id": "balloon",
+  "tris": {
+    "LOD0": 3888,
+    "LOD1": 900,
+    "LOD2": 476
+  },
+  "bboxMin": [
+    -4.3998,
+    0,
+    -4.3923
+  ],
+  "bboxMax": [
+    4.3998,
+    12.8,
+    4.3923
+  ],
+  "boundsRadius": 12.8,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 84596,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9278
+      ],
+      "coverage": 0.8757,
+      "overlap": 0,
+      "stretchP95": 1.991,
+      "stretchP05": 0.824,
+      "uvPerUnit": 0.05257
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 25785
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 9499
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 11871
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 94526
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 46734
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 43498
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 338732
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 201486
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 151369
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.3,
+    "paintSeconds": 0.9,
+    "totalSeconds": 2.6
+  },
+  "pivot": "centre of the bottom of the neck on y = 0",
+  "axes": "Y up: round balloon with a 34 mm neck (fits over the erlenmeyer-250ml neck: neck radius 1.7 >= 1.55), bulb about 88 x 108 mm centred at y = 7.4; scale the bulb to show inflation; neutral light albedo: tint it",
+  "units": "1 = 1 cm",
+  "tintable": true,
+  "tintParts": [
+    "rubber"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/balloon/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 18701,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4934,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 10073,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3694,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 67011,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 17588,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 39116,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 10307,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 227570,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 59696,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 139925,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 27949,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

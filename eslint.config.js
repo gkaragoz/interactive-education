@@ -1,16 +1,18 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
-const MODULES = ['data', 'core', 'scene', 'modules', 'ui', 'app'];
+const MODULES = ['data', 'core', 'chemlab', 'scene', 'modules', 'ui', 'app'];
 
 /** Allowed imports per module; mirrors docs/ARCHITECTURE.md (data/core -> scene -> ui -> app). */
 const ALLOWED = {
   data: [],
   core: ['data'],
-  scene: ['data', 'core'],
-  modules: ['data', 'core', 'scene'],
-  ui: ['data', 'core', 'scene'],
-  app: ['data', 'core', 'scene', 'modules', 'ui'],
+  // chemlab is the pure chemistry engine: no three.js, no DOM; scene, modules, ui and app read it.
+  chemlab: ['data', 'core'],
+  scene: ['data', 'core', 'chemlab'],
+  modules: ['data', 'core', 'scene', 'chemlab'],
+  ui: ['data', 'core', 'scene', 'chemlab'],
+  app: ['data', 'core', 'chemlab', 'scene', 'modules', 'ui'],
 };
 
 const forbiddenFor = (mod) =>
@@ -49,6 +51,7 @@ const moduleRules = MODULES.filter((m) => m !== 'data').map((mod) => ({
       {
         patterns: [
           ...forbiddenFor(mod),
+          ...(mod === 'chemlab' ? [{ group: ['three', 'three/**'], message: 'chemlab is pure: no three.js (render code lives in scene/modules).' }] : []),
           {
             // data/types.ts is the shared contract and may be imported directly.
             group: [...MODULES.filter((m) => m !== mod).map((m) => `**/${m}/*`), '!**/data/types', '!**/data/moduleTypes'],
@@ -69,6 +72,10 @@ export default tseslint.config(
   ...moduleRules,
   {
     files: ['src/**/*.ts'],
-    rules: { 'max-lines': ['warn', { max: 300, skipBlankLines: true, skipComments: true }] },
+    rules: {
+      'max-lines': ['warn', { max: 300, skipBlankLines: true, skipComments: true }],
+      // `_name` marks an intentionally unused parameter (interface methods a scene does not need).
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
+    },
   },
 );

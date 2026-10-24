@@ -30,3 +30,6 @@
 
 ## v0.7.1
 - Düzeltme: v0.7.0 dağıtımı laboratuvar varlık testi yüzünden durmuştu; içerik v0.7.0 ile aynı.
+
+## v0.9.0
+- Kimya Laboratuvarı: 10 rehberli deney ve serbest tezgâh (beherler, erlenmeyer, terazi, bek, voltametre), kimya motoru, Defter, güvenlik sayfası ve her deney için parçacık düzeyinde nedenini göster animasyonu.

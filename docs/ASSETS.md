@@ -195,3 +195,84 @@ Preview sheet: `docs/images/modules_v0_6_batch4.png`. Axes/units/parts per asset
 | `allele-token` | 4130 | 872 | 416 | 120 KB | 512 | 0.2/0.1 | sphere centre |
 
 Texture totals for batch 4 (all tiers): high 12.3 MB, medium 3.9 MB.
+
+
+## Lab batch (v0.9 virtual chemistry lab, `public/models/lab/`)
+55 assets in two sub-batches: **A** (vessels, equipment, bench, reagent containers, PPE: 35 assets, sheet `docs/images/lab_v0_9_batchA.png`) and **B** (solids, apparatus,
+particle-level props: 20 assets, sheet `docs/images/lab_v0_9_batchB.png`). Same contract v2 as the module assets (`<id>.glb`, `<id>.meta.json`, textures in
+`public/textures/lab/<id>/<tier>/`, LOD0/1/2, closed meshes, materials `_clay` / `_gel`), plus the conventions below. World unit = 1 cm for apparatus, Y up, front +Z;
+particle props use their own units (atom-ball radius 1). Pivots, axes, tint parts, capacities and anchor points are in each `meta.json`.
+
+- **Glass** is the `glass` mesh in the gel material: real wall thickness (1.0-2.5 mm), rounded rim beads, painted window streaks (a broad and a thin vertical highlight, no view-dependent
+  shading is baked), a frosted writing patch and graduation ticks (volume-accurate: ticks are placed from the cavity profile; minor / major lengths). Ticks face +Z.
+- **Liquid volume**: vessels also ship a closed mesh `inner` (gel material) that is the cavity just inside the glass, up to the top graduation / shoulder. The app tints it and scales or
+  clips it along Y; the asset is not baked as a liquid. `meta.liquid = { mesh, axis, yMin, yMax }` gives the usable range. The Hofmann voltameter has `inner-left`, `inner-right`, `inner-centre`
+  (see `meta.liquids`); the thermometer has a red `column` mesh (clay) to scale along Y (`meta.column`).
+- **Spout**: beakers and the graduated cylinder have a pouring lip towards +X. Erlenmeyer neck top y = 14 (balloon neck radius 1.7 fits its 1.55 neck).
+- **App-textured faces**: `digital-balance` mesh `display` and `flame-mount` mesh `card` are separate meshes in the gel material; `meta.uvRects[part] = [u0, v0, u1, v1]` (glTF texture coordinates, v down)
+  is the rectangle of the front face in the gel atlas. Draw the digits / flame into your own texture and map it with that rectangle (or give the mesh its own material).
+- **Anchors in meta.json**: `flameMount` / `flameBase` (burner, candle, lighter, flame-mount), `mountPoint` + `buretteOrigin` (burette stand), `holes` (test-tube rack), `plateTop` (hot plate),
+  `panCentre` (balance), `ringY` (tripod), `funnelOrigin` (filter cone), `shelfTop` (backdrop), `tile` (bench top 60 x 30 cm; modular along X).
+- **Tint**: reagent-bottle caps / labels, powder-jar lid / label, indicator-bottle cap / label, waste-container, lighter body, nitrile gloves, goggles frame, balloon, pH paper strip,
+  atom-ball, ion balls, bond-stick, precipitate-crystal, electron-dot have a neutral light albedo (`neutralAlbedo`) to be tinted. Everything else is painted.
+- Budgets: every GLB <= 1.5 MB (largest 726 KB), texture totals high 21.7 MB, medium 9.5 MB, low 2.4 MB. Heroes (beakers, erlenmeyer, alcohol burner, bench top, Hofmann voltameter) 2048/1024/512, others 1024/512/256 or smaller.
+- Test: `tests/assetsLab.test.ts` (same checks as the module test plus liquid meshes and `uvRects`; stretch p05 > 0.2 because thin strips and slabs compress).
+
+| id | LOD0 tris | LOD1 | LOD2 | GLB | tex px | MB high/medium | pivot | tint parts |
+|---|---|---|---|---|---|---|---|---|
+| `alcohol-burner` | 7468 | 1738 | 900 | 232 KB | 2048 | 1.17/0.76 | centre of the base on y = 0 | - |
+| `atom-ball` | 6348 | 1452 | 768 | 163 KB | 512 | 0.17/0.05 | sphere centre | atom |
+| `balloon` | 3888 | 900 | 476 | 82 KB | 512 | 0.23/0.07 | centre of the bottom of the neck on y = 0 | rubber |
+| `beaker-100ml` | 5256 | 1280 | 696 | 168 KB | 2048 | 0.33/0.53 | centre of the base (y = 0 stands on the bench) | - |
+| `beaker-250ml` | 5328 | 1320 | 696 | 160 KB | 2048 | 0.35/0.54 | centre of the base (y = 0 stands on the bench) | - |
+| `beaker-400ml` | 5328 | 1320 | 696 | 167 KB | 2048 | 0.34/0.54 | centre of the base (y = 0 stands on the bench) | - |
+| `bench-top` | 17496 | 4056 | 1944 | 398 KB | 2048 | 0.56/0.61 | centre of the top surface (y = 0 is the work surface) | - |
+| `bond-stick` | 4896 | 1156 | 624 | 100 KB | 256 | 0.05/0.01 | centre of the stick | stick |
+| `bubble` | 5808 | 1452 | 768 | 206 KB | 256 | 0.04/0.01 | sphere centre | - |
+| `burette-stand` | 7346 | 1660 | 896 | 199 KB | 1024 | 0.62/0.16 | centre of the cast base plate on y = 0 | - |
+| `burette` | 4308 | 962 | 520 | 145 KB | 1024 | 0.78/0.21 | the tip on y = 0 (the stopcock sits at y = 7) | stopcock |
+| `candle` | 3952 | 938 | 508 | 90 KB | 512 | 0.18/0.05 | centre of the base on y = 0 | - |
+| `co2-molecule` | 7704 | 1488 | 720 | 204 KB | 512 | 0.21/0.06 | molecule centre (centre of mass side: oxygen / carbon / mid-bond) | - |
+| `copper-strip` | 5808 | 1452 | 768 | 159 KB | 512 | 0.16/0.05 | centre of the bottom edge | - |
+| `digital-balance` | 10230 | 2448 | 1098 | 287 KB | 1024 | 0.87/0.24 | centre of the underside on y = 0 | - |
+| `dropper-pipette` | 2596 | 634 | 300 | 93 KB | 512 | 0.35/0.09 | the glass tip on y = 0 (the teat points up) | teat |
+| `electrode` | 4122 | 912 | 442 | 101 KB | 512 | 0.19/0.05 | the electrode tip on y = 0 | - |
+| `electron-dot` | 5808 | 1452 | 768 | 152 KB | 256 | 0.05/0.02 | sphere centre | dot |
+| `erlenmeyer-250ml` | 7056 | 1720 | 888 | 216 KB | 2048 | 0.33/0.56 | centre of the base on y = 0 | - |
+| `filter-paper-cone` | 4000 | 874 | 480 | 90 KB | 512 | 0.19/0.05 | the cone tip | - |
+| `flame-mount` | 2576 | 624 | 312 | 77 KB | 512 | 0.24/0.07 | centre of the mount base on y = 0 | - |
+| `funnel` | 3268 | 800 | 440 | 110 KB | 1024 | 0.66/0.16 | centre of the stem tip on y = 0 | - |
+| `glass-rod` | 3904 | 900 | 440 | 110 KB | 512 | 0.13/0.04 | centre of the rod | - |
+| `graduated-cylinder-100ml` | 5684 | 1396 | 760 | 190 KB | 1024 | 0.62/0.16 | centre of the foot on y = 0 | - |
+| `h2-molecule` | 4866 | 912 | 420 | 127 KB | 512 | 0.21/0.06 | molecule centre (centre of mass side: oxygen / carbon / mid-bond) | - |
+| `hofmann-voltameter` | 24268 | 5802 | 3176 | 726 KB | 2048 | 1.24/1.29 | centre of the stand base on y = 0, x = 0 at the middle tube (the base spans x -11..17 to carry the battery) | - |
+| `hot-plate-stirrer` | 7614 | 1828 | 864 | 208 KB | 1024 | 0.69/0.2 | centre of the underside on y = 0 | - |
+| `indicator-dropper-bottle` | 5472 | 1352 | 682 | 174 KB | 512 | 0.37/0.11 | centre of the base on y = 0 | cap, label |
+| `ion-ball-minus` | 4248 | 804 | 408 | 116 KB | 512 | 0.17/0.05 | sphere centre | body |
+| `ion-ball-plus` | 5424 | 1020 | 540 | 149 KB | 512 | 0.18/0.05 | sphere centre | body |
+| `iron-nail` | 6696 | 1496 | 816 | 124 KB | 512 | 0.19/0.05 | the nail tip on y = 0 (tip down into the solution) | - |
+| `lab-backdrop` | 16908 | 3360 | 1788 | 388 KB | 1024 | 0.66/0.18 | bottom centre of the wall front face (y = 0, z = 0) | - |
+| `lighter` | 6938 | 1504 | 726 | 188 KB | 512 | 0.22/0.06 | centre of the base on y = 0 | body |
+| `magnesium-ribbon-coil` | 3836 | 720 | 390 | 108 KB | 512 | 0.21/0.06 | bottom of the coil axis | - |
+| `magnetic-stir-bar` | 5074 | 1134 | 600 | 107 KB | 256 | 0.06/0.02 | centre of the bar | - |
+| `nitrile-gloves` | 6772 | 1684 | 924 | 206 KB | 512 | 0.25/0.07 | midpoint between the two gloves on the table plane (y = 0) | glove-l, glove-r |
+| `o2-molecule` | 5028 | 960 | 456 | 134 KB | 512 | 0.18/0.05 | molecule centre (centre of mass side: oxygen / carbon / mid-bond) | - |
+| `ph-colour-chart` | 9504 | 1836 | 972 | 304 KB | 512 | 0.21/0.06 | centre of the underside on y = 0 | - |
+| `ph-paper-strip` | 4800 | 1200 | 588 | 140 KB | 256 | 0.06/0.02 | centre of the bottom (dipped) end | strip |
+| `powder-jar` | 6608 | 1486 | 764 | 198 KB | 1024 | 1.26/0.33 | centre of the base on y = 0 | lid, label |
+| `precipitate-crystal` | 6348 | 1452 | 768 | 179 KB | 256 | 0.06/0.02 | crystal centre | crystal |
+| `reagent-bottle-250ml` | 7700 | 1718 | 890 | 224 KB | 1024 | 0.8/0.21 | centre of the base on y = 0 | cap, label |
+| `reagent-bottle-500ml` | 7700 | 1718 | 890 | 220 KB | 1024 | 0.82/0.21 | centre of the base on y = 0 | cap, label |
+| `safety-goggles` | 6240 | 1504 | 756 | 225 KB | 512 | 0.24/0.07 | centre of the bridge between the lenses | frame |
+| `spatula` | 5978 | 1488 | 768 | 163 KB | 512 | 0.22/0.06 | centre of the handle | - |
+| `splint` | 5808 | 1452 | 768 | 167 KB | 512 | 0.19/0.05 | centre of the bottom (hand) end | - |
+| `test-tube-rack` | 25752 | 5580 | 2688 | 625 KB | 1024 | 0.79/0.21 | centre of the bottom plate on y = 0 | - |
+| `test-tube` | 3816 | 850 | 440 | 122 KB | 1024 | 0.6/0.15 | centre of the round bottom tip on y = 0 (it stands in the rack with y = 0 at the rack hole bottom) | - |
+| `thermometer` | 4298 | 940 | 512 | 129 KB | 512 | 0.2/0.06 | centre of the bulb bottom on y = 0 | - |
+| `tongs` | 6540 | 1586 | 822 | 182 KB | 512 | 0.22/0.06 | the rivet where the two arms cross | - |
+| `tripod` | 5060 | 1250 | 516 | 136 KB | 1024 | 0.83/0.22 | centre of the three feet on y = 0 | - |
+| `waste-container` | 4562 | 1110 | 606 | 113 KB | 1024 | 0.7/0.21 | centre of the base on y = 0 | body, lid, label |
+| `watch-glass` | 5616 | 1400 | 728 | 183 KB | 1024 | 0.6/0.14 | centre of the convex underside on y = 0 | - |
+| `water-molecule` | 7380 | 1392 | 648 | 191 KB | 512 | 0.21/0.06 | molecule centre (centre of mass side: oxygen / carbon / mid-bond) | - |
+| `wire-gauze` | 5150 | 1140 | 544 | 149 KB | 512 | 0.19/0.05 | centre of the underside on y = 0 | - |
+

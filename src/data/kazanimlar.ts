@@ -1,6 +1,7 @@
 import type { Kazanim } from './types';
+import { chemKazanimlar } from './kazanimlar-chem';
 
-// Codes were found in the 2026 MEB programmes. `summaryTr` is our own paraphrase, not the official text.
+// 2026 MEB programme codes; `summaryTr` is our paraphrase.
 export const kazanimlar: Kazanim[] = [
   {
     id: 'FB.5.3.1',
@@ -298,4 +299,5 @@ export const kazanimlar: Kazanim[] = [
     summaryTr: "Genetik yapıdaki değişikliklerin canlı yaşamına olumlu ve olumsuz etkilerini sorgular; mutasyon çeşitlerine değinilmez.",
     sourceId: 'meb-biyoloji-2026',
   },
+  ...chemKazanimlar,
 ];

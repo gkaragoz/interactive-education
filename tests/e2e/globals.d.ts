@@ -26,7 +26,26 @@ interface BilimModulesHost {
   };
 }
 
+/** `window.__bilimSim`: the SimHost of the open sim module (chemistry lab). */
+interface BilimSimHost {
+  scene: {
+    lab: { journal: { textTr: string }[]; vessel(id: string): { mix: Record<string, number> } | undefined; vesselIds(): string[] };
+    root: { traverse(f: (o: BilimSimObject) => void): void };
+    pointer?: (ev: { type: string; dragId: string | null; hit: { id: string } | null }) => void;
+  };
+  simStage: { clock: { simTime: number; paused: boolean; speed: number }; stage: { camera: BilimCamera; canvas: HTMLCanvasElement } };
+}
+interface BilimCamera {
+  matrixWorldInverse: { elements: number[] };
+  projectionMatrix: { elements: number[] };
+}
+interface BilimSimObject {
+  userData: Record<string, unknown>;
+  getWorldPosition(target: unknown): unknown;
+}
+
 interface Window {
+  __bilimSim?: BilimSimHost;
   __bilim: BilimDebug;
   __bilimModules?: BilimModulesHost;
 }

@@ -7,6 +7,7 @@ import type { AssetMeta, OrganelleAsset } from './assetTypes';
 import { MaterialLibrary } from './materials';
 import { makePlaceholderAsset } from './placeholders';
 import type { Texture, WebGLRenderer } from 'three';
+import { AssetRoot, type AssetRootBackend } from './assetRoot';
 import { createKtx2Backend, pickTier, TextureStore, tiersOf } from './textureStore';
 
 /** Instanced copies of one asset: per-instance matrices and tints (through `instanceColor`). */
@@ -37,6 +38,8 @@ export class ModuleAssets {
   private readonly organelleCache = new Map<string, Promise<OrganelleAsset>>();
   private readonly metas = new Map<string, AssetMeta | null>();
   private readonly streaming = new Set<string>();
+  private readonly placeholders = new Set<string>();
+  private readonly roots = new Map<string, AssetRoot>();
   private store: TextureStore | null = null;
   private invalidate: () => void = () => undefined;
   private disposed = false;
@@ -76,6 +79,7 @@ export class ModuleAssets {
       if ((asset.lods[0]?.length ?? 0) === 0) throw new Error('GLB has no meshes');
       return asset;
     } catch {
+      this.placeholders.add(`${dir}/${id}`);
       if (!this.fallbacks.has(id)) {
         this.fallbacks.add(id);
         this.onFallback?.(id);
@@ -155,11 +159,14 @@ export class ModuleAssets {
     return promise;
   }
 
-  /** `dir` 'organelles' reads textures/<id>/..., 'modules' reads textures/modules/<id>/... (the store's id carries the folder). */
-  private async streamTextures(id: string, dir: 'organelles' | 'modules'): Promise<void> {
+  /**
+   * `dir` 'organelles' reads textures/<id>/..., any other root (modules, lab) reads textures/<dir>/<id>/... (the store's
+   * id carries the folder). The maps go on the library material `matId` (default: the asset id).
+   */
+  private async streamTextures(id: string, dir: string, matId = id): Promise<void> {
     const store = this.store;
     const meta = this.metas.get(`${dir}/${id}`) ?? null;
-    const sid = dir === 'modules' ? `modules/${id}` : id;
+    const sid = dir === 'organelles' ? id : `${dir}/${id}`;
     if (!store?.enabled || !meta || this.streaming.has(sid)) return;
     this.streaming.add(sid);
     const tiers = tiersOf(meta);
@@ -168,8 +175,8 @@ export class ModuleAssets {
     if (!first) return;
     const apply = (t: Awaited<ReturnType<TextureStore['load']>>, fade: boolean): void => {
       if (!t || this.disposed) return;
-      this.materials.applyMaps(id, 'clay', t.clay, fade);
-      this.materials.applyMaps(id, 'gel', t.gel, fade);
+      this.materials.applyMaps(matId, 'clay', t.clay, fade);
+      this.materials.applyMaps(matId, 'gel', t.gel, fade);
       this.invalidate();
     };
     apply(await store.load(sid, meta, first), false);
@@ -177,6 +184,28 @@ export class ModuleAssets {
       apply(await store.load(sid, meta, target), false);
       store.release(sid, first);
     }
+  }
+
+  /**
+   * Another asset folder (`public/models/<dir>/`, textures in `public/textures/<dir>/<id>/<tier>/`), e.g. `withRoot('lab')`.
+   * Same loading, placeholder fallback, KTX2 streaming and shared materials as the module assets; see `AssetRoot`.
+   */
+  withRoot(dir: string): AssetRoot {
+    let root = this.roots.get(dir);
+    if (!root) {
+      const backend: AssetRootBackend = {
+        fetch: (id, color) => this.fetch(id, color, dir),
+        meta: (id) => this.metas.get(`${dir}/${id}`) ?? null,
+        isPlaceholder: (id) => this.placeholders.has(`${dir}/${id}`),
+        stream: (id, matId) => this.streamTextures(id, dir, matId),
+        instances: (matId, asset, count) => this.makeInstances(matId, asset, count),
+        materials: this.materials,
+        lodIndex: () => this.lodIndex(),
+      };
+      root = new AssetRoot(dir, backend);
+      this.roots.set(dir, root);
+    }
+    return root;
   }
 
   private makeInstances(id: string, asset: OrganelleAsset, count: number): InstanceSet {
@@ -226,6 +255,8 @@ export class ModuleAssets {
     for (const promise of [...this.cache.values(), ...this.organelleCache.values()]) void promise.then((asset) => asset.dispose());
     this.cache.clear();
     this.organelleCache.clear();
+    for (const root of this.roots.values()) root.dispose();
+    this.roots.clear();
     this.store?.dispose();
     this.materials.dispose();
   }

@@ -1,0 +1,181 @@
+{
+  "id": "atom-ball",
+  "tris": {
+    "LOD0": 6348,
+    "LOD1": 1452,
+    "LOD2": 768
+  },
+  "bboxMin": [
+    -0.9991,
+    -0.9991,
+    -0.9991
+  ],
+  "bboxMax": [
+    0.9991,
+    0.9991,
+    0.9991
+  ],
+  "boundsRadius": 1,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 167144,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.6589
+      ],
+      "coverage": 0.6059,
+      "overlap": 0,
+      "stretchP95": 1.022,
+      "stretchP05": 0.964,
+      "uvPerUnit": 0.22283
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 24362
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 13603
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 9237
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 90827
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 58857
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 32563
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 324251
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 222668
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 104824
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.6,
+    "paintSeconds": 1.3,
+    "totalSeconds": 3.2
+  },
+  "pivot": "sphere centre",
+  "axes": "unit sphere (radius 1): scale it per element; neutral light albedo, tint per atom; instancing friendly (one mesh, LOD0/1/2)",
+  "units": "1 = radius",
+  "tintable": true,
+  "tintParts": [
+    "atom"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/atom-ball/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 14035,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4866,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6116,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 3053,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 45632,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 15658,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 22594,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 7380,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 165562,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 51977,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 96257,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 17328,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "id": "lab-backdrop",
+  "tris": {
+    "LOD0": 16908,
+    "LOD1": 3360,
+    "LOD2": 1788
+  },
+  "bboxMin": [
+    -30,
+    0,
+    -2
+  ],
+  "bboxMax": [
+    30,
+    45,
+    12
+  ],
+  "boundsRadius": 52.4012,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 398036,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.982,
+        0.9962
+      ],
+      "coverage": 0.5272,
+      "overlap": 0,
+      "stretchP95": 1.306,
+      "stretchP05": 0.426,
+      "uvPerUnit": 0.00834
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 99245
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 65274
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 39171
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 375675
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 272510
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 126432
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1370820
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1065095
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 381709
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.2,
+    "paintSeconds": 5.1,
+    "totalSeconds": 12.3
+  },
+  "pivot": "bottom centre of the wall front face (y = 0, z = 0)",
+  "axes": "XY wall panel 60 x 45 cm (matches one bench tile width) with painted 6 x 3 cm tiles, shelf at y = 22 projecting 12 cm towards +Z; stands behind a bench tile at z = -15",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "shelfTop": [
+    0,
+    22.8,
+    6
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/lab-backdrop/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 47306,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16443,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 22963,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 7900,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 178055,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 53303,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 105049,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 19703,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 655516,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 155712,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 449489,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 50315,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "id": "funnel",
+  "tris": {
+    "LOD0": 3268,
+    "LOD1": 800,
+    "LOD2": 440
+  },
+  "bboxMin": [
+    -3.7899,
+    -0.06,
+    -3.7975
+  ],
+  "bboxMax": [
+    3.8,
+    13.3759,
+    3.7975
+  ],
+  "boundsRadius": 13.8949,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 113328,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.9797
+      ],
+      "coverage": 0.8802,
+      "overlap": 0,
+      "stretchP95": 1.736,
+      "stretchP05": 0.523,
+      "uvPerUnit": 0.07041
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 34454
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 27927
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 1853
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 153593
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 131317
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 3607
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 804516
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 573885
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 10843
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.1,
+    "paintSeconds": 6.6,
+    "totalSeconds": 10.2
+  },
+  "pivot": "centre of the stem tip on y = 0",
+  "axes": "Y up, cone diameter 76 mm, stem 9 mm x 62 mm, total 133 mm; the filter-paper-cone sits inside (its tip at y ~ 7.2)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "parts": [
+    "glass"
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/funnel/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 40028,
+        "size": 256,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 7212,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 30511,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 2305,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 164614,
+        "size": 512,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 27087,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 133552,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 3975,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 663715,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 92164,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 564552,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 6999,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

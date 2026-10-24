@@ -1,0 +1,180 @@
+{
+  "id": "glass-rod",
+  "tris": {
+    "LOD0": 3904,
+    "LOD1": 900,
+    "LOD2": 440
+  },
+  "bboxMin": [
+    -12.5,
+    -0.32,
+    -0.32
+  ],
+  "bboxMax": [
+    12.5,
+    0.32,
+    0.32
+  ],
+  "boundsRadius": 12.5006,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 113272,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.6784
+      ],
+      "coverage": 0.4712,
+      "overlap": 0,
+      "stretchP95": 1.001,
+      "stretchP05": 0.989,
+      "uvPerUnit": 0.09666
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 5102
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 5510
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 726
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 26055
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 27685
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 1305
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 144716
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 115195
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 3086
+          }
+        }
+      }
+    },
+    "bakeSeconds": 1.4,
+    "paintSeconds": 1.2,
+    "totalSeconds": 2.9
+  },
+  "pivot": "centre of the rod",
+  "axes": "X along the rod (length 250 mm, diameter 6.4 mm)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "parts": [
+    "glass"
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/glass-rod/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 9816,
+        "size": 128,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 128,
+            "bytes": 1896,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 128,
+            "bytes": 6595,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 128,
+            "bytes": 1325,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 36397,
+        "size": 256,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 4846,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 29681,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 1870,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 132426,
+        "size": 512,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 13604,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 116065,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 2757,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

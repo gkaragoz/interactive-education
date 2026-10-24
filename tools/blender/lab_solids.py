@@ -11,7 +11,7 @@ from extrude import extrude_polygon
 
 META = {}
 TEXTURE_SIZES = {}
-STEEL, DSTEEL, BLACK, WOOD, BRASS = "#bcc5ce", "#6a737d", "#2f3338", "#b98a52", "#c9a24b"
+STEEL, DSTEEL, BLACK, WOOD, BRASS = "#97a3b0", "#6a737d", "#2f3338", "#b98a52", "#c9a24b"
 NEUTRAL_L = "#ece9df"
 
 
@@ -284,7 +284,7 @@ def flame_mount(q):
     cs = prof[:, [1, 0]].copy()
     cs[:, 0] = cs[:, 0]
     surf = _prism_xy(cs, 0.06, s(2, 1))
-    card = part("card", surf, solid("#ffb347", len(surf[0])), mat="gel", alpha=0.85, occ=False, ao=None, speck=0.0, form=0.0, proj=2, tint=(1, 0.8, 0.6))
+    card = part("card", surf, solid("#ffb347", len(surf[0])), mat="gel", alpha=0.85, occ=False, ao=None, speck=0.0, form=0.0, tint=(1, 0.8, 0.6))
     card.rect_dir = (0.0, 0.0, 1.0)
     return [clay("mount", geo.merge(col, cone, wick), "#b7a98b", tint=(0.6, 0.5, 0.5)), card]
 

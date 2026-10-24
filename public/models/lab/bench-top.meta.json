@@ -1,0 +1,181 @@
+{
+  "id": "bench-top",
+  "tris": {
+    "LOD0": 17496,
+    "LOD1": 4056,
+    "LOD2": 1944
+  },
+  "bboxMin": [
+    -30,
+    -5.6,
+    -15
+  ],
+  "bboxMax": [
+    30,
+    0,
+    15
+  ],
+  "boundsRadius": 32.4297,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 407980,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9981,
+        0.8728
+      ],
+      "coverage": 0.5718,
+      "overlap": 0,
+      "stretchP95": 1.304,
+      "stretchP05": 0.486,
+      "uvPerUnit": 0.00848
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 260416
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 147927
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 101500
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1061855
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 607768
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 286949
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 4099997
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 2447550
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 742253
+          }
+        }
+      }
+    },
+    "bakeSeconds": 10.4,
+    "paintSeconds": 24.8,
+    "totalSeconds": 39.1
+  },
+  "pivot": "centre of the top surface (y = 0 is the work surface)",
+  "axes": "XZ plane tile 60 x 30 cm (6 x 3 dm), epoxy resin top 2.4 cm on a wood frame 3.2 cm (down to y = -5.6); front edge towards +Z; abuts along X at x = +-30 for a modular bench",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "tile": [
+    60,
+    30
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/bench-top/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 149495,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 41703,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 90586,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 17206,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 611803,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 115479,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 454906,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 41418,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 558984,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 2048,
+            "bytes": 379839,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 2048,
+            "bytes": 81993,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 2048,
+            "bytes": 97152,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

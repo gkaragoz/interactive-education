@@ -67,3 +67,7 @@ Hash routes: `#/` (explore), `#/kaynakca`, `#/kaynakca/<sourceId>` (deep link, f
 - `core/settingsStorage.ts` holds the saved quality, level and Sorular choices; `AppState.questionsOn` reaches `ModuleHost.setQuestions` which updates `ModuleSession.setQuestionsEnabled` and the view.
 - `scene/moduleAssets.ts` streams painted organelle textures (`organelle`, `organelleInstances`); `scene/moduleStage.ts` has `setSafeInsets` and `prewarm`.
 - E2E: `playwright.config.ts` has two projects (`smoke`, `modules`), runs on SwiftShader with `quality=low` and 180 s per test; `E2E_GPU=1 npm run e2e` uses the real GPU. `tools/ui-shots.mjs` takes full-UI GPU screenshots of every module at several sizes; `tools/perf.mjs` is `npm run perf`.
+
+## Sim modules and the chemistry lab (v0.9)
+- Layers: `chemlab` (pure engine, no three.js, no DOM) is importable by `scene`, `modules`, `ui` and `app`; it imports only `core` and `data`. `tests/chemlab` covers it.
+- `core/simClock.ts` (fixed-step accumulator, time-lapse, snapshot history), `scene/simScene.ts` (contract), `scene/simStage.ts` (stage + pointer + clock + history), `scene/labInteractions.ts` (keyboard path), `app/simHost.ts` + `app/moduleRouting.ts` (route to the right host), `ui/lab*.ts` (lab screen). Details in `docs/SIMS.md`.

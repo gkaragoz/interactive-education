@@ -1,0 +1,203 @@
+{
+  "id": "test-tube-rack",
+  "tris": {
+    "LOD0": 25752,
+    "LOD1": 5580,
+    "LOD2": 2688
+  },
+  "bboxMin": [
+    -10,
+    0,
+    -3.5
+  ],
+  "bboxMax": [
+    10,
+    9,
+    3.5
+  ],
+  "boundsRadius": 13.5091,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 640416,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9961,
+        0.9294
+      ],
+      "coverage": 0.7079,
+      "overlap": 0,
+      "stretchP95": 1.363,
+      "stretchP05": 0.521,
+      "uvPerUnit": 0.02553
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 117655
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 81309
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 65813
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 432488
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 338741
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 216531
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 1539170
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1370456
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 671748
+          }
+        }
+      }
+    },
+    "bakeSeconds": 4.7,
+    "paintSeconds": 6.2,
+    "totalSeconds": 12.4
+  },
+  "pivot": "centre of the bottom plate on y = 0",
+  "axes": "X along the six holes (spacing 2.9, first at x = -7.25), Y up; upper collars at y = 7.5..8.5, lower guides at y = 2.2; a test tube stands with its tip at y = 2.3 (lower guide bottom) and passes through the hole axis (z = 0)",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "holes": [
+    [
+      -7.25,
+      0
+    ],
+    [
+      -4.35,
+      0
+    ],
+    [
+      -1.45,
+      0
+    ],
+    [
+      1.45,
+      0
+    ],
+    [
+      4.35,
+      0
+    ],
+    [
+      7.25,
+      0
+    ]
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/test-tube-rack/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 55876,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 18591,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 25342,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 11943,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 211921,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 62889,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 114616,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 34416,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 793808,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 179253,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 513293,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 101262,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

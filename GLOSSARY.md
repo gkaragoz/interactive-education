@@ -70,6 +70,48 @@ _Avoid_: Solo, focus
 Two cell scenes shown side by side with linked camera, highlighting shared and different organelles.
 _Avoid_: Diff, versus mode
 
+### Modules, labs and simulations
+
+**Timeline module**:
+A module whose picture is a pure function of time (`seek(t)`): phases, a scrub bar, charts and checks (mitoz ve mayoz, enerji, kas ...). Defined by `ModuleInfo` plus a `ModuleScene`.
+_Avoid_: Animation module, video
+
+**Track**:
+One animation of a timeline module, shown as a tab (e.g. mitoz, mayoz I). In the chemistry lab each track explains one experiment and has the experiment's id.
+_Avoid_: Scene, episode
+
+**Phase**:
+A named stretch of a track with its own text per level, chart points and step button.
+_Avoid_: Chapter, slide
+
+**Sim module**:
+An interactive sandbox with fixed-step simulation state instead of a timeline: sliders, drag and drop, measurements, snapshot and restore. Contract `SimScene` (`docs/SIMS.md`); the chemistry lab is the first, physics sandboxes will follow (research in `docs/research/fizik.md`).
+_Avoid_: Game, widget
+
+**Time-lapse (zaman atlaması)**:
+The factor (1x, 5x, 20x, 60x) by which a sim runs faster than real time; the step grows instead of the frame count.
+_Avoid_: Fast forward, speed multiplier
+
+**Kimya laboratuvarı**:
+The chemistry sim module: ten guided experiments (Rehberli deney), a free bench (Serbest tezgâh), the engine in `src/chemlab` and the 3D bench in `src/modules/chem-lab`.
+_Avoid_: Chem game
+
+**Defter**:
+The lab notebook: the engine's timestamped journal (actions, observations, measurements, warnings) shown in the lab, with a copy button; clicking a line replays that moment.
+_Avoid_: Log, report
+
+**Nedenini göster**:
+The particle-level explainer of an experiment, played as a timeline track after the steps are done.
+_Avoid_: Explanation video
+
+**Sorular**:
+The setting (Açık / Kapalı) that decides whether Kendini dene checks and Tahmin et prompts pause the animation; "Kendini dene" is the list of questions and stays reachable when it is off.
+_Avoid_: Quiz mode
+
+**Safe area**:
+The part of the stage not covered by floating panels; the camera centres the picture in it (`setSafeInsets`). Narrow stages (under about 1450 x 740 px) switch to a compact layout.
+_Avoid_: Margin, viewport
+
 ### Asset pipeline
 
 **Organelle asset**:

@@ -6,3 +6,4 @@ export { createSettingsMenu } from './settings';
 export { createMicroscopePanel } from './bottomRow';
 export { renderAbout } from './about';
 export type { ModuleView, ModuleViewHandlers } from './moduleView';
+export type { LabView, LabViewHandlers } from './labView';

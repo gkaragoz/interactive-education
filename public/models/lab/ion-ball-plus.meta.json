@@ -1,0 +1,181 @@
+{
+  "id": "ion-ball-plus",
+  "tris": {
+    "LOD0": 5424,
+    "LOD1": 1020,
+    "LOD2": 540
+  },
+  "bboxMin": [
+    -1,
+    -1,
+    -1.07
+  ],
+  "bboxMax": [
+    1,
+    1,
+    1.07
+  ],
+  "boundsRadius": 1.1028,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 152664,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.8586
+      ],
+      "coverage": 0.6937,
+      "overlap": 0,
+      "stretchP95": 1.259,
+      "stretchP05": 0.865,
+      "uvPerUnit": 0.22335
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 26571
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 16218
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 16746
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 95925
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 70513
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 58453
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 335873
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 276750
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 184627
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.8,
+    "paintSeconds": 1.2,
+    "totalSeconds": 4.3
+  },
+  "pivot": "sphere centre",
+  "axes": "unit sphere (radius 1) with a raised '+' mark on both +Z and -Z poles; neutral `body` is tinted per ion, `sign` is dark ink",
+  "units": "1 = radius",
+  "tintable": true,
+  "tintParts": [
+    "body"
+  ],
+  "neutralAlbedo": true,
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/ion-ball-plus/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 16212,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5166,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6741,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4305,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 51928,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 16980,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 23608,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 11340,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 182450,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 54431,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 99866,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 28153,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

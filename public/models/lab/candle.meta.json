@@ -1,0 +1,182 @@
+{
+  "id": "candle",
+  "tris": {
+    "LOD0": 3952,
+    "LOD1": 938,
+    "LOD2": 508
+  },
+  "bboxMin": [
+    -1.35,
+    0,
+    -1.3477
+  ],
+  "bboxMax": [
+    1.35,
+    10.3688,
+    1.3477
+  ],
+  "boundsRadius": 10.3697,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 93168,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.7176
+      ],
+      "coverage": 0.6376,
+      "overlap": 0,
+      "stretchP95": 1.814,
+      "stretchP05": 0.941,
+      "uvPerUnit": 0.08768
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 23340
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 16895
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 8821
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 89290
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 71840
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 30548
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 315825
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 281631
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 101207
+          }
+        }
+      }
+    },
+    "bakeSeconds": 2.6,
+    "paintSeconds": 1.1,
+    "totalSeconds": 4
+  },
+  "pivot": "centre of the base on y = 0",
+  "axes": "Y up, candle diameter 22 mm, height 90 mm + wick to y = 10.3",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "flameMount": [
+    0.12,
+    10.3,
+    0.02
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/candle/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 13313,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 4418,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6186,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 2709,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 48544,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 15019,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27259,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 6266,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 184636,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 52301,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 116038,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 16297,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

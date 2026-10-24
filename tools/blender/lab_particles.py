@@ -167,14 +167,12 @@ TEXTURE_SIZES["bubble"] = 256
 
 def precipitate_crystal(q):
     p, f = geo.cube_sphere(res(26, q, 4))
-    k = 1.15
-    nrm = (np.abs(p) ** k).sum(1) ** (1.0 / k)
-    v = p / np.maximum(nrm, 1e-9)[:, None] * 1.0
-    v = v * np.array([0.62, 1.0, 0.62])
-    rng = np.random.default_rng(5)
-    v[:, 1] = np.clip(v[:, 1], -0.8, 0.8) * 1.0
+    l1 = np.abs(p).sum(1)
+    oct_ = p / np.maximum(l1, 1e-9)[:, None]
+    sph_ = p / np.maximum(np.linalg.norm(p, axis=1), 1e-9)[:, None]
+    v = (0.88 * oct_ * 1.25 + 0.12 * sph_) * np.array([0.62, 1.05, 0.62])
     ph = np.arctan2(v[:, 2], v[:, 0])
-    v = v * (1 + 0.04 * np.cos(3 * ph + 0.5))[:, None]
+    v = v * (1 + 0.05 * np.cos(3 * ph + 0.5))[:, None]
     lc.neutral_hint("precipitate-crystal", "crystal", w=0.2, relief=0.004, dab=0.05)
 
     def fn(S, r, hint, gel):

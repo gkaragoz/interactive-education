@@ -1,0 +1,187 @@
+{
+  "id": "ph-colour-chart",
+  "tris": {
+    "LOD0": 9504,
+    "LOD1": 1836,
+    "LOD2": 972
+  },
+  "bboxMin": [
+    -5.5,
+    0,
+    -2.7
+  ],
+  "bboxMax": [
+    5.5,
+    0.225,
+    2.7
+  ],
+  "boundsRadius": 5.7964,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 311424,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0078,
+        0.0079
+      ],
+      "uvMax": [
+        0.9922,
+        0.9668
+      ],
+      "coverage": 0.4082,
+      "overlap": 0,
+      "stretchP95": 1.693,
+      "stretchP05": 0.338,
+      "uvPerUnit": 0.0486
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 128,
+            "pngBytes": 29389
+          },
+          "normal": {
+            "size": 128,
+            "pngBytes": 17171
+          },
+          "orm": {
+            "size": 128,
+            "pngBytes": 17788
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 100389
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 77195
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 57829
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 331936
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 315211
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 175808
+          }
+        }
+      }
+    },
+    "bakeSeconds": 12.2,
+    "paintSeconds": 1.2,
+    "totalSeconds": 13.6
+  },
+  "pivot": "centre of the underside on y = 0",
+  "axes": "XZ plane card 11 x 5.4 cm, 8 painted colour patches (patch-1 red .. patch-8 violet, left to right) approximating pH 1, 3, 4, 6, 7, 8, 10, 13",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "patchPH": [
+    1,
+    3,
+    4,
+    6,
+    7,
+    8,
+    10,
+    13
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/ph-colour-chart/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 16918,
+        "size": 128,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 128,
+            "bytes": 5645,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 128,
+            "bytes": 6739,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 128,
+            "bytes": 4534,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 58084,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 18365,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27178,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 12541,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 206826,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 57966,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 114979,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 33881,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

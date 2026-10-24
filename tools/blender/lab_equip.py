@@ -9,7 +9,7 @@ from shapes import res, part
 META = {}
 TEXTURE_SIZES = {}
 
-STEEL, DSTEEL, BLACK, WOOD, WHITE, BRASS = "#bcc5ce", "#6a737d", "#2f3338", "#b98a52", "#ece9df", "#c9a24b"
+STEEL, DSTEEL, BLACK, WOOD, WHITE, BRASS = "#97a3b0", "#6a737d", "#2f3338", "#b98a52", "#ece9df", "#c9a24b"
 
 
 def at(surf, pos=(0, 0, 0), r=None):

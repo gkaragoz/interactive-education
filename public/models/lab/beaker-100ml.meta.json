@@ -1,0 +1,189 @@
+{
+  "id": "beaker-100ml",
+  "tris": {
+    "LOD0": 5256,
+    "LOD1": 1280,
+    "LOD2": 696
+  },
+  "bboxMin": [
+    -2.64,
+    0,
+    -2.6356
+  ],
+  "bboxMax": [
+    3.09,
+    7.0918,
+    2.6356
+  ],
+  "boundsRadius": 7.5895,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 172656,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.002,
+        0.002
+      ],
+      "uvMax": [
+        0.9743,
+        0.9981
+      ],
+      "coverage": 0.5387,
+      "overlap": 0,
+      "stretchP95": 1.412,
+      "stretchP05": 0.972,
+      "uvPerUnit": 0.03788
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 161541
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 75564
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 9029
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 706035
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 385553
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 17393
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 2048,
+            "pngBytes": 3179255
+          },
+          "normal": {
+            "size": 2048,
+            "pngBytes": 1622914
+          },
+          "orm": {
+            "size": 2048,
+            "pngBytes": 50814
+          }
+        }
+      }
+    },
+    "bakeSeconds": 14.7,
+    "paintSeconds": 38,
+    "totalSeconds": 58.1
+  },
+  "pivot": "centre of the base (y = 0 stands on the bench)",
+  "axes": "Y up, pouring spout towards +X; outer diameter 50 mm, height 70 mm, 1 unit = 1 cm",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "capacityMl": 100,
+  "parts": [
+    "glass",
+    "inner"
+  ],
+  "liquid": {
+    "mesh": "inner",
+    "axis": "Y",
+    "yMin": 0.18,
+    "yMax": 4.767,
+    "note": "closed cavity volume up to the top graduation: scale / clip it along Y to set the level"
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/beaker-100ml/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 108729,
+        "size": 512,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 26926,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 74855,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 6948,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 532332,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 85107,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 432296,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 14929,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 327692,
+        "size": 2048,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 2048,
+            "bytes": 295493,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 2048,
+            "bytes": 1835,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 2048,
+            "bytes": 30364,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

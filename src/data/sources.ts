@@ -1,5 +1,6 @@
 import type { Source } from './types';
 import { ACCESSED, commons, openstax, wpEn, wpTr } from './sources-helpers';
+import { chemSources } from './sources-chem';
 import { moduleSources } from './sources-modules';
 
 // Every cited reference. URLs were fetched and confirmed to exist on the `accessed` date.
@@ -83,6 +84,7 @@ export const sources: Source[] = [
   openstax('4-4', '4.4 The Endomembrane System and Proteins', '4-4-the-endomembrane-system-and-proteins'),
 
   ...moduleSources,
+  ...chemSources,
 
   // Wikimedia Commons file pages for micrographs
   commons('onion', 'Living cells of onion epidermis', 'Living_cells_of_onion_epidermis_(33605021164).jpg', 'Berkshire Community College Bioscience Image Library', 'CC0'),

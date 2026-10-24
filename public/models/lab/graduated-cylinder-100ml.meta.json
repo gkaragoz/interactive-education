@@ -1,0 +1,190 @@
+{
+  "id": "graduated-cylinder-100ml",
+  "tris": {
+    "LOD0": 5684,
+    "LOD1": 1396,
+    "LOD2": 760
+  },
+  "bboxMin": [
+    -3.0868,
+    0,
+    -2.9029
+  ],
+  "bboxMax": [
+    3.105,
+    25.0868,
+    2.9029
+  ],
+  "boundsRadius": 25.131,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 194640,
+  "uv": {
+    "gel": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9685,
+        0.9962
+      ],
+      "coverage": 0.6831,
+      "overlap": 0,
+      "stretchP95": 1.417,
+      "stretchP05": 0.906,
+      "uvPerUnit": 0.03232
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "gel": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 47765
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 21361
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 2609
+          }
+        }
+      },
+      "medium": {
+        "gel": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 198833
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 105658
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 4806
+          }
+        }
+      },
+      "high": {
+        "gel": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 881134
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 448485
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 11928
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.1,
+    "paintSeconds": 7.2,
+    "totalSeconds": 14.2
+  },
+  "pivot": "centre of the foot on y = 0",
+  "axes": "Y up, spout towards +X; outer diameter 29 mm, height 250 mm, 1 unit = 1 cm; 2 mL ticks, longer every 10 mL",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "capacityMl": 100,
+  "parts": [
+    "glass",
+    "foot",
+    "inner"
+  ],
+  "liquid": {
+    "mesh": "inner",
+    "axis": "Y",
+    "yMin": 1.57,
+    "yMax": 20.094,
+    "note": "cavity volume up to the 100 mL mark"
+  },
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/graduated-cylinder-100ml/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 38711,
+        "size": 256,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 256,
+            "bytes": 12320,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 256,
+            "bytes": 23774,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 256,
+            "bytes": 2617,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 155826,
+        "size": 512,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 512,
+            "bytes": 35851,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 512,
+            "bytes": 115226,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 512,
+            "bytes": 4749,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 624616,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "gel_albedo.ktx2",
+            "size": 1024,
+            "bytes": 112936,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "gel_normal.ktx2",
+            "size": 1024,
+            "bytes": 502955,
+            "codec": "UASTC"
+          },
+          {
+            "name": "gel_orm.ktx2",
+            "size": 1024,
+            "bytes": 8725,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}

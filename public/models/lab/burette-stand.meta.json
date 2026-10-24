@@ -1,0 +1,187 @@
+{
+  "id": "burette-stand",
+  "tris": {
+    "LOD0": 7346,
+    "LOD1": 1660,
+    "LOD2": 896
+  },
+  "bboxMin": [
+    -12,
+    0,
+    -7
+  ],
+  "bboxMax": [
+    12,
+    70.2,
+    7
+  ],
+  "boundsRadius": 70.5887,
+  "closed": true,
+  "generator": "tools/blender/make_organelles.py",
+  "seed": 20260101,
+  "bytes": 203980,
+  "uv": {
+    "clay": {
+      "uvMin": [
+        0.0039,
+        0.004
+      ],
+      "uvMax": [
+        0.9854,
+        0.9962
+      ],
+      "coverage": 0.5956,
+      "overlap": 0,
+      "stretchP95": 1.363,
+      "stretchP05": 0.638,
+      "uvPerUnit": 0.02354
+    }
+  },
+  "textureSource": {
+    "tiers": {
+      "low": {
+        "clay": {
+          "albedo": {
+            "size": 256,
+            "pngBytes": 63518
+          },
+          "normal": {
+            "size": 256,
+            "pngBytes": 61474
+          },
+          "orm": {
+            "size": 256,
+            "pngBytes": 35642
+          }
+        }
+      },
+      "medium": {
+        "clay": {
+          "albedo": {
+            "size": 512,
+            "pngBytes": 246466
+          },
+          "normal": {
+            "size": 512,
+            "pngBytes": 269534
+          },
+          "orm": {
+            "size": 512,
+            "pngBytes": 111529
+          }
+        }
+      },
+      "high": {
+        "clay": {
+          "albedo": {
+            "size": 1024,
+            "pngBytes": 932273
+          },
+          "normal": {
+            "size": 1024,
+            "pngBytes": 1077558
+          },
+          "orm": {
+            "size": 1024,
+            "pngBytes": 334568
+          }
+        }
+      }
+    },
+    "bakeSeconds": 6.1,
+    "paintSeconds": 4.6,
+    "totalSeconds": 11.6
+  },
+  "pivot": "centre of the cast base plate on y = 0",
+  "axes": "Y up; rod at x = -7 (height 70); the clamp ring grips the burette at mountPoint (2, 50, 0): put the burette origin at (2, 12, 0) so its clamp zone (burette y = 38) sits in the ring",
+  "units": "1 = 1 cm",
+  "tintable": false,
+  "mountPoint": [
+    2,
+    50,
+    0
+  ],
+  "buretteOrigin": [
+    2,
+    12,
+    0
+  ],
+  "textures": {
+    "format": "KTX2",
+    "path": "textures/lab/burette-stand/<tier>/<material>_<map>.ktx2",
+    "tiers": {
+      "low": {
+        "bytes": 45583,
+        "size": 256,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 256,
+            "bytes": 9511,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 256,
+            "bytes": 27584,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 256,
+            "bytes": 8488,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "medium": {
+        "bytes": 162539,
+        "size": 512,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 512,
+            "bytes": 28119,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 512,
+            "bytes": 112311,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 512,
+            "bytes": 22109,
+            "codec": "ETC1S"
+          }
+        ]
+      },
+      "high": {
+        "bytes": 615924,
+        "size": 1024,
+        "maps": [
+          {
+            "name": "clay_albedo.ktx2",
+            "size": 1024,
+            "bytes": 89799,
+            "codec": "ETC1S"
+          },
+          {
+            "name": "clay_normal.ktx2",
+            "size": 1024,
+            "bytes": 466973,
+            "codec": "UASTC"
+          },
+          {
+            "name": "clay_orm.ktx2",
+            "size": 1024,
+            "bytes": 59152,
+            "codec": "ETC1S"
+          }
+        ]
+      }
+    }
+  }
+}
