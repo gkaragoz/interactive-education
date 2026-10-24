@@ -33,3 +33,6 @@
 
 ## v0.9.0
 - Kimya Laboratuvarı: 10 rehberli deney ve serbest tezgâh (beherler, erlenmeyer, terazi, bek, voltametre), kimya motoru, Defter, güvenlik sayfası ve her deney için parçacık düzeyinde nedenini göster animasyonu.
+
+## v0.9.1
+- Kimya laboratuvarı kart görseli eklendi.
