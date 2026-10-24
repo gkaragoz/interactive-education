@@ -43,6 +43,7 @@ const R0 = 2.1;
 
 /** Animal cell: a translucent membrane ball that swells, or shrinks and crinkles; the nucleus follows. */
 export function createAnimalCell(shell: MeshPhysicalMaterial, clay: MeshPhysicalMaterial, seg: number): CellView {
+  shell.opacity = 0.46;
   const group = new Group();
   const { mesh, base } = liveSphere(shell, seg, '#e7b3b8');
   const nucleus = new Mesh(paint(new SphereGeometry(0.62, 18, 14), COLORS.nucleus, 0.2), clay);

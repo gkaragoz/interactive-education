@@ -36,3 +36,6 @@
 
 ## v0.9.1
 - Kimya laboratuvarı kart görseli eklendi.
+
+## v1.0.0
+- Sahne cilası: boyalı kromozomlar, akuaporin ve lizis, boyalı organeller enerji modülünde, DNA'da helikaz ve katlanmış polipeptit, sinirde boyalı kahraman çekimleri, kalıtımda ve kasta serbest alan çerçeveleme, modül dokuları varsayılan, performans ölçümleri (docs/PERF.md).

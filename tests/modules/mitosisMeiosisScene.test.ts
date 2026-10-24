@@ -69,3 +69,28 @@ describe('mitosis-meiosis scene', () => {
     s.dispose();
   });
 });
+
+describe('painted chromatid conversion', () => {
+  it('straightens a tilted rod: long axis along Y, waist at the origin, long arm toward -Y, length 1', async () => {
+    const { CylinderGeometry, Matrix4 } = await import('three');
+    const { paintedChromatidGeometry } = await import('../../src/modules/mitosis-meiosis/paintedChromatid');
+    const g = new CylinderGeometry(0.09, 0.09, 0.8, 16, 24);
+    // pinch the waist at 35% of the length, then tilt by 18 degrees and shift away from the origin
+    const p = g.getAttribute('position');
+    for (let i = 0; i < p.count; i++) {
+      const y = p.getY(i);
+      const k = 1 - 0.45 * Math.exp(-Math.pow((y - 0.1) / 0.06, 2));
+      p.setXYZ(i, p.getX(i) * k, y, p.getZ(i) * k);
+    }
+    g.applyMatrix4(new Matrix4().makeRotationZ(0.31).setPosition(0.2, -0.1, 0));
+    const out = paintedChromatidGeometry([{ name: 'chromosome-single-arms', geometry: g }]);
+    expect(out).not.toBeNull();
+    out!.computeBoundingBox();
+    const b = out!.boundingBox!;
+    expect(b.max.y - b.min.y).toBeCloseTo(1, 2);
+    expect(Math.abs(b.min.y)).toBeGreaterThan(Math.abs(b.max.y));
+    expect(b.max.x).toBeLessThan(1.3);
+    expect(out!.getAttribute('aSeg')).toBeDefined();
+    expect(paintedChromatidGeometry([{ name: 'placeholder', geometry: g }])).toBeNull();
+  });
+});

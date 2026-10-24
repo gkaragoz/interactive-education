@@ -74,7 +74,7 @@ export function buildMitosis(np: number, rng: Rng): Plan {
   plan.loose = new KeyTrack(['v'], { v: 1 }).to(11).to(17, { v: 0 }).to(33).to(36.5, { v: 1 });
 
   const C = (px: number, py: number, pz: number, tx = 0, ty = 0, tz = 0): Record<string, number> => ({ px, py, pz, tx, ty, tz });
-  plan.cam = new KeyTrack(CAM_CH, C(0, 2.5, 21)).to(10, C(-2, 2.5, 21)).to(17, C(0, 3, 21)).to(21, C(7, 4.5, 20)).to(26, C(7, 4.5, 20)).to(31, C(0, 2, 25)).to(37, C(0, 1.5, 26)).to(45, C(0, 1.5, 29));
+  plan.cam = new KeyTrack(CAM_CH, C(0, 2, 16.8)).to(10, C(-1.6, 2, 16.8)).to(17, C(0, 2.4, 16.8)).to(21, C(5.6, 3.6, 16)).to(26, C(5.6, 3.6, 16)).to(31, C(0, 1.6, 20)).to(37, C(0, 1.2, 20.8)).to(45, C(0, 1.2, 23.2));
   plan.chart = chartMitosis(np);
   plan.labels = mitosisLabels;
   return plan;

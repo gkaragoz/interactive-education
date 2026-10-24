@@ -32,7 +32,7 @@ export function chemoPlan(): Plan {
   const S = 0;
   // light fades out long before the seafloor
   for (let i = 0; i < 14; i++) {
-    const t = 0.2 + i * 0.45;
+    const t = -1.8 + i * 0.45;
     const stop = 1.5 + hash01(i) * 2.2;
     trips.push(go('photon', S, 0.22, [[t, -9.0, 7.6, 0.4], [t + 2.4, -4.0 + hash01(i + 3) * 6, stop, 0.2]], { fade: 0.8 }));
   }

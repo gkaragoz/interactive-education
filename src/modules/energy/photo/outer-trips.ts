@@ -14,9 +14,10 @@ export const GRANUM = 5;
 
 /** Station 0 (first visit): sunlight, CO2 entering at the stoma and water climbing the vein. */
 export function leafIntro(light: number, end: number): Trip[] {
-  const out = sunPhotons(0.1, end, light);
+  // the first molecules are already under way at t = 0, so the first frame is a poster of the story
+  const out = sunPhotons(-1.6, end, light);
   for (let i = 0; i < 6; i++) {
-    const t = 0.2 + i * 0.45;
+    const t = -1.2 + i * 0.6;
     out.push(go('co2', LEAF, 0.34, [[t, -6.5 + (i % 3), -5.8, 0.4], [t + 1.1, -3.0, -3.4, 0.2], [t + 1.9, STOMA[0], STOMA[1], 0], [t + 2.8, -1.4, -0.4, 0.1]], { wobble: 0.08 }));
     out.push(go('h2o', LEAF, 0.34, [[t + 0.1, VEIN_X, -6.4, 0.3], [t + 1.5, VEIN_X, -0.3, 0], [t + 2.5, 2.6, 0.5, 0.2]], { wobble: 0.06 }));
   }

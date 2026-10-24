@@ -39,7 +39,7 @@ export async function createActive(kit: Kit): Promise<TrackRig> {
   const pumps: Pump[] = await Promise.all(PX.map((x) => makePump(kit.ctx, x, PZ)));
   kit.root.add(...pumps.map((p) => p.group));
   const patch = kit.patch({
-    xHalf: 8.6,
+    xHalf: 12.5,
     zFront: 0,
     zBack: -3.8,
     seed: 9,

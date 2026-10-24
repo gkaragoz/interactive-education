@@ -18,7 +18,7 @@ const SPEED: Record<string, number> = { dusuk: 0.6, orta: 1, yuksek: 1.5 };
 /** Simple diffusion: small molecules cross the lipid bilayer by themselves, down their concentration gradient. */
 export function createDiffusion(kit: Kit): TrackRig {
   const pool = kit.pool(N + BIG);
-  const patch = kit.patch({ xHalf: 8.6, zFront: 0, zBack: -3.8, seed: 3 });
+  const patch = kit.patch({ xHalf: 12.5, zFront: 0, zBack: -3.8, seed: 3 });
   kit.backdrop(9.2, -3.8, 5.8, -5.8);
   kit.bokeh(9.2, 5.8, -5.8, -3.8);
   for (let i = 0; i < N; i++) pool.setColor(i, COLORS.solute);

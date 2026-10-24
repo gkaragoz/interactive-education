@@ -2,6 +2,7 @@ import { BackSide, Color, Group, Mesh, MeshBasicMaterial, SphereGeometry } from 
 import type { ModuleContext, ModuleLabel, ModuleScene } from '../../scene';
 import type { Plan, StationBuilder, StationRt } from './env';
 import { Flock } from './flock';
+import { createLegend } from './legend';
 import { cameraFrom, smooth } from './math';
 
 export interface RigSpec {
@@ -18,6 +19,8 @@ const VEIL_COLOR = '#f6ebd2';
 /** Assembles a ModuleScene from a plan factory: stations overlaid at the origin (one active at a time), molecules, cuts. */
 export async function buildRig(ctx: ModuleContext, spec: RigSpec): Promise<ModuleScene> {
   const root = new Group();
+  // the painted look of the module's own models (reviewed: richer clay, no cost beyond the texture streams)
+  ctx.assets.moduleTextures = true;
   root.name = `energy-${ctx.trackId}`;
   const groups = spec.stations.map((_, i) => {
     const g = new Group();
@@ -44,6 +47,8 @@ export async function buildRig(ctx: ModuleContext, spec: RigSpec): Promise<Modul
   veil.visible = false;
   root.add(veil);
 
+  const legend = plan.legend?.length ? createLegend(plan.legend) : null;
+  if (legend) root.add(legend.sprite);
   let active = -1;
   const activeAt = (t: number): number => {
     let s = plan.windows[0]!.station;
@@ -85,10 +90,13 @@ export async function buildRig(ctx: ModuleContext, spec: RigSpec): Promise<Modul
       const d = Math.hypot(cam.position[0] - cam.target[0], cam.position[1] - cam.target[1], cam.position[2] - cam.target[2]);
       const top = cam.target[1] + 0.1 * d;
       const bottom = cam.target[1] - 0.17 * d;
+      // the text card sits at the lower left: anchors there stay above it
+      const cardTop = cam.target[1] - 0.115 * d;
+      const cardRight = cam.target[0] + 0.1 * d;
       for (const l of plan.labels) {
         if (t < l.t0 || t > l.t1) continue;
         const text = typeof l.text === 'string' ? l.text : l.text[ctx.level];
-        if (text) out.push({ text, world: [l.at[0], Math.min(top, Math.max(bottom, l.at[1])), l.at[2]], anchorId: l.id });
+        if (text) out.push({ text, world: [l.at[0], Math.min(top, Math.max(l.at[0] < cardRight ? cardTop : bottom, l.at[1])), l.at[2]], anchorId: l.id });
       }
       return out;
     },
@@ -100,6 +108,7 @@ export async function buildRig(ctx: ModuleContext, spec: RigSpec): Promise<Modul
     },
     dispose: () => {
       flock.dispose();
+      legend?.dispose();
       own.forEach((d) => d.dispose());
       veilGeo.dispose();
       veilMat.dispose();

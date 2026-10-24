@@ -16,19 +16,19 @@ export async function cellStation(env: Env): Promise<StationRt> {
   const body = addMesh(env, new SphereGeometry(1, 40, 24), '#f6d9b0', 'glass', 'energy-fcell', 0.3);
   body.scale.set(14, 7.2, 3.2);
   const mito = await organelleInstances(env.ctx, 'mitochondrion', 1, { lod: env.ctx.quality === 'low' ? 2 : 1, gelOpacity: 0.42, skin: 'glossy' }, 'energy-fmito');
-  mito.setMatrix(0, new Matrix4().compose(new Vector3(7.4, -0.4, 0), new Quaternion(), new Vector3(1.4, 1.4, 1.4)));
+  mito.setMatrix(0, new Matrix4().compose(new Vector3(3.8, -0.4, 0), new Quaternion(), new Vector3(1.4, 1.4, 1.4)));
   mito.commit();
   env.group.add(mito.group);
   env.own.push(mito);
   const bar = (rot: number): void => {
     const m = addMesh(env, new BoxGeometry(5.2, 0.5, 0.5), '#d8453b');
-    m.position.set(7.4, 0, 1.6);
+    m.position.set(3.8, 0, 1.6);
     m.rotation.z = rot;
   };
   bar(Math.PI / 4);
   bar(-Math.PI / 4);
   const ringMesh = addMesh(env, new TorusGeometry(2.6, 0.2, 8, 40), '#d8453b');
-  ringMesh.position.set(7.4, 0, 1.6);
+  ringMesh.position.set(3.8, 0, 1.6);
   return {};
 }
 

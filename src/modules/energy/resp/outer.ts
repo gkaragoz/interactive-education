@@ -13,12 +13,12 @@ const mito = (i: number): [number, number, number] => {
 export function cellIntro(): Trip[] {
   const out: Trip[] = [];
   for (let i = 0; i < 3; i++) {
-    const t = 0.3 + i * 0.95;
+    const t = -1.6 + i * 0.95;
     const m = mito(i * 2);
     out.push(go('glucose', R_CELL, 0.6, [[t, -12.5, 3.5 - i * 1.6, 0.8], [t + 1.6, -6.5, 1.0 - i, 0.6], [t + 3.6, m[0] - 1.0, m[1], m[2]]], { wobble: 0.08, fade: 0.5 }));
   }
   for (let i = 0; i < 6; i++) {
-    const t = 0.6 + i * 0.5;
+    const t = -1.2 + i * 0.6;
     const m = mito(i);
     out.push(go('o2', R_CELL, 0.4, [[t, -12.5, -5 + (i % 3), 0.8], [t + 1.5, -6.0, -2.5, 0.6], [t + 3.2, m[0], m[1] - 0.6, m[2]]], { wobble: 0.1 }));
   }

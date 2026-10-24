@@ -67,6 +67,7 @@ export function translLabels(t: number, ileri: boolean, P: TranslPoints): Module
   if (stop && P.stopOn) addP(`Dur kodonu: ${stop.codon}`, pt(P.stop, 1.4), 'stop');
   if (t >= st.release && t < st.release + 3) add(ileri ? 'Zincir tRNA\'dan ayrılır' : 'Zincir serbest kalır', -1.5, 6.4, 0.5, 'release');
   if (t >= st.separate && t < st.separate + 2.6) add('Alt birimler ayrılır', 0, 5.8, 0.5, 'subs');
+  if (ileri && t >= 53) addP('α-sarmal benzeri kıvrım (Ek bilgi)', pt(P.bead[Math.min(2, n - 1)] as Vector3, -1.6, 1.2), 'helix');
   if (t >= 50) addP(ileri ? 'Polipeptit katlanarak protein olur' : 'Katlanarak protein olur', pt(P.bead[Math.min(1, n - 1)] as Vector3, 1.8), 'fold');
   return out;
 }

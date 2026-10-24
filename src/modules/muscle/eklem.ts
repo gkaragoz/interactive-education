@@ -28,7 +28,7 @@ export function createEklem(ctx: ModuleContext, root: Group): TrackRig {
   return {
     duration: 36,
     seek: (t) => arm.pose(armAt(t)),
-    cameraAt: (t) => ({ position: [1.5 + (ctx.reducedMotion ? 0 : Math.sin(t * 0.12) * 0.6), 2.0, 33], target: [1.2, 0.2, 0] }),
+    cameraAt: (t) => ({ position: [1.5 + (ctx.reducedMotion ? 0 : Math.sin(t * 0.12) * 0.6), 2.0, 29], target: [1.2, 0.2, 0] }),
     labelsAt: (t) => {
       const s = armAt(t);
       const word = (keys: typeof BICEPS_KEYS): string => stateWord(s.biceps, evalKeys(keys, t + 0.5), evalKeys(keys, t - 0.5));

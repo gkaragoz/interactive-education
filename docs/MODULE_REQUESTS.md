@@ -76,3 +76,10 @@
 - Resolved by the shell: asset root (`withRoot('lab')`), camera framing and limits (`SimScene.camera`), hidden-parent picking, Defter merging of pours, Etiketler modes. The scene uses them (`labAssets.ts`, `framing.ts`, one label per item).
 - Content: `src/data/modules/chem-lab*.ts` track times do not need to match the particle script times for the explainer; the scene follows `ParticleScript.durationS` and the dock's `seek(t)`.
 - Asset (nice to have): a `crucible` with lid and a `bunsen-burner` GLB (the scene draws a lathe crucible and a procedural Bunsen), and a `gas-tube` (inverted test tube is used). `bubble`/`atom-ball` are not instanced (6k triangles each); the scene uses its own 80 to 320 triangle spheres in the clay look.
+- Shell (AO flag): please add a supported per-object flag (e.g. `userData.noAO`) that the GTAO pass skips; nervous flags glow sprites, veils and steam with `isPoints = true` (`noAO()` in `src/modules/nervous/kit.ts`) until then.
+- Shell (module textures): reviewed `?moduletex` on nervous (channels, pump, synapse hero): the painted mottling is better than flat vertex colours; suggest enabling it by default.
+- Asset (`reflex-arc-parts`): used only for the opening overview. For the cord in the scene it would need a saturated lilac grey matter (`#a894cc`), roots as separate meshes (`cord-roots` can be hidden) and the dorsal root entering at the upper left; a version with dorsal +Y and normal +Z (facing the viewer) would avoid the 90 degree turn.
+
+## membrane-transport (polish wave 2)
+- Asset: `pump-protein-b` (same footprint and pivot as `pump-protein`, opened towards the other side: `pump-protein` = inward-open, ATP site low; `-b` = outward-open, ions released up) so the Na+/K+ pump can cross-fade like the carrier pair. Until then the scene tilts and squashes the single pump and lights its five binding-site halos.
+- Data (ozmoz notes and simplifications): the animal cell now bursts (lysis) at İleri with the "Büyük fark" option; the text was updated accordingly.

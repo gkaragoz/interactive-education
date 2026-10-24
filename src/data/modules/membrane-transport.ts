@@ -111,7 +111,7 @@ export const membraneTransport: ModuleInfo = {
     'Geçişler rastgele zamanlarda gerçekleşir, bu yüzden grafikte küçük dalgalanmalar olur; animasyon aynı seçeneklerle her zaman aynı şekilde oynar.',
     'Kanal proteinler hep açık gösterilir; gerçekte birçoğu bir sinyalle açılıp kapanan kapılara sahiptir. Suyun lipit çift katmandan ve akuaporin kanallarından geçişi ayrıca gösterilmez, su toplu olarak zardan geçer.',
     'Na⁺/K⁺ pompasının turu yavaşlatılmış ve sadeleştirilmiştir; ikincil aktif taşıma, simport ve antiport programın dışında olduğu için anlatılmaz. İyonların zardan sızıntısı gösterilmez.',
-    'Ozmozda hücre hacmi değişimi görünür olsun diye abartılmıştır; hayvan hücresi aşırı hipotonik ortamda patlayabilir, animasyon patlamayı göstermez. Bitki hücresinin şekli kutu benzeri bir gösterimdir.',
+    'Ozmozda hücre hacmi değişimi görünür olsun diye abartılmıştır; hayvan hücresi aşırı hipotonik ortamda patlar; animasyon patlamayı yalnızca İleri düzeyde ve “Büyük fark” seçeneğinde gösterir. Bitki hücresinin şekli kutu benzeri bir gösterimdir.',
     'Endositoz ve ekzositozda zar yarı kesit olarak çizilir, kesecik oluşumu tek bir parçacık, birkaç damlacık ve birkaç molekül üzerinde gösterilir; reseptörler, kaplayıcı proteinler (klatrin) ve vezikülün lizozomla birleşmesi gösterilmez.',
     'Üç ozmoz ortamı aynı anda ama sırayla öne çıkarılarak gösterilir; hücreler gerçekte birbirinden bağımsız ve çok daha yavaş değişir.',
   ],

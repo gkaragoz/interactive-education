@@ -20,6 +20,7 @@ Animated lesson, five tracks, two levels (Temel / İleri). Kazanım: BİY.9.2.2 
   expected trend.
 - `bilayer.ts` + `cup.ts`: instanced lipids (two leaflets). Endo/exocytosis wraps the lipids around a profile (flat -> cup -> omega -> closed sphere) with an
   area-preserving radial map, so density stays uniform, the vesicle pinches off and the hole closes by itself; exocytosis is the same map run backwards.
+- Module textures are on (`assets.moduleTextures = true` in `scene.ts`; checked against `?moduletex`: crisper protein detail). Labels are clamped to the free band under the toolbar (`scene.ts`). Osmosis has six `channel-protein` aquaporins per membrane (water crosses through them for two thirds of the passages) and, at İleri with "Büyük fark", the animal cell bursts (lysis). Ions pass in front of the channel and dip toward the pore.
 - `proteins.ts` loads the GLBs (`channel-protein`, `carrier-protein`, `carrier-protein-b`, `pump-protein`; pivots on the membrane centre, axis Y).
   The pump GLB is rigid, so its cycle is shown by a small tilt/squash and by the ions and ATP moving; the real conformational change is not modelled.
 - Tracks live in `tracks/`; `scene.ts` picks the rig by `ctx.trackId`; `setOptions` rebuilds the simulation without rebuilding meshes.

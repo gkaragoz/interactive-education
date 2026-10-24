@@ -65,7 +65,7 @@ export function createKit(ctx: ModuleContext, root: Group): Kit {
     },
     backdrop(xHalf, zBack, top, bottom) {
       const make = (stops: [number, string][], y0: number, y1: number): void => {
-        const geo = new PlaneGeometry(xHalf * 3, y1 - y0);
+        const geo = new PlaneGeometry(xHalf * 6, y1 - y0);
         const map = gradientTexture((g, w, h) => {
           const grad = g.createLinearGradient(0, 0, 0, h);
           for (const [at, col] of stops) grad.addColorStop(at, col);
@@ -87,8 +87,8 @@ export function createKit(ctx: ModuleContext, root: Group): Kit {
         });
       };
       // outside: cool blue-teal, lighter toward the horizon; inside: warm yellow, deeper away from it (soft fade at y = 0)
-      make([[0, 'rgba(78,150,170,0.85)'], [0.7, 'rgba(120,185,196,0.6)'], [1, 'rgba(190,222,214,0.18)']], 0, top);
-      make([[0, 'rgba(246,226,160,0.2)'], [0.3, 'rgba(240,205,120,0.55)'], [1, 'rgba(214,150,70,0.85)']], bottom, 0);
+      make([[0, 'rgba(78,150,170,0.85)'], [0.7, 'rgba(120,185,196,0.6)'], [1, 'rgba(190,222,214,0.18)']], 0, top + 6);
+      make([[0, 'rgba(246,226,160,0.2)'], [0.3, 'rgba(240,205,120,0.55)'], [1, 'rgba(214,150,70,0.85)']], bottom - 6, 0);
     },
     bokeh(xHalf, top, bottom, zBack) {
       const n = ctx.quality === 'low' ? 10 : 26;

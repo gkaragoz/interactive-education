@@ -21,10 +21,10 @@ export function homeOn(rng: Rng, side: 0 | 1, nearX?: number, spread = 3): HomeF
 }
 
 /** Straight passage along a gate axis (lipid gap or channel) from one mouth to the other. */
-export function passSite(x: number, z: number, tIn: number, tOut: number, dir: 1 | -1, reach = 0.95): Leg['site'] {
+export function passSite(x: number, z: number, tIn: number, tOut: number, dir: 1 | -1, reach = 0.95, dip = 0): Leg['site'] {
   return (t, out) => {
     const u = smooth((t - tIn) / Math.max(tOut - tIn, 1e-6));
-    out.set(x, dir > 0 ? lerp(reach, -reach, u) : lerp(-reach, reach, u), z);
+    out.set(x, dir > 0 ? lerp(reach, -reach, u) : lerp(-reach, reach, u), z - dip * Math.sin(Math.PI * u));
   };
 }
 

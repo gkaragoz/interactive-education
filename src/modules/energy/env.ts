@@ -37,6 +37,8 @@ export interface Plan {
   shots: readonly Shot[];
   labels: readonly LabelRule[];
   chart(t: number): Record<string, number>;
+  /** Molecules shown in the colour key (a small fixed sprite); none = no key. */
+  legend?: readonly import('./legend').LegendId[];
   /** Stations drawn upside down (y mirrored): lets a membrane be authored one way and shown the other (camera and labels stay in world space). */
   mirrored?: readonly number[];
   /** Option-dependent numbers the stations read (lamp distance, bubble counts). */

@@ -22,6 +22,8 @@ async function buildTrack(id: string, env: TrackEnv): Promise<TrackRuntime> {
 
 /** Builds the scene of one track. Every pose is a pure function of the time handed to `seek`. */
 export async function createDnaScene(ctx: ModuleContext): Promise<ModuleScene> {
+  // the painted KTX2 textures of the module's own assets (nucleotide, tRNA, polymerases...) improve close-ups
+  ctx.assets.moduleTextures = true;
   const root = new Group();
   root.name = 'dna-protein';
   // invisible box so the stage frames a sensible region (camera limits come from the root's bounds at t = 0)

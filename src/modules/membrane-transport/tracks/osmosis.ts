@@ -1,8 +1,8 @@
-import { Vector3, type Mesh } from 'three';
+import { Quaternion, Vector3, type Mesh, type Object3D } from 'three';
 import { mulberry32 } from '../../../core';
 import { netFlux, simulateCrossings } from '../crossings';
 import type { Kit, TrackRig } from '../kit';
-import { cameraPath, lerp, smooth } from '../math';
+import { cameraPath, lerp, ramp, smooth } from '../math';
 import { COLORS } from '../palette';
 import { makeWander, Walker, type HomeFn, type Leg } from '../walker';
 import { allLegs, emptyChart } from './common';
@@ -21,7 +21,7 @@ const COMPARE_FROM = 44;
 const START = [6, 20, 30];
 const PLANT_CAP = 1.12;
 /** Solute fraction of the outside solution: [hypotonic, isotonic, hypertonic] per "derisim-farki" choice. */
-const C_OUT: Record<string, [number, number, number]> = { kucuk: [0.25, 0.3, 0.35], orta: [0.21, 0.3, 0.42], buyuk: [0.17, 0.3, 0.5] };
+const C_OUT: Record<string, [number, number, number]> = { kucuk: [0.25, 0.3, 0.35], orta: [0.21, 0.3, 0.42], buyuk: [0.12, 0.3, 0.5] };
 const BOX = new Vector3(5.4, 3.6, 2.4);
 
 /** Cell volume over local time: dV/dt = alpha (c_in - c_out), c_in = S/V (the bath is much larger than the cell). */
@@ -52,10 +52,16 @@ interface Beaker {
   legs: ReturnType<typeof allLegs>;
   solutes: Walker[];
   waterRadius: number;
+  /** Time the animal cell bursts (Infinity: it does not). */
+  burst: number;
 }
 
 /** Osmosis: three cells (hypotonic, isotonic, hypertonic) that take their turns; water crosses, the solute does not. */
-export function createOsmosis(kit: Kit): TrackRig {
+const UP = new Vector3(0, 1, 0);
+/** Directions of the aquaporin-like water channels in each membrane. */
+const AQ = Array.from({ length: 6 }, (_, k) => new Vector3(Math.cos(k * 1.05 + 0.3), Math.sin(k * 1.05 + 0.3), 0.3 + 0.25 * Math.sin(k * 2.1)).normalize());
+
+export async function createOsmosis(kit: Kit): Promise<TrackRig> {
   const mats = kit.ctx.assets.materials;
   const perBeaker = W_IN0 + W_OUT + EXCH + 20 + S_IN;
   const pool = kit.pool(perBeaker * 3 + 2);
@@ -68,11 +74,16 @@ export function createOsmosis(kit: Kit): TrackRig {
   const glass: Mesh[] = [];
   const tints = ['#3f8fc0', '#8aa878', '#c9792a'];
   BX.forEach((cx, i) => {
-    const m = kit.glow(tints[i]!, 15, 11, 0.3);
+    const m = kit.glow(tints[i]!, 15, 11, 0.2);
     m.position.set(cx, 0, -3);
     glass.push(m);
   });
-  kit.bokeh(18, 6, -6, -3);
+  const aq: Object3D[][] = await Promise.all(BX.map(async () => Promise.all(AQ.map(async () => {
+    const m = await kit.ctx.assets.loadGlb('channel-protein');
+    kit.root.add(m);
+    return m;
+  }))));
+  const qa = new Quaternion();
   const tmp = new Vector3();
   const radial = new Vector3();
 
@@ -102,12 +113,23 @@ export function createOsmosis(kit: Kit): TrackRig {
       const rng = mulberry32(4000 + bi * 97);
       const cOut = c[bi]!;
       const table = volumeTable(cOut, plant);
-      const b: Beaker = { cx, start: START[bi]!, table, cOut, water: [], legs: [], solutes: [], waterRadius: WATER_R };
+      const b: Beaker = { cx, start: START[bi]!, table, cOut, water: [], legs: [], solutes: [], waterRadius: WATER_R, burst: Infinity };
+      if (kit.ctx.level === 'ileri' && !plant && bi === 0) {
+        const k = table.findIndex((v) => v >= 1.5 * V0);
+        if (k >= 0) b.burst = b.start + k * 0.05;
+      }
       const view = cells[bi]!;
       const unit = (): Vector3 => new Vector3(rng() * 2 - 1, rng() * 2 - 1, (rng() * 2 - 1) * 0.8).normalize();
       const insideHome = (u: Vector3, frac: number): HomeFn => (t, out) => {
-        const r = view.radius(u, sRatio(b, t)) * frac;
-        out.copy(u).multiplyScalar(r).add(radial.set(cx, 0, 0));
+        const spread = ramp(t, b.burst, b.burst + 2);
+        const r = view.radius(u, sRatio(b, t)) * frac + spread * (1.2 + 2.6 * frac);
+        out.copy(u).multiplyScalar(r);
+        if (spread > 0) {
+          out.x = Math.max(-BOX.x, Math.min(BOX.x, out.x));
+          out.y = Math.max(-BOX.y, Math.min(BOX.y, out.y));
+          out.z = Math.max(-BOX.z, Math.min(BOX.z, out.z));
+        }
+        out.add(radial.set(cx, 0, 0));
       };
       const outsideHome = (u: Vector3, d: number): HomeFn => (t, out) => {
         const r = view.radius(u, sRatio(b, t)) + d;
@@ -128,7 +150,7 @@ export function createOsmosis(kit: Kit): TrackRig {
       // ordered water: particle j is inside while the water content W_in(t) is above j + 0.5
       const nW = W_IN0 + W_OUT;
       for (let j = 0; j < nW; j++) {
-        const u = unit();
+        const u = j % 3 !== 0 ? AQ[j % 6]!.clone() : unit();
         dirs.push(u);
         const inside0 = j < W_IN0;
         const w = new Walker(wander(j), [inside0 ? insideHome(u, Math.cbrt(rng()) * 0.8) : outsideHome(u, 0.6 + rng() * 2.6)], speed, inside0 ? 1 : 0);
@@ -160,7 +182,7 @@ export function createOsmosis(kit: Kit): TrackRig {
         rng: kit.ctx.rng(90 + bi),
       });
       exSides.forEach((s, m) => {
-        const u = unit();
+        const u = m % 3 !== 0 ? AQ[m % 6]!.clone() : unit();
         const mk = (side: 0 | 1): HomeFn => (side === 0 ? outsideHome(u, 0.6 + rng() * 2.6) : insideHome(u, Math.cbrt(rng()) * 0.8));
         let side = s;
         const w = new Walker(wander(500 + m), [mk(s)], speed, s);
@@ -200,8 +222,8 @@ export function createOsmosis(kit: Kit): TrackRig {
     ...cut(BX[0]!, 0, 19),
     ...cut(BX[1]!, 19.8, 29),
     ...cut(BX[2]!, 29.8, 43.2),
-    { t: 44.5, pos: [0, 5, 40], target: [0, -0.4, 0] },
-    { t: OSMOSIS_DURATION, pos: [0, 5, 40], target: [0, -0.4, 0] },
+    { t: 44.5, pos: [0, 5, 34], target: [0, -0.4, 0] },
+    { t: OSMOSIS_DURATION, pos: [0, 5, 34], target: [0, -0.4, 0] },
   ]);
 
   return {
@@ -210,9 +232,18 @@ export function createOsmosis(kit: Kit): TrackRig {
       const compare = t >= COMPARE_FROM;
       const f = focus(t);
       beakers.forEach((b, bi) => {
-        cells[bi]!.update(sRatio(b, t));
-        cells[bi]!.group.visible = compare || bi === f;
+        const pop = 1 + 0.22 * ramp(t, b.burst - 0.7, b.burst + 0.3);
+        cells[bi]!.update(sRatio(b, t) * pop);
+        const alive = t < b.burst + 0.3;
+        cells[bi]!.group.visible = (compare || bi === f) && alive;
         glass[bi]!.visible = compare || bi === f;
+        aq[bi]!.forEach((m, k) => {
+          const u = AQ[k]!;
+          m.visible = (compare || bi === f) && alive;
+          m.position.copy(u).multiplyScalar(cells[bi]!.radius(u, sRatio(b, t) * pop)).add(radial.set(b.cx, 0, 0));
+          m.quaternion.copy(qa.setFromUnitVectors(UP, u));
+          m.scale.setScalar(0.55);
+        });
         const base = bi * perBeaker;
         const show = !compare && bi === f;
         b.water.forEach((w, i) => (show ? pool.set(base + i, w.posAt(t, tmp), b.waterRadius) : pool.hide(base + i)));
@@ -245,9 +276,11 @@ export function createOsmosis(kit: Kit): TrackRig {
         { text: names[f]!, world: [cx, 3.2, 0], anchorId: 'sol' },
         { text: 'Su (küçük, mavi)', world: [cx + 5.0, 3.1, 0.2], anchorId: 'lw' },
         { text: 'Çözünen madde (büyük, altın)', world: [cx + 5.0, 2.3, 0.2], anchorId: 'ls' },
+        ...(ileri && t < b.burst ? [{ text: 'Akuaporin (su kanalı)', world: [cx + AQ[0]!.x * 3.1, AQ[0]!.y * 3.1, 0.6] as [number, number, number], anchorId: 'aqp' }] : []),
         { text: plant ? 'Hücre duvarı' : 'Hücre zarı', world: [cx + (plant ? 3.0 : 2.3), 1.5, 0.4], anchorId: 'wall' },
       ];
-      if (tau > 4) {
+      if (ileri && b.burst < Infinity && t > b.burst) out.push({ text: 'Hücre patladı (lizis)', world: [cx, -3.2, 0.5], anchorId: 'msg' });
+      else if (tau > 4) {
         const msg = f === 1 ? 'Su iki yöne eşit geçer' : f === 0 ? (plant ? 'Turgor basıncı artar' : 'Su girer, hücre şişer') : plant ? 'Plazmoliz: zar duvardan ayrılır' : 'Su çıkar, hücre büzülür';
         out.push({ text: msg, world: [cx, -3.4, 0.5], anchorId: 'msg' });
       }
@@ -267,12 +300,13 @@ export function createOsmosis(kit: Kit): TrackRig {
         'molekul-dis': b.water.length - inside,
         'derisim-farki': Math.abs(cIn - b.cOut) * 100,
         'net-gecis': netFlux(b.legs, t, 2.5),
-        'hucre-hacmi': (v / V0) * 100,
+        'hucre-hacmi': Math.min(180, (v / V0) * 100),
       };
     },
     setOptions: build,
     dispose() {
       cells.forEach((c) => c.dispose());
+      aq.flat().forEach((m) => m.removeFromParent());
     },
   };
 }

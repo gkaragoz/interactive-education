@@ -6,9 +6,10 @@ import { Nucs } from '../kit/nucs';
 import { RNA_HEX, baseColor } from '../kit/palette';
 import { PartSet } from '../kit/partSet';
 import { PrimSet, unitGeometries } from '../kit/prims';
+import { aaColor } from '../kit/palette';
 import { genePlan } from '../sequence';
 import type { TrackEnv, TrackRuntime } from '../types';
-import { ANTI_Y, S_T, beadPos, bondGrow } from './translChain';
+import { ANTI_Y, FOLD_CENTER, S_T, beadPos, bondGrow } from './translChain';
 import { translLabels, type TranslPoints } from './translLabels';
 import { buildTranslationPlan, type TranslationPlan } from './translasyonPlan';
 import { CODON_PITCH, T_INIT, T_LARGE, T_SCAN, T_SMALL, bondTime, chainLength, dockTime, exitTime, slide, stopTimes } from './translTiming';
@@ -41,7 +42,8 @@ const CAM: CamKey[] = [
   { t: 28, p: [-2, 3.4, 21], l: [0, 2.2, 0] },
   { t: 40, p: [1, 3.6, 22], l: [-0.3, 2.8, 0] },
   { t: 48, p: [-1, 4.2, 22], l: [-1, 3.8, 0] },
-  { t: 56, p: [-1.5, 5.4, 12], l: [-2.2, 5.6, 0] },
+  { t: 51, p: [-1.5, 5.6, 13], l: [-2.2, 5.8, 0] },
+  { t: 56, p: [-1.8, 5.9, 9.5], l: [-2.2, 6.2, 0] },
 ];
 
 const A = new Vector3();
@@ -224,6 +226,21 @@ export async function createTranslasyon(env: TrackEnv): Promise<TrackRuntime> {
       if (next) {
         const gk = j + 1 < n ? bondGrow(t, j + 1) : 0;
         if (gk > 0.01) rods.between(pj.x, pj.y, pj.z, pj.x + (next.x - pj.x) * gk, pj.y + (next.y - pj.y) * gk, pj.z + (next.z - pj.z) * gk, 0.1, LINK_PEP);
+      }
+    }
+    // side chains (R groups) stand out of the folded chain: an alpha-helix-like coil, each residue coloured like its amino acid
+    const fold = win(t, 48.6, 54);
+    if (fold > 0.05) {
+      for (let j = 0; j < n; j++) {
+        if (!P.beadOn[j]) continue;
+        const pj = P.bead[j] as Vector3;
+        B.set(pj.x - FOLD_CENTER.x, 0, pj.z - FOLD_CENTER.z);
+        if (B.lengthSq() < 1e-6) B.set(1, 0, 0);
+        B.normalize().multiplyScalar(0.62 * fold);
+        const aa = plan.peptide[j] as string;
+        const r = (aa === 'Gly' ? 0.17 : aa === 'Trp' || aa === 'Phe' || aa === 'Tyr' ? 0.34 : 0.26) * fold;
+        spheres.sphere(pj.x + B.x, pj.y + B.y, pj.z + B.z, r, aaColor(aa));
+        rods.between(pj.x, pj.y, pj.z, pj.x + B.x, pj.y + B.y, pj.z + B.z, 0.05 * fold, STUB);
       }
     }
     // flash at each new peptide bond

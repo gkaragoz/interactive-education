@@ -3,6 +3,7 @@ import type { ModuleContext, ModuleLabel, ModuleScene, Vec3 } from '../../scene'
 import { CellBody } from './membrane';
 import { cellGeometry, chromatidGeometry, fibreGeometry, kinetochoreGeometry, patchGeometry, ringGeometry, unitSphere } from './geometry';
 import { makeChromatidMaterial } from './chromatidMaterial';
+import { paintedChromatidGeometry, syncPainted } from './paintedChromatid';
 import { ChromatidSet } from './chromatidSet';
 import { KF, SpindleSet } from './spindleSet';
 import { NucleusSet } from './nucleusSet';
@@ -32,7 +33,15 @@ export async function createMitosisScene(ctx: ModuleContext): Promise<ModuleScen
   const uniforms = { uLoose: { value: 0 } };
 
   // materials: clones of the shared painted look (see src/scene/materials.ts)
-  const chromMat = makeChromatidMaterial(lib.get('chromosome', 'clay'), uniforms);
+  // the painted single chromatid (GLB + painted textures); the procedural lathe is the fallback when the file is missing
+  const paintedSrc = lib.get('chromosome-single', 'clay');
+  ctx.assets.moduleTextures = true;
+  const chromAsset = await ctx.assets.asset('chromosome-single', '#e8d8c8');
+  const lod = q === 'high' ? 0 : 1;
+  const paintedGeo = (): ReturnType<typeof paintedChromatidGeometry> => paintedChromatidGeometry(chromAsset.lods[lod] ?? chromAsset.lods[0] ?? []);
+  const gChrom = paintedGeo() ?? chromatidGeometry(radial, q === 'low' ? 18 : 28);
+  const isPainted = gChrom.getAttribute('aSeg') !== undefined && paintedGeo() !== null;
+  const chromMat = makeChromatidMaterial(isPainted ? paintedSrc : lib.get('chromosome', 'clay'), uniforms, isPainted);
   const clay = (id: string): MeshPhysicalMaterial => lib.get(id, 'clay');
   const gel = (id: string, opacity: number): MeshPhysicalMaterial => {
     const src = lib.get(id, 'gel');
@@ -43,8 +52,24 @@ export async function createMitosisScene(ctx: ModuleContext): Promise<ModuleScen
     return m;
   };
   const extra: MeshPhysicalMaterial[] = [];
+  // nuclear pores: pink rings on the envelope patches (the painted fragment GLB has them, too heavy to instance for every patch)
+  const envelope = gel('nuclear-envelope-fragment', 0.6);
+  const envBase = envelope.onBeforeCompile;
+  envelope.onBeforeCompile = (shader, renderer): void => {
+    envBase.call(envelope, shader, renderer);
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      `#include <color_fragment>
+{
+  vec2 pq = fract(vNormalMapUv * 2.0) - 0.5;
+  float ring = smoothstep(0.05, 0.0, abs(length(pq) - 0.16));
+  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.96, 0.42, 0.6), ring * 0.9);
+  diffuseColor.a = max(diffuseColor.a, ring * 0.95);
+}`,
+    );
+  };
+  envelope.customProgramCacheKey = (): string => 'mm-envelope-pores';
 
-  const gChrom = chromatidGeometry(radial, q === 'low' ? 18 : 28);
   const gKin = kinetochoreGeometry(radial);
   const gFibre = fibreGeometry(6);
   const gPatch = patchGeometry(3);
@@ -61,7 +86,7 @@ export async function createMitosisScene(ctx: ModuleContext): Promise<ModuleScen
   ghostGroup.position.set(2.6, -2.6, 0.5);
   ghostGroup.visible = false;
   root.add(ghostGroup);
-  const gGhost = chromatidGeometry(radial, q === 'low' ? 18 : 28);
+  const gGhost = (isPainted ? paintedGeo() : null) ?? chromatidGeometry(radial, q === 'low' ? 18 : 28);
   const ghost = new ChromatidSet(ghostGroup, gGhost, chromMat, gKin, clay('kinetochore'));
   const ghostFrames = new CellFrames();
   let ghostPlan: Plan | null = null;
@@ -69,7 +94,7 @@ export async function createMitosisScene(ctx: ModuleContext): Promise<ModuleScen
   const poleSet = await ctx.assets.instances('spindle-pole', 4, '#e8a04c');
   root.add(kfSet.group, poleSet.group);
   const spindle = new SpindleSet(root, gFibre, clay('kinetochore-fibre'), kfSet, poleSet, q);
-  const nuclei = new NucleusSet(root, gPatch, gel('nuclear-envelope-fragment', 0.6), gSphere, gel('nucleoplasm', 0.08), clay('nucleolus'));
+  const nuclei = new NucleusSet(root, gPatch, envelope, gSphere, gel('nucleoplasm', 0.08), clay('nucleolus'));
   const rings = new InstancedMesh(gRing, clay('contractile-ring'), 8);
   rings.instanceMatrix.setUsage(DynamicDrawUsage);
   rings.frustumCulled = false;
@@ -79,6 +104,8 @@ export async function createMitosisScene(ctx: ModuleContext): Promise<ModuleScen
     rings.setColorAt(i, new Color('#f08a3c'));
   }
   root.add(rings);
+  // the library swaps texture tiers (and disposes the old one): follow it right before each draw
+  if (isPainted) chroms.mesh.onBeforeRender = ghost.mesh.onBeforeRender = (): void => void syncPainted(paintedSrc, chromMat);
   const frames = new CellFrames();
 
   let options = { ...ctx.options };

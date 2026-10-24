@@ -112,6 +112,17 @@ describe.each(info.tracks.map((t) => [t.id, t.duration] as const))('membrane-tra
   });
 });
 
+describe('membrane-transport reduced motion', () => {
+  it.each(info.tracks.map((t) => t.id))('builds and poses %s with reduced motion, jitter calmer than normal', async (trackId) => {
+    const assets = new ModuleAssets(`/nowhere${opened++}/`, 'medium', new Texture(), new Plane(), () => undefined);
+    const base = Object.fromEntries(info.options.map((o) => [o.id, o.defaultChoice]));
+    const scene = await createMembraneScene({ assets, quality: 'medium', level: 'ileri', reducedMotion: true, trackId, options: base, rng: seededRng });
+    scene.seek(scene.duration * 0.5);
+    expect(snapshot(scene).every(Number.isFinite)).toBe(true);
+    scene.dispose();
+  });
+});
+
 describe('membrane-transport framing', () => {
   it('shows no labels at low quality and at most 6 anywhere', async () => {
     const low = await open('ozmoz', {}, 'ileri', 'low');
@@ -132,6 +143,17 @@ describe('membrane-transport framing', () => {
     });
     expect(visible).toBeLessThanOrEqual(150);
     expect(visible).toBeGreaterThan(40);
+  });
+
+  it('the animal cell bursts only at Ileri with the big difference; aquaporins sit in the membrane', async () => {
+    const big = await open('ozmoz', { 'derisim-farki': 'buyuk' });
+    expect(big.labelsAt!(19.5).some((l) => l.text.includes('patladı'))).toBe(true);
+    expect(big.labelsAt!(8).some((l) => l.text.includes('patladı'))).toBe(false);
+    const mid = await open('ozmoz');
+    expect(mid.labelsAt!(19.5).some((l) => l.text.includes('patladı'))).toBe(false);
+    const temel = await open('ozmoz', { 'derisim-farki': 'buyuk' }, 'temel');
+    expect(temel.labelsAt!(19.5).some((l) => l.text.includes('patladı'))).toBe(false);
+    expect(big.labelsAt!(8).some((l) => l.text.includes('Akuaporin'))).toBe(true);
   });
 
   it('the lysosome only exists at Ileri', async () => {

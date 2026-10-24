@@ -37,8 +37,8 @@ export const mitosisLabels: LabelFn = (c) => {
   const cell = c.cellVals(0);
   const neck = cell[6] as number;
   if (between(t, 38, 42) && neck < 0.92 && neck > 0.1) {
-    const top = c.cellPos(0, 0, (cell[5] as number) * 0.9 * neck + 0.3, [0, 0, 0]);
-    out.push({ text: ileri ? 'Boğumlanma (kasılma halkası)' : 'Boğumlanma', world: [top[0], top[1] + 0.5, top[2]], anchorId: 'furrow' });
+    const top = c.cellPos(0, 0, -((cell[5] as number) * 0.9 * neck + 0.3), [0, 0, 0]);
+    out.push({ text: ileri ? 'Boğumlanma (kasılma halkası)' : 'Boğumlanma', world: [top[0], top[1] - 0.5, top[2]], anchorId: 'furrow' });
   }
   if (t >= 43) {
     const a = c.cellPos(0, -4.0, 4.2, [0, 0, 0]);

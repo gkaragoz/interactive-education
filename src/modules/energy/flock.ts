@@ -24,7 +24,7 @@ export interface Trip {
   upright?: boolean;
   /** Fixed Euler orientation applied before the spin (e.g. flip a membrane protein over). */
   base?: readonly [number, number, number];
-  /** A turning machine part (ATP synthase): keeps its spin under reduced motion, where decorative spin and shimmer stop. */
+  /** A turning machine part (ATP synthase); like all spin it stops under reduced motion. */
   rotor?: boolean;
   tint?: string;
   /** Change colour to `to` between `at` and `at + 0.5` s. */
@@ -142,7 +142,7 @@ export class Flock {
       if (wob) P.set(P.x + wob * Math.sin(t * 1.3 + ph * 3), P.y + wob * Math.sin(t * 1.7 + ph * 5), P.z + wob * Math.sin(t * 1.1 + ph * 7));
       if (trip.upright) AX.set(0, 1, 0);
       else AX.set(b.ax, b.ay, b.az);
-      const spin = this.calm && !trip.rotor ? 0 : (trip.spin ?? 0.6);
+      const spin = this.calm ? 0 : (trip.spin ?? 0.6);
       const angle = (trip.upright ? (trip.phase ?? 0) : ph) + spin * t;
       if (trip.upright && set.poseSpin) {
         if (trip.base) Q.setFromEuler(E.set(trip.base[0], trip.base[1], trip.base[2]));

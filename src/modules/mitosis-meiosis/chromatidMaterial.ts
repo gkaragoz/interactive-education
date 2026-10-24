@@ -10,7 +10,7 @@ export interface ChromatidUniforms {
  * (`uLoose`), and the fragment shader paints the exchanged segment of a crossing over (`aSeg` below `iA.w`, colour `iAlt`).
  * Bending is done in scaled space (from the instance matrix lengths) so the rod keeps its proportions.
  */
-export function makeChromatidMaterial(base: MeshPhysicalMaterial, uniforms: ChromatidUniforms): MeshPhysicalMaterial {
+export function makeChromatidMaterial(base: MeshPhysicalMaterial, uniforms: ChromatidUniforms, painted = false): MeshPhysicalMaterial {
   const mat = base.clone();
   mat.vertexColors = true;
   mat.onBeforeCompile = (shader): void => {
@@ -55,13 +55,18 @@ vSeg = aSeg; vAlt = iAlt; vHi = iA.w;`,
       .replace('#include <common>', `#include <common>\nvarying float vSeg;\nvarying vec3 vAlt;\nvarying float vHi;`)
       .replace(
         '#include <color_fragment>',
-        `#include <color_fragment>
+        painted
+          ? `#include <color_fragment>
+// painted albedo: the exchanged tip keeps the paint but takes the other parent's tint
+float inSeg = (1.0 - smoothstep(vHi - 0.025, vHi + 0.025, vSeg)) * step(0.002, vHi);
+diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb / max(vColor.rgb, vec3(0.05)) * vAlt, inSeg);`
+          : `#include <color_fragment>
 float inSeg = (1.0 - smoothstep(vHi - 0.025, vHi + 0.025, vSeg)) * step(0.002, vHi);
 diffuseColor.rgb = mix(diffuseColor.rgb, vAlt, inSeg);
 float waist = smoothstep(0.03, 0.0, abs(vSeg - 0.65));
 diffuseColor.rgb *= (1.0 - 0.25 * waist) * (0.82 + 0.18 * sin(vSeg * 64.0)) * (0.94 + 0.06 * sin(vSeg * 23.0 + 1.0));`,
       );
   };
-  mat.customProgramCacheKey = (): string => 'mm-chromatid-v1';
+  mat.customProgramCacheKey = (): string => (painted ? 'mm-chromatid-painted' : 'mm-chromatid-v1');
   return mat;
 }

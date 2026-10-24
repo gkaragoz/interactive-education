@@ -1,7 +1,7 @@
 import type { Rng } from '../../core';
 
 /** Sizes in scene units (1 unit ~ 1 um with the explorer's mild exaggeration). */
-export const THICK = 0.25;
+export const THICK = 0.22;
 export const LENGTHS = [3.0, 2.0, 2.5];
 export const MATERNAL = '#d4186a';
 export const PATERNAL = '#1478b8';

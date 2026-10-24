@@ -36,7 +36,7 @@ export function repliLabels(t: number, ileri: boolean, P: RepliPoints): ModuleLa
 
   if (t >= 0.6 && t < 6.5) add('Çift sarmal DNA (eşlenecek)', pt(P.oldB[10] as number, 1.1), 'parent');
   if (t >= 7.5 && t < 14.8) vec(ileri ? 'Replikasyon çatalı' : 'Sarmal açılıyor', P.fork, 'fork', 1.5);
-  if (P.forkOn && t >= 5.5 && t < 30) vec(ileri ? 'Helikaz (Ek bilgi)' : 'Sarmalı açan enzim', P.helicase, 'helicase', 0.6);
+  if (P.forkOn && t >= 5.5 && t < 28.5) vec(ileri ? 'Helikaz (Ek bilgi)' : 'Sarmalı açan enzim', P.helicase, 'helicase', 0.6);
   if (t >= 9 && t < 38) {
     add('Eski zincir (kalıp)', pt(P.oldB[3] as number, 0.9, 0.3), 'oldB');
     add('Eski zincir (kalıp)', pt(P.oldA[3] as number, -0.9, 0.3), 'oldA');

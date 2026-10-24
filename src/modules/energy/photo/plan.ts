@@ -26,7 +26,7 @@ const L = (id: string, t0: number, t1: number, text: LabelRule['text'], at: Labe
 
 function labels(level: LevelId): LabelRule[] {
   const common: LabelRule[] = [
-    L('sun', 0.3, 3.3, 'Güneş ışığı', [8.2, 2.5, 0]),
+    L('sun', 0.3, 3.3, 'Güneş ışığı', [8.2, 1.9, 0]),
     L('co2-in', 0.8, 3.3, 'Karbondioksit', [-5.2, -4.3, 0.5]),
     L('h2o-in', 0.8, 3.3, 'Su', [5.9, -4.4, 0.5]),
     L('leaf', 0.3, 3.3, 'Yaprak', [3.5, 2.5, 0]),
@@ -141,6 +141,7 @@ export function photoPlan(level: LevelId, o: Record<string, string>): Plan {
     trips,
     shots: shots(level),
     mirrored: [INNER],
+    legend: level === 'ileri' ? ['co2', 'h2o', 'o2', 'glucose', 'atp'] : ['co2', 'h2o', 'o2', 'glucose'],
     labels: labels(level),
     chart: chartFrom(PHOTO_SERIES, events),
     extras: { lampX: LAMP_X[o['light-intensity'] ?? 'medium'] ?? -6.8, bubbles: lab.bubbles, light },

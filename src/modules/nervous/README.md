@@ -18,6 +18,9 @@ Preview: `#/modul/nervous?demo` (registered in `entries/index.ts`, released by `
 - `walk.ts`: Brownian-looking jitter from incommensurate sines plus gate legs (no state). `kit.ts`: shared clay materials, sprites, backdrop bands; `noAO()` keeps glow quads out of the high-quality ambient-occlusion pass (otherwise they draw dark boxes).
 - Camera paths put the action in the clear part of the stage (the shell panels cover the corners); labels are level-adaptive (Temel never shows "Ara nöron" or "Reseptör").
 
+## Opening overviews
+`overview.ts` / `overviews.ts`: the first 3.4 s of every track show a painted hero on a soft veil (`neuron` for the action potential, `synapse-terminal` with drifting `neurotransmitter` for the synapse, the three `reflex-arc-parts` pieces for the reflex), then the camera flies into the procedural scene while the veil fades and the hero scales away (pure functions of t, no pops). The t = 0 frame is the poster. The veil's bounding box is zeroed so it does not stretch the stage's framing.
+
 ## Camera, panels, reduced motion
 Camera paths look at the point of interest (`cp(x, y, d)`); the stage centres the picture in the area the shell panels leave free (`setSafeInsets`), so scenes carry no panel offsets. With reduced motion the player does not play (the learner steps with the playhead) and the Brownian jitter amplitude is smaller; every pose is still a pure function of t.
 

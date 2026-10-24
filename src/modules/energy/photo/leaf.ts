@@ -5,7 +5,7 @@ import { organelleInstances } from '../organelles';
 import { hash01 } from '../paths';
 import { addInstanced, addMesh, glowMesh, type Item } from '../props';
 
-export const SUN: readonly [number, number, number] = [8.2, 4.3, 0];
+export const SUN: readonly [number, number, number] = [8.2, 3.6, 0];
 export const STOMA: readonly [number, number, number] = [-1.8, -1.65, 0];
 export const VEIN_X = 4.8;
 

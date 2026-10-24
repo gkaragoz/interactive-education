@@ -208,6 +208,7 @@ export async function createMutasyon(env: TrackEnv): Promise<TrackRuntime> {
       const idx = beads.push(m1.compose(A, q1, one.set(scale, scale, scale)));
       beads.tint(idx, col, 'residue', 'stubs');
       if (k === ci()) P.pepNew.copy(A);
+      spheres.sphere(A.x, A.y + 0.95 * Math.min(1, scale), 0.2, 0.3 * Math.min(1, scale) * (scale > 0.05 ? 1 : 0), col);
       if (k < nOld - 1 && scale > 0.05) {
         const nextScale = k + 1 === ci() && mp.after.stopped ? 1 - eff : k + 1 > ci() && mp.after.stopped && k + 1 >= nNew ? 1 - eff : 1;
         const gk = Math.min(shown(k + 1), nextScale);

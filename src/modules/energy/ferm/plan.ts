@@ -13,8 +13,8 @@ const DURATION = 50;
 const L = (id: string, t0: number, t1: number, text: string, at: LabelRule['at']): LabelRule => ({ id, t0, t1, text, at });
 
 const labels: LabelRule[] = [
-  L('nooxy', 0.4, 6.4, 'Oksijen yok', [7.4, 3.6, 1.6]),
-  L('idle', 0.4, 6.4, 'Mitokondri çalışamaz', [7.4, -3.4, 1.6]),
+  L('nooxy', 0.4, 6.4, 'Oksijen yok', [3.8, 3.6, 1.6]),
+  L('idle', 0.4, 6.4, 'Mitokondri çalışamaz', [3.8, -3.4, 1.6]),
   L('cyto', 0.4, 14.8, 'Sitoplazma', [-9.4, -3.6, 0]),
   L('glu', 4.8, 8, 'Glikoz', [-9.4, 3.2, 0]),
   L('gly', 7.6, 14.5, 'Glikoliz: 2 pirüvat', [-5.2, 4.2, 0]),
@@ -50,6 +50,7 @@ export function fermPlan(): Plan {
   const trips: Trip[] = [...gl.trips, ...la.trips, ...al.trips, ...compare(), ...flask(T_FLASK)];
   return {
     duration: DURATION,
+    legend: ['glucose', 'co2', 'atp'],
     windows: [
       { station: F_CELL, t0: 0 },
       { station: F_MUSCLE, t0: T_LACTIC },

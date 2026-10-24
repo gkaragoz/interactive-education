@@ -13,7 +13,7 @@ export const BP = new Vector3(BALL.x, ANTI_Y + BALL.y, 0); // newest bead at the
 export const BA = new Vector3(BALL.x + CODON_PITCH, ANTI_Y + BALL.y, 0); // newest bead at the A site
 const U = new Vector3(-0.35, 0.937, 0).normalize();
 export const STEP = 0.86;
-const FOLD_CENTER = new Vector3(-2.2, 6.4, 0.3);
+export const FOLD_CENTER = new Vector3(-2.2, 6.4, 0.3);
 
 const tmp = new Vector3();
 

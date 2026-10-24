@@ -22,6 +22,7 @@ export async function createMembraneScene(ctx: ModuleContext): Promise<ModuleSce
   if (!make) throw new Error(`Unknown membrane-transport track: ${ctx.trackId}`);
   const root = new Group();
   root.name = `membrane-transport-${ctx.trackId}`;
+  ctx.assets.moduleTextures = true;
   const kit = createKit(ctx, root);
   const rig = await make(kit);
   rig.seek(0);
@@ -34,7 +35,15 @@ export async function createMembraneScene(ctx: ModuleContext): Promise<ModuleSce
       rig.seek(c);
     },
     cameraAt: (t) => rig.cameraAt(t),
-    labelsAt: (t) => (ctx.quality === 'low' ? [] : rig.labelsAt(t).slice(0, 6)),
+    labelsAt: (t) => {
+      if (ctx.quality === 'low') return [];
+      // keep every anchor in the free band between the toolbar and the bottom panels (proportional to the camera distance)
+      const cam = rig.cameraAt(t);
+      const d = Math.hypot(cam.position[0] - cam.target[0], cam.position[1] - cam.target[1], cam.position[2] - cam.target[2]);
+      const top = cam.target[1] + 0.11 * d;
+      const bottom = cam.target[1] - 0.145 * d;
+      return rig.labelsAt(t).slice(0, 6).map((l) => ({ ...l, world: [l.world[0], Math.min(top, Math.max(bottom, l.world[1])), l.world[2]] as [number, number, number] }));
+    },
     chartAt: (t) => rig.chartAt(t),
     setOptions: (o) => rig.setOptions(o),
     dispose: () => {

@@ -78,7 +78,7 @@ export function createKasilmaTemel(ctx: ModuleContext, root: Group): TrackRig {
       }
       leaders.instanceMatrix.needsUpdate = true;
     },
-    cameraAt: (t) => ({ position: [0.4 + (ctx.reducedMotion ? 0 : Math.sin(t * 0.11) * 1.2), 2.4, 33], target: [0.2, 0.4, 0] }),
+    cameraAt: (t) => ({ position: [0.4 + (ctx.reducedMotion ? 0 : Math.sin(t * 0.11) * 1.2), 2.4, 29], target: [0.2, 0.4, 0] }),
     labelsAt: (t) => {
       const angle = angleAt(t);
       const off = (p: [number, number, number]): Vec3 => [p[0] + ARM_AT[0], p[1] + ARM_AT[1], p[2]];

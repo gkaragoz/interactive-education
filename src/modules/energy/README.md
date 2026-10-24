@@ -18,6 +18,13 @@ Four tracks (`fotosentez`, `hucresel-solunum`, `fermantasyon`, `kemosentez`), ea
 | `fermantasyon` | 0 cell without O2, 1 muscle cell, 2 yeast cell, 3 ATP comparison (2 vs 30), 4 yeast flask with balloon | lactic: pyruvate beads recolour to lactate, no CO2; alcohol: one carbon per pyruvate leaves as CO2, two become ethanol. |
 | `kemosentez` | 0 deep-sea vent | light fades out high up; H2S rises into a bacterium; CO2 in, food out, then to the tube worms. |
 
+## Look, key and first frame
+- Organelles come from `ctx.assets.organelleInstances` (painted KTX2 tiers); the module turns on `assets.moduleTextures` for its own GLBs (`rig.ts`).
+- `legend.ts`: a molecule-colour key sprite (CO2, H2O, O2, glucose, ATP) pinned to the lower middle of the screen through `onBeforeRender`; it has empty bounds, so it never changes the framing. The plan lists which molecules (`Plan.legend`).
+- First-frame posters: intro molecules start at negative times so t = 0 already shows the story.
+- Reduced motion: no shimmer, no tumbling, no coin or rotor spin.
+- Labels: at most six at a time; the rig keeps anchors out of the strip under the top panels and above the lower-left text card.
+
 ## Programme limits
 Photosystems, ATP synthase and the H+ gradient are labelled "Ek bilgi"; no Calvin or Krebs intermediates and no ETS protein names (the complexes are unlabelled "taşıyıcı proteinler"); Temel shows no equations. Quantities are schematic (see `ModuleInfo.simplifications`).
 

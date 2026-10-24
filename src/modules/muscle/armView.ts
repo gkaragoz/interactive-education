@@ -113,6 +113,13 @@ export function createArmView(ctx: ModuleContext): ArmView {
   };
   const bic = makeMuscle(COLORS.muscleRest, [{ z: 0.18, k: 1, shift: 0.07 }, { z: -0.2, k: 0.82, shift: -0.1 }]);
   const tri = makeMuscle(COLORS.tricepsRest, [{ z: -0.15, k: 1, shift: -0.05 }, { z: 0.25, k: 0.78, shift: 0.1 }]);
+  // tendon footprints: small warm discs where each tendon meets the bone, so the attachments read
+  const footGeo = paint(unitSphere(10), '#ead7a4');
+  const feet = [0, 1, 2, 3].map(() => {
+    const m = meshOf(footGeo, solid);
+    m.scale.set(0.2, 0.2, 0.12);
+    return m;
+  });
   const bicActive = new Color(COLORS.biceps);
   const triActive = new Color(COLORS.triceps);
 
@@ -176,6 +183,10 @@ export function createArmView(ctx: ModuleContext): ArmView {
       arc.setMatrixAt(i, m4);
     }
     arc.instanceMatrix.needsUpdate = true;
+    feet[0]!.position.set(bl.origin[0] + 0.07, bl.origin[1], 0.05);
+    feet[1]!.position.set(bl.insertion[0], bl.insertion[1], 0.02);
+    feet[2]!.position.set(tl.origin[0] - 0.05, tl.origin[1], -0.1);
+    feet[3]!.position.set(tl.insertion[0], tl.insertion[1], -0.05);
   }
 
   function landmark(name: Parameters<ArmView['landmark']>[0], angle: number): [number, number, number] {

@@ -50,7 +50,7 @@ export async function createFacilitated(kit: Kit): Promise<TrackRig> {
   const proteins = [...channels, ...carriers];
   kit.root.add(...proteins.map((p) => p.group));
   const patch = kit.patch({
-    xHalf: 8.6,
+    xHalf: 12.5,
     zFront: 0,
     zBack: -3.8,
     seed: 5,
@@ -97,7 +97,7 @@ export async function createFacilitated(kit: Kit): Promise<TrackRig> {
     ions = buildWalkers(
       ionSides.map((s) => ({ side0: s, amp: kit.wander, speed })),
       ionTr,
-      (tr) => legOf(tr, passSite(tr.gate.x, tr.gate.z, tr.tIn, tr.tOut, tr.dir)),
+      (tr) => legOf(tr, passSite(tr.gate.x, tr.gate.z, tr.tIn, tr.tOut, tr.dir, 0.95, 0.5)),
       201,
     );
     // glucose: group A from the start, group B drops in at ARRIVE

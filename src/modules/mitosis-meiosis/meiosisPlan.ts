@@ -43,10 +43,10 @@ export function buildMeiosis(mode: MeiosisMode, np: number, assort: number, rng:
   plan.loose.to(53).to(60, { v: 0 }).to(77).to(81, { v: 0.45 }).to(90);
 
   const C = (px: number, py: number, pz: number, tx = 0, ty = 0, tz = 0): Record<string, number> => ({ px, py, pz, tx, ty, tz });
-  const cam: KeyTrack = mk(c, CAM_CH, C(0, 2.5, 22));
-  cam.to(8, C(0, 2.5, 22)).to(10.5, C(2.5, 1.5, 17, -0.3, 0, 0)).to(15, C(2.5, 1.5, 17, -0.3, 0, 0)).to(18.5, C(0, 3, 22));
-  cam.to(21.5, C(7, 4.5, 20)).to(27, C(7, 4.5, 20)).to(31, C(0, 2, 26)).to(38, C(0, 1.5, 27)).to(46, C(0, 1, 31)).to(52, C(0, 2, 31));
-  cam.to(60, C(5, 10, 26)).to(67, C(5, 10, 26)).to(73, C(0, 2, 30)).to(85, C(0, 1, 33)).to(90);
+  const cam: KeyTrack = mk(c, CAM_CH, C(0, 2, 17.6));
+  cam.to(8, C(0, 2, 17.6)).to(10.5, C(2, 1.2, 13.6, -0.3, 0, 0)).to(15, C(2, 1.2, 13.6, -0.3, 0, 0)).to(18.5, C(0, 2.4, 17.6));
+  cam.to(21.5, C(5.6, 3.6, 16)).to(27, C(5.6, 3.6, 16)).to(31, C(0, 1.6, 20.8)).to(38, C(0, 1.2, 21.6)).to(46, C(0, 0.8, 24.8)).to(52, C(0, 1.6, 24.8));
+  cam.to(60, C(4, 8, 20.8)).to(67, C(4, 8, 20.8)).to(73, C(0, 1.6, 24)).to(85, C(0, 0.8, 26.4)).to(90);
   plan.cam = cam;
   plan.chart = mode === 'm1' ? chartMeiosis1(np) : mode === 'm2' ? chartMeiosis2(np) : chartNondisjunction(np);
   plan.labels = meiosisLabels(mode, warp, np);

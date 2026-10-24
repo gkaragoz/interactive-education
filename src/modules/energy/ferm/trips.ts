@@ -24,6 +24,8 @@ export interface FermPlan {
 export function glycolysis(): FermPlan {
   const trips: Trip[] = [];
   const events: Ev[] = [];
+  // two glucose molecules wait in the cytoplasm from the first frame (the cell has food but no oxygen)
+  for (let i = 0; i < 2; i++) trips.push(go('glucose', F_CELL, 0.55, [[-3, -8 + i * 2.5, 2.8 - i * 4.2, 0.6], [4.2, -9 + i * 2.5, 2.3 - i * 3.9, 0.6]], { wobble: 0.15, fade: 0.5 }));
   trips.push(go('glucose', F_CELL, 0.55, [[4.4, -12, 4.2, 0.5], [7.0, G[0], G[1], G[2]], [8.4, G[0], G[1], G[2]]], { wobble: 0.04, fade: 0.5, spin: 0.4 }));
   for (let i = 0; i < 6; i++) {
     const g = i < 3 ? 0 : 1;

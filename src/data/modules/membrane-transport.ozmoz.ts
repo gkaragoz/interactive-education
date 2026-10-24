@@ -16,7 +16,7 @@ export const ozmozTrack: TrackInfo = {
     'Mavi toplar su, turuncu toplar zarın geçiremediği çözünmüş maddedir. Sayılar küçük tutulmuş, hacim değişimi görünür olsun diye abartılmıştır.',
     'Hücre türünü seçenekten değiştirebilirsin: hayvan hücresi ya da hücre duvarlı bitki hücresi.',
     'Grafikler o anda incelenen hücreyi gösterir (önce sol, sonra orta, sonra sağ hücre); hücre değişince değerler de değişir.',
-    'Aşırı hipotonik ortamda hayvan hücresi patlayabilir; animasyon bunu göstermez, şişmeyi sınırlı tutar.',
+    'İleri düzeyde ve “Büyük fark” seçilince hipotonik ortamdaki hayvan hücresi patlar (lizis); Temel düzeyde ve diğer seçeneklerde şişme sınırlı tutulur.',
   ],
   phases: [
     ph({

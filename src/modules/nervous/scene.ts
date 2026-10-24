@@ -2,6 +2,8 @@ import { Group } from 'three';
 import type { ModuleContext, ModuleScene } from '../../scene';
 import { createKit, type Kit, type TrackRig } from './kit';
 import { createAxon } from './action/axon';
+import { overviewFor } from './overviews';
+import { withOverview } from './overview';
 import { createReflex } from './reflex/reflex';
 import { createSynapse } from './synapse/synapse';
 
@@ -19,7 +21,9 @@ export async function createNervousScene(ctx: ModuleContext): Promise<ModuleScen
   const root = new Group();
   root.name = `nervous-${ctx.trackId}`;
   const kit = createKit(ctx, root);
-  const rig = await make(kit);
+  const base = await make(kit);
+  const spec = overviewFor(ctx.trackId, ctx.level);
+  const rig = spec ? await withOverview(kit, base, spec) : base;
   rig.seek(0);
   return {
     root,

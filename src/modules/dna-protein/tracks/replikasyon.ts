@@ -33,14 +33,14 @@ const DEF_P = new Color('#cdbca2');
 const DMAX = 2.6;
 
 const CAM: CamKey[] = [
-  { t: 0, p: [0, 1.5, 15], l: [0, 0, 0] },
-  { t: 6, p: [-3.2, 1.5, 14.5], l: [-3.4, 0, 0] },
-  { t: 14, p: [-1.5, 2.5, 16], l: [-2.4, 0.2, 0] },
-  { t: 24, p: [1.5, 2.8, 17], l: [0.5, 0, 0] },
-  { t: 32, p: [2.5, 2.5, 18], l: [1.2, 0, 0] },
-  { t: 38, p: [0, 2.5, 20], l: [0, 0, 0] },
-  { t: 48, p: [-3, 3.5, 22], l: [0, 0, 0] },
-  { t: 56, p: [3, 3.5, 22], l: [0, 0, 0] },
+  { t: 0, p: [0, 1.5, 17], l: [0, 0, 0] },
+  { t: 6, p: [-3.2, 1.5, 17], l: [-3.4, 0, 0] },
+  { t: 14, p: [-1.5, 2.5, 20], l: [-2.4, 0.2, 0] },
+  { t: 24, p: [1.5, 2.8, 21], l: [0.5, 0, 0] },
+  { t: 32, p: [2.5, 2.5, 22], l: [1.2, 0, 0] },
+  { t: 38, p: [0, 2.5, 24], l: [0, 0, 0] },
+  { t: 48, p: [-3, 3.5, 25], l: [0, 0, 0] },
+  { t: 56, p: [3, 3.5, 25], l: [0, 0, 0] },
 ];
 
 const frameLocal = (x: number): number => (x - (N - 1) / 2) * RISE;
@@ -58,13 +58,16 @@ const cp = new Color();
 const m1 = new Matrix4();
 const m2 = new Matrix4();
 const one = new Vector3();
-const qId = new Quaternion();
+const q3 = new Quaternion();
+const AXIS_X = new Vector3(1, 0, 0);
+const AXIS_Y = new Vector3(0, 1, 0);
+const AXIS_Z = new Vector3(0, 0, 1);
 
 export async function createReplikasyon(env: TrackEnv): Promise<TrackRuntime> {
   const { ctx, root, ileri } = env;
   const nucs = await Nucs.create(ctx.assets, root, 72, 110, 170, ctx.quality);
   nucs.frame.makeRotationZ(Math.PI / 2).setPosition(-((N - 1) / 2) * RISE, 0, 0);
-  const helicase = await PartSet.create(ctx.assets, 'helicase', 1, { ghost: 0.4, lod: ctx.quality === 'low' ? 1 : 0 });
+  const helicase = await PartSet.create(ctx.assets, 'helicase', 1, { lod: 0 });
   const poly = await PartSet.create(ctx.assets, 'dna-polymerase', 5, { lod: ctx.quality === 'low' ? 1 : 0 });
   root.add(helicase.group, poly.group);
 
@@ -134,7 +137,7 @@ export async function createReplikasyon(env: TrackEnv): Promise<TrackRuntime> {
     nucs.begin();
     poly.begin();
     helicase.begin();
-    const dmax = DMAX + 1.7 * win(t, 38, 48);
+    const dmax = DMAX + 0.9 * win(t, 38, 48);
     P.dmax = dmax;
     // twist phase per daughter rung: the helix keeps its twist only between paired rungs, so neighbours never differ by
     // more than one twist step (no stretched bonds) and an unpaired old nucleotide lies flat
@@ -204,13 +207,18 @@ export async function createReplikasyon(env: TrackEnv): Promise<TrackRuntime> {
     // enzymes
     const forkIdx = Math.min(Math.max((t - 7) / 1.3, 0), N + 0.5);
     P.forkOn = t > 4.5 && t < 31.5;
-    A.set(0, -(forkIdx + 1.4) * RISE, 0);
-    const hs = easeBack(seg(t, 4.5, 6.5)) * (1 - win(t, 29, 31.2)) * 1.35;
+    // the hexameric ring encircles the old strand (lagging template) just behind the fork, axis along the strand, tilted so
+    // the ring is seen open
+    const hi = Math.max(forkIdx - 0.9, 0);
+    A.set(-dsepAt(t, hi, DMAX) - 0.7, -hi * RISE, 0);
+    const hs = easeBack(seg(t, 4.5, 6.5)) * (1 - win(t, 29, 31.2)) * 1.9;
     if (hs > 0.02) {
-      helicase.push(matrixFor(m2, A, hs, t * 0.7));
+      q1.setFromAxisAngle(AXIS_Z, 0.67 * win(t, 7, 12)).multiply(q2.setFromAxisAngle(AXIS_X, 0.95)).multiply(q3.setFromAxisAngle(AXIS_Y, t * 0.5));
+      m1.compose(A, q1, one.set(hs, hs, hs));
+      helicase.push(m2.multiplyMatrices(nucs.frame, m1));
     }
     P.helicase.copy(A);
-    P.helicase.x += 2.3;
+    P.helicase.x -= 2.0;
     toWorld(P.helicase);
     P.fork.set(0, -forkIdx * RISE, 0);
     toWorld(P.fork);
@@ -236,7 +244,6 @@ export async function createReplikasyon(env: TrackEnv): Promise<TrackRuntime> {
     helicase.end();
   };
 
-  void qId;
   void frameLocal;
   return {
     duration: 56,

@@ -118,5 +118,5 @@ export function respPlan(level: LevelId): Plan {
     windows = [{ station: R_CELL, t0: 0 }, { station: R_MITO, t0: 5.4 }, { station: R_MATRIX, t0: R1_END }, { station: R_MEMB, t0: R3_START }, { station: R_MITO, t0: R3_END }, { station: R_CELL, t0: 58 }];
     swaps = [5.4, R1_END, R3_START, R3_END, 58];
   }
-  return { duration: DURATION, windows, swaps, trips, shots: shots(level), labels: labels(level), chart: chartFrom(RESP_SERIES, events, { 'glikoz-kalan': 100 }) };
+  return { duration: DURATION, legend: ['glucose', 'o2', 'co2', 'h2o', 'atp'] as const, windows, swaps, trips, shots: shots(level), labels: labels(level), chart: chartFrom(RESP_SERIES, events, { 'glikoz-kalan': 100 }) };
 }
