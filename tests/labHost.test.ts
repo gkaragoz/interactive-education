@@ -5,12 +5,12 @@ import { findModule, homeModules, openableModules } from '../src/modules';
 import { benchOf, createLabInteractions, experimentList, shelfOf } from '../src/scene/labInteractions';
 
 describe('chem-lab registry entry', () => {
-  it('is a sim module: preview only with ?demo, never on the home page until released', () => {
-    expect(findModule('chem-lab', { demo: false })).toBeNull();
+  it('is a sim module released since v0.9.0: openable without ?demo and listed on the home page', () => {
+    expect(findModule('chem-lab', { demo: false })).not.toBeNull();
     const entry = findModule('chem-lab', { demo: true });
     expect(entry?.sim?.id).toBe('chem-lab');
     expect(entry?.definition).toBeNull();
-    expect(homeModules().some((m) => m.id === 'chem-lab')).toBe(false);
+    expect(homeModules().some((m) => m.id === 'chem-lab')).toBe(true);
     expect(openableModules({ demo: true }).some((m) => m.id === 'chem-lab')).toBe(true);
   });
 
